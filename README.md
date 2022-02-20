@@ -6,11 +6,11 @@ Filmz
  
 ## Do we have a clear understanding of the problem?
  
-### How is this problem solved currently (if at all)?:
+### How is this problem solved currently (if at all)?
 The problem we are trying to solve is the issue of not being able to find reliable “audience based” information about movies one may be wanting to watch. There are plenty of movie rating websites out there such as IMDB and Rotten Tomatoes but they all take movie critic reviews more seriously and the average movie review gets pushed to the side. With our website we are hoping to make our review system strictly user based.
-### How will this project make life better? Is it educational or just for entertainment?:
+### How will this project make life better? Is it educational or just for entertainment?
 This will make life much better because in today's day and age, most movies reviews are tainted by biased movie critics that are trying to push the narrative of the company that is employing them. With our website we put the average movie watcher first and try to bring the most unbiased response as possible. 
-### Who is the target audience? Who will use your app or play your game?:
+### Who is the target audience? Who will use your app or play your game?
 The target audience is anyone who enjoys watching movies, which is the larger majority. Anyone looking for unbiased reviews on a movie, or wants to talk about a movie, or leave comments about a movie can use this app to their benefit. This app can be used by almost anyone, however will most commonly be used by movie enthusiasts.
  
 ## What is the scope of your project?
