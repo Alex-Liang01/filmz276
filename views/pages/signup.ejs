@@ -2,21 +2,41 @@
 <html>
 <head>
   <title>FilmZ Signup</title>
+  <link rel="stylesheet" type = "text/css" href="/stylesheets/mystyle1.css">
 </head>
 
 <body>
-  <form method = "post">
+  <form action="/signedup" method = "post">
     <div>FilmZ</div>
     Sign up
     <div>Username <input type = "text" id="username" name="username"></div>
-    <div>Password <input type = "text" id="password" name="password"></div>
-    <div>Confirm Password <input type = "text" id="confirmpassword" name="confirmpassword"></div>
+    <div>Password <input type = "password" id="password" name="password"></div>
+    <div>Confirm Password <input type = "password" id="confirmpassword" name="confirmpassword" onkeyup="match(this)"></div>
+    <output id="alert"></output>
     <div>First Name <input type = "text" id="firstname" name="firstname"></div>
     <div>Last Name <input type = "text" id="lastname" name="lastname"></div>
-    <div>Email <input type = "text" id="email" name="email"></div>   
+    <div>Email <input type = "text" id="email" name="email"></div>
+    <div><input type="date" id="birthday" name="birthday"></div>
+    <div>Gender <select id= "gender" name="gender">
+        <option disabled selected value> -- Select -- </option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+    </select></div>  
     <a href="/">Sign in Instead</a>
-    <div><input type = "submit" id="signup" value="signup"></div>
+    <div><input type = "submit" id="signedup" value="signedup"></div>
   </form>
-  
 </body>
+<script type="text/javascript">
+    let password=document.getElementById("password");
+    function match(elem){
+        if(elem.value.length>0){
+            if(elem.value != password.value){
+                document.getElementById('alert').innerHTML='Passwords do not match';
+            }else{
+                document.getElementById('alert').innerHTML='Passwords match';
+            }
+        }
+    }
+</script>    
 </html>
