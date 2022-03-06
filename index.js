@@ -1,10 +1,11 @@
-const { Pool } = require('pg')
-const pool = new Pool({
-  connectionSring: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+const { Pool } = require('pg');
+var pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    }
+})
+
 
 const express = require('express')
 const path = require('path')
@@ -26,11 +27,10 @@ app.post('/signedup',async(req,res)=>{
       let username=req.body.username; let password=req.body.password; let firstname=req.body.firstname; 
       let lastname=req.body.lastname; let email =req.body.email;
       let birthday=req.body.birthday; let gender=req.body.gender;
-      const client = await pool.connect();
-      const newuser= await client.query(`INSERT INTO users VALUES ('${username}','${password}','${email}','${firstname}',
+      const newuser= await pool.query(`INSERT INTO usr VALUES ('${username}','${password}','${email}','${firstname}',
       '${lastname}','${birthday}','${gender}')`);
       res.render('pages/index');
-      client.release();
+      
     }
     catch(err){
       res.send("Error" + err);
