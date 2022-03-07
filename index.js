@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    connectionString: process.env.DATABASE_URL|| "postgres://postgres:piechu@localhost/users",
+    // ssl: {
+    //   rejectUnauthorized: false
+    // }
 })
 
 
@@ -29,8 +29,7 @@ app.post('/signedup',async(req,res)=>{
       let birthday=req.body.birthday; let gender=req.body.gender;
       const newuser= await pool.query(`INSERT INTO usr VALUES ('${username}','${password}','${firstname}',
       '${lastname}','${email}','${birthday}','${gender}')`);
-      res.render('pages/index');
-      
+      res.render('pages/thankyou');
     }
     catch(err){
       res.send("Error" + err);
