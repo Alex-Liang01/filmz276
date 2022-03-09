@@ -8,12 +8,18 @@ var pool = new Pool({
 
 
 const express = require('express')
+const sessions = require('express-session');
 const path = require('path')
 const PORT = process.env.PORT || 5000
 
+
 var app=express()
+
+
+
+
 app.use(express.json());
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({extended:true}));//false}));
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -22,6 +28,8 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 app.get('/signup',(req,res)=>{
     res.render('pages/signup')
 })
+
+
 app.post('/signedup',async(req,res)=>{
     try{
       let username=req.body.username; let password=req.body.password; let firstname=req.body.firstname; 
@@ -36,28 +44,18 @@ app.post('/signedup',async(req,res)=>{
     }
   })
   
-  app.post('/login', function(req, res) {
-
+  app.post('/loginn', function(req, res) {
     let username = req.body.username;
     let password = req.body.password;
-
-    if (username && password) {
-
-      pool.query('SELECT * FROM usr WHERE username = ? AND password = ?', [username, password], function(error, results) {
-        if (error) throw error;
-
-        if (results.length > 0) {
-          console.log("TRUE");
-          res.redirect('/signup');
-        } 
-        else {
-          res.send('Incorrect Username and/or Password!');
-        }			
-        res.end();
-      });
-    } else {
-      res.send('Please enter Username and Password!');
-      res.end();
-    }
-  });
-
+    let isValid = false;
+    pool.query(`SELECT * FROM usr WHERE username='" + username + "' and password='" + password + "'"`, function(error, rows, fields) {
+        if(rows.length > 0) {
+          //the user is valid
+          isValid = true;
+        } else {
+          //the user isn't valid
+          isValid = false;
+        }
+    });
+    res.send(isValid);
+});
