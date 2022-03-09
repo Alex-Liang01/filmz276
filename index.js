@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    connectionString: 'postgres://postgres:sanjit12@localhost/proj'
+    // ssl: {
+    //   rejectUnauthorized: false
+    // }
 })
 
 
@@ -35,3 +35,29 @@ app.post('/signedup',async(req,res)=>{
       res.send("Error" + err);
     }
   })
+  
+  app.post('/login', function(req, res) {
+
+    let username = req.body.username;
+    let password = req.body.password;
+
+    if (username && password) {
+
+      pool.query('SELECT * FROM usr WHERE username = ? AND password = ?', [username, password], function(error, results) {
+        if (error) throw error;
+
+        if (results.length > 0) {
+          console.log("TRUE");
+          res.redirect('/signup');
+        } 
+        else {
+          res.send('Incorrect Username and/or Password!');
+        }			
+        res.end();
+      });
+    } else {
+      res.send('Please enter Username and Password!');
+      res.end();
+    }
+  });
+
