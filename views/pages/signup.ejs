@@ -2,32 +2,58 @@
 <html>
 <head>
   <title>FilmZ Signup</title>
-  <link rel="stylesheet" type = "text/css" href="/stylesheets/mystyle1.css">
+  <link rel="stylesheet" type = "text/css" href="/stylesheets/signup.css">
   <script src="/scripts/signupscript.js" defer></script>
 </head>
 
 <body>
+
+
+  <div  class = "all" >
+
   <form action="/signedup" method = "post">
-    <div>FilmZ</div>
-    Sign up
-    <div>Username <input type = "text" id="username" name="username"></div>
-    <div>Password <input type = "password" id="password" name="password"></div>
-    <div>Confirm Password <input type = "password" id="confirmpassword" name="confirmpassword" onkeyup="matchpassword(this)"></div>
+
+    <h1> Don't Miss Out on FilmZ!</h1>
+    <h2>Sign up Now!</h2>
+
+    <div class="line"> </div>
+
+    <div class = "information" >
+
+    <div> <input type = "text" class ="firstname" id="firstname" name="firstname" placeholder="First Name"> <input type = "text" class ="lastname" id="lastname" name="lastname" placeholder="Last Name"></div>
+
+    <div> <input type = "text" class ="email" id="email" name="email" placeholder="Email"> <input type = "text" class ="confirmemail" id="confirmemail" name="confirmemail" placeholder="Confirm Email" onkeyup="matchemail(this)"></div>
+
+    <div><input type="date" class="birthdate" id="birthday" name="birthday" placeholder="Birthdate"></div>
+
+
+    <p1> Gender </p1>
+    <p2> Birthdate</p2>
+    <div><select id= "gender" class="gender" name="gender">
+      <option disabled selected value> -- Select -- </option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+  </select></div> 
+
+    <div> <input type = "text" class="username" id="username" name="username" placeholder="Username"> </div>
+
+    <div> <input type = "password" class="password" id="password" name="password" placeholder="Password"></div>
+
+    <div> <input type = "password" class="confirmpassword" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" onkeyup="matchpassword(this)"></div>
     <output id="passwordalert"></output>
-    <div>First Name <input type = "text" id="firstname" name="firstname"></div>
-    <div>Last Name <input type = "text" id="lastname" name="lastname"></div>
-    <div>Email <input type = "text" id="email" name="email"></div>
-    <div>Confirm Email <input type = "text" id="confirmemail" name="confirmemail"onkeyup="matchemail(this)"></div>
+
     <output id="emailalert"></output>
-    <div>Birthdate <input type="date" id="birthday" name="birthday"></div>
-    <div>Gender <select id= "gender" name="gender">
-        <option disabled selected value> -- Select -- </option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="other">Other</option>
-    </select></div>  
-    <a href="/">Sign in Instead</a>
-    <div><input type = "submit" id="signedup" value="signedup"></div>
+
+    <div><input type = "submit" class="signup" id="signedup" value="SIGN UP"></div>
+    
+    <ul> <a href="/">Already Have an Account? </a> </ul>
+
+    </div>
+
   </form>
+
+  </div>
+
 </body>
 </html>
