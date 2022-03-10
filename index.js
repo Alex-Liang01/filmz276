@@ -28,6 +28,12 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 app.get('/signup',(req,res)=>{
     res.render('pages/signup')
 })
+app.get('/mainpage',(req,res)=>{
+  res.render('pages/mainpage')
+})
+app.get('/account',(req,res)=>{
+  res.render('pages/account')
+})
 
 
 app.post('/signedup',async(req,res)=>{
@@ -43,19 +49,19 @@ app.post('/signedup',async(req,res)=>{
       res.send("Error" + err);
     }
   })
-  
-  app.post('/loginn', function(req, res) {
-    let username = req.body.username;
-    let password = req.body.password;
-    let isValid = false;
-    pool.query(`SELECT * FROM usr WHERE username='" + username + "' and password='" + password + "'"`, function(error, rows, fields) {
-        if(rows.length > 0) {
-          //the user is valid
-          isValid = true;
-        } else {
-          //the user isn't valid
-          isValid = false;
-        }
-    });
-    res.send(isValid);
-});
+
+//  app.post('/loginn', function(req, res) {
+//    let username = req.body.username;
+//    let password = req.body.password;
+//    let isValid = false;
+//    pool.query(`SELECT * FROM usr WHERE username='" + username + "' and password='" + password + "'"`, function(error, rows, fields) {
+//        if(rows.length > 0) {
+//          //the user is valid
+//          isValid = true;
+//        } else {
+//          //the user isn't valid
+//          isValid = false;
+//        }
+//    });
+//    res.send(isValid);
+//  });
