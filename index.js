@@ -17,12 +17,24 @@ app.use(express.urlencoded({extended:true}));//false}));
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+
 app.get('/', (req, res) => res.render('pages/index'))
+
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+
 app.get('/signup',(req,res)=>{
     res.render('pages/signup')
 })
 
+app.get('/admin', (req, res) => {
+	var getUsersQuery = 'SELECT * FROM usr';
+	pool.query(getUsersQuery, (error,result) => {
+		if (error)
+			res.end(error);
+		var results = {'rows':result.rows}
+		res.render('pages/admin',results);
+	})
+});
 
 app.post('/signedup',async(req,res)=>{
     try{
