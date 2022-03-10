@@ -6,28 +6,190 @@
   <script src="/scripts/signupscript.js" defer></script>
 </head>
 
+<style>
+
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+    font-size: 16px;
+}
+
+body{
+      background-color: #212226;
+      margin: 0px;
+      position: relative;
+    } 
+
+    .all{
+  background-color: #363940; 
+  height: 1000px;
+  width: 1000px;
+  margin: 150px 100px 100px 800px; 
+  top: 0px;
+  overflow:auto;
+}
+
+h1{
+  text-align: center;
+  font-size: 400%;
+  font-family: 'Roboto', sans serif;
+  color: white;
+}
+
+h2{
+  text-align: center;
+  font-size: 200%;
+  font-family: 'Roboto', sans serif;
+  color: white;
+}
+
+.information{
+  background-color: #cbcdcd;
+  height: 550px;
+  width: 895px;
+  margin: 120px 50px 100px 50px;
+}
+
+
+.firstname{
+  font-size: 150%;
+  font-family: 'Roboto', sans serif;
+  margin: 60px 0px 0px 90px;
+} 
+
+.lastname{
+  position: absolute;
+  font-size: 150%;
+  font-family: 'Roboto', sans serif;
+  margin: 60px 0px 0px 100px;
+} 
+
+.email{
+  position: absolute;
+  font-size: 150%;
+  font-family: 'Roboto', sans serif;
+  margin: 40px 0px 0px 90px;
+}
+
+.confirmemail{
+  position: absolute;
+  font-size: 150%;
+  font-family: 'Roboto', sans serif;
+  margin: 40px 0px 0px 490px;
+}
+
+.birthdate{
+  position: absolute;
+  font-size: 150%;
+  font-family: 'Roboto', sans serif;
+  margin: 115px 0px 0px 130px;
+}
+
+.gender{
+  position: absolute;
+  font-size: 185%;
+  font-family: 'Roboto', sans serif;
+  margin: 115px 0px 0px 570px;
+}
+
+.username{
+  position: absolute;
+  font-size: 150%;
+  font-family: 'Roboto', sans serif;
+  margin: 195px 0px 0px 290px;
+}
+
+.password{
+  position: absolute;
+  font-size: 150%;
+  font-family: 'Roboto', sans serif;
+  margin: 270px 0px 0px 90px;
+
+}
+
+.confirmpassword{
+  position: absolute;
+  font-size: 150%;
+  font-family: 'Roboto', sans serif;
+  margin: 270px 0px 0px 490px;
+}
+
+.signup{
+  position: absolute;
+  font-size: 150%;
+  font-family: 'Roboto', sans serif;
+  margin: 335px 0px 0px 385px;
+}
+
+ul{
+  position: absolute;
+  font-size: 150%;
+  font-family: 'Roboto', sans serif;
+  margin: 385px 0px 0px 350px;
+}
+
+p1{
+  position: absolute;
+  font-size: 100%;
+  font-family: 'Roboto', sans serif;
+  margin: 95px 0px 0px 570px;
+}
+
+p2{
+  position: absolute;
+  font-size: 100%;
+  font-family: 'Roboto', sans serif;
+  margin: 95px 0px 0px 130px;
+}
+    
+</style>
+
+
 <body>
+
+  <div  class = "all" >
+
   <form action="/signedup" method = "post">
-    <div>FilmZ</div>
-    Sign up
-    <div>Username <input type = "text" id="username" name="username"></div>
-    <div>Password <input type = "password" id="password" name="password"></div>
-    <div>Confirm Password <input type = "password" id="confirmpassword" name="confirmpassword" onkeyup="matchpassword(this)"></div>
+
+    <h1> Welcome to FilmZ!</h1>
+    <h2>Sign up Now!</h2>
+
+    <div class = "information" >
+
+    <div> <input type = "text" class ="firstname" id="firstname" name="firstname" placeholder="First Name"> <input type = "text" class ="lastname" id="lastname" name="lastname" placeholder="Last Name"></div>
+
+    <div> <input type = "text" class ="email" id="email" name="email" placeholder="Email"> <input type = "text" class ="confirmemail" id="confirmemail" name="confirmemail" placeholder="Confirm Email" onkeyup="matchemail(this)"></div>
+
+    <div><input type="date" class="birthdate" id="birthday" name="birthday" placeholder="Birthdate"></div>
+
+
+    <p1> Gender </p1>
+    <p2> Birthdate</p2>
+    <div><select id= "gender" class="gender" name="gender">
+      <option disabled selected value> -- Select -- </option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+  </select></div> 
+
+    <div> <input type = "text" class="username" id="username" name="username" placeholder="Username"> </div>
+
+    <div> <input type = "password" class="password" id="password" name="password" placeholder="Password"></div>
+
+    <div> <input type = "password" class="confirmpassword" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" onkeyup="matchpassword(this)"></div>
     <output id="passwordalert"></output>
-    <div>First Name <input type = "text" id="firstname" name="firstname"></div>
-    <div>Last Name <input type = "text" id="lastname" name="lastname"></div>
-    <div>Email <input type = "text" id="email" name="email"></div>
-    <div>Confirm Email <input type = "text" id="confirmemail" name="confirmemail"onkeyup="matchemail(this)"></div>
+
     <output id="emailalert"></output>
-    <div>Birthdate <input type="date" id="birthday" name="birthday"></div>
-    <div>Gender <select id= "gender" name="gender">
-        <option disabled selected value> -- Select -- </option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="other">Other</option>
-    </select></div>  
-    <a href="/">Sign in Instead</a>
-    <div><input type = "submit" id="signedup" value="signedup"></div>
+
+    <div><input type = "submit" class="signup" id="signedup" value="SIGN UP"></div>
+    
+    <ul> <a href="/">Sign in Instead </a> </ul>
+
+    </div>
+
   </form>
+
+  </div>
+
 </body>
 </html>
