@@ -6,18 +6,12 @@ var pool = new Pool({
     // }
 })
 
-
 const express = require('express')
 const sessions = require('express-session');
 const path = require('path')
 const PORT = process.env.PORT || 5000
 
-
 var app=express()
-
-
-
-
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));//false}));
 app.use(express.static(path.join(__dirname, 'public')))
@@ -44,18 +38,18 @@ app.post('/signedup',async(req,res)=>{
     }
   })
   
-  app.post('/loginn', function(req, res) {
-    let username = req.body.username;
-    let password = req.body.password;
-    let isValid = false;
-    pool.query(`SELECT * FROM usr WHERE username='" + username + "' and password='" + password + "'"`, function(error, rows, fields) {
-        if(rows.length > 0) {
-          //the user is valid
-          isValid = true;
-        } else {
-          //the user isn't valid
-          isValid = false;
-        }
-    });
-    res.send(isValid);
-});
+//   app.post('/loginn', function(req, res) {
+//     let username = req.body.username;
+//     let password = req.body.password;
+//     let isValid = false;
+//     pool.query("Select * from usr Where username='" + username + "' and password='" + password + "'", function(error, rows, fields) {
+//         if(rows.length > 0) {
+//           //the user is valid
+//           isValid = true;
+//         } else {
+//           //the user isn't valid
+//           isValid = false;
+//         }
+//     });
+//     res.send(isValid);
+// });
