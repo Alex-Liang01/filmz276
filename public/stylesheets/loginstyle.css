@@ -11,7 +11,7 @@ body {
 .log {
   width: 400px;
   background-color: #363940;
-  margin: 100px auto;
+  margin: 300px auto;
 }
 .log h1 {
   text-align: center;
@@ -41,10 +41,25 @@ body {
   border: 0;
   cursor: pointer;
   font-weight: bold;
-  color: #ffffff;
+  color: #e9ecf3;
   transition: background-color 0.2s;
 }
 .log form input[type="submit"]:hover {
   background-color: #2868c7;
   transition: background-color 0.2s;
+}
+a:link {
+  color: #5866e9;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:visited {
+  color: #e9ecf3;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:hover {
+  color: #e9ecf3;
+  background-color: transparent;
+  text-decoration: underline;
 }
