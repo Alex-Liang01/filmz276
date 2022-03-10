@@ -19,35 +19,44 @@ body{
   overflow:auto;
   display: flex;
   justify-content: center;
+  border-bottom: 1px solid black;
 }
 
-/* .all form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding-top: 20px;
-  } */
+.line{
+    background-color: #212226;
+    width: 1000px;
+    height: 2px;
+    margin: 400px px 0px 400px;
+    top: 0px;
+}
+
 
 h1{
   text-align: center;
   font-size: 400%;
-  font-family: 'Roboto', sans serif;
+  font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen,
+    ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial,
+    sans-serif;
   color: white;
 }
 
 h2{
   text-align: center;
   font-size: 200%;
-  font-family: 'Roboto', sans serif;
+  font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen,
+  ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial,
+  sans-serif;
   color: white;
   text-decoration: underline;
+  margin: 0px 0px 70px 0px;
 }
 
 .information{
   background-color: #cbcdcd;
   height: 550px;
   width: 895px;
-  margin: 120px 50px 100px 50px;
+  margin: 80px 50px 100px 50px;
+  border-bottom: 1px solid black;
 }
 
 
