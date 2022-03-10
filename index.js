@@ -1,15 +1,15 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-    connectionString: process.env.DATABASE_URL|| "postgres://postgres:piechu@localhost/users",
-    // ssl: {
-    //   rejectUnauthorized: false
-    // }
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    }
 })
 
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
-//HERE 
+
 var app=express()
 const session = require("express-session");
 const res = require('express/lib/response');
@@ -36,7 +36,6 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 app.get('/signup',(req,res)=>{
     res.render('pages/signup')
 })
-<<<<<<< Updated upstream
 
 app.get('/admin', (req, res) => {
 	var getUsersQuery = 'SELECT * FROM usr';
@@ -48,8 +47,6 @@ app.get('/admin', (req, res) => {
 	})
 });
 
-=======
->>>>>>> Stashed changes
 app.post('/signedup',async(req,res)=>{
     try{
       let username=req.body.username; let password=req.body.password; let firstname=req.body.firstname; 
@@ -64,7 +61,7 @@ app.post('/signedup',async(req,res)=>{
     }
   })
 
-//
+
 app.use(function(req, res, next) {
   res.locals.user = req.session.user;
   next();
