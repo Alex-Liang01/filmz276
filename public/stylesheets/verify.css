@@ -51,4 +51,11 @@
     transition: background-color 0.2s;
   }
   
+  .incorrect{
+      color: #e9ecf3;
+      text-align: center;
+      padding-bottom: 20px;
+
+  }
+  
   

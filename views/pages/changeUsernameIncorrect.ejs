@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>FilmZ Change Password</title>
+  <title>FilmZ Change Username</title>
   <link rel="stylesheet" type = "text/css" href="/stylesheets/verify.css">
   <script defer></script>
 </head>
 
 <body>
   <div class="log">
-    <h1>Please verify your password</h1>
-  <form action="/account/verifiedPassword" method = "post" >
-    <div><input type = "password" id="password" name="password"></div>
+  <h1>Please verify your password</h1>
+  <form action="/account/verifiedUsername" method = "post" >
+    <div class="incorrect">Wrong Password</div>
+    <input type = "password" id="password" name="password">
     <div><input type = "submit" id="verifypassword" value="Verify Password"></div>
   </form>
-  </div>
 </body>
 </html>

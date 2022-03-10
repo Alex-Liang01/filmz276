@@ -63,3 +63,10 @@ a:hover {
   background-color: transparent;
   text-decoration: underline;
 }
+
+.incorrect{
+  color: #e9ecf3;
+  text-align: center;
+  padding-bottom: 20px;
+
+}
