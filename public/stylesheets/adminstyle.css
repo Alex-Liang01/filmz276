@@ -1,0 +1,30 @@
+body {
+  background-color: #212226;
+  font-family: roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+}
+h1 {
+  color: white;
+  font-weight: 300;
+  margin: 2rem;
+}
+table {
+  border-collapse: collapse;
+  width: 80%;
+}
+td, th {
+  padding: 1rem 1.5rem 1rem 1.5rem;
+}
+th {
+  color: white;
+  font-weight: 800;
+}
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+}
+tr {
+  color: #a7aab8;
+  font-weight: 300;
+}
+tr:nth-child(even){background-color: #17181a;}
