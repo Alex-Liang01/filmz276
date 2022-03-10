@@ -10,14 +10,23 @@ body{
       position: relative;
     } 
 
-    .all{
+.all{
   background-color: #363940; 
   height: 1000px;
   width: 1000px;
-  margin: 150px 100px 100px 800px; 
+  margin: 100px auto; 
   top: 0px;
   overflow:auto;
+  display: flex;
+  justify-content: center;
 }
+
+/* .all form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px;
+  } */
 
 h1{
   text-align: center;
@@ -31,6 +40,7 @@ h2{
   font-size: 200%;
   font-family: 'Roboto', sans serif;
   color: white;
+  text-decoration: underline;
 }
 
 .information{
@@ -109,13 +119,21 @@ h2{
   font-size: 150%;
   font-family: 'Roboto', sans serif;
   margin: 335px 0px 0px 385px;
+  color: #cbcdcd;
+  background-color: #363940 ;
+  border-radius: 15px;
+}
+
+.signup:hover{
+    background-color: #2868c7;
+    transition: background-color 0.2s;
 }
 
 ul{
   position: absolute;
   font-size: 150%;
   font-family: 'Roboto', sans serif;
-  margin: 385px 0px 0px 350px;
+  margin: 385px 0px 0px 310px;
 }
 
 p1{
@@ -131,3 +149,21 @@ p2{
   font-family: 'Roboto', sans serif;
   margin: 95px 0px 0px 130px;
 }
+
+a:link {
+    color: #363940;
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: #363940;
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #2868c7;
+    background-color: transparent;
+    text-decoration: underline;
+  }
