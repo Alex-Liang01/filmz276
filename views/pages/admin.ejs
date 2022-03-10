@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Filmz Admin</title>
+    <link href="/stylesheets/adminstyle.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <center>
+      <h1>List of users</h1>
+      <table>
+        <tr>
+          <th>NAME</th>
+          <th>USERNAME</th>
+          <th>EMAIL</th>
+          <th>BIRTHDAY</th>
+          <th>GENDER</th>
+        </tr>
+        <% rows.forEach(function(r) { %>
+			<tr>
+				<td><%= r.firstname %><%= r.lastname %></td>
+				<td>
+					<%= r.username %>
+					<!--<a href="?id="></a>-->
+				</td>
+				<td><%= r.email %></td>
+				<td><%= r.birthday %></td>
+				<td><%= r.gender %></td>
+			</tr>
+		<% }); %>
+      </table>
+    </center>
+    <!--<script src="/script.js"></script>-->
+  </body>
+</html>
