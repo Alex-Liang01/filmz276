@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen,
+      ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial,
+      sans-serif;
+    font-size: 16px;
+  }
+  .text{
+      color: #e9ecf3;
+  }
+  body {
+    background-color: #212226;
+  }
+  .log {
+    width: 400px;
+    background-color: #363940;
+    margin: 300px auto;
+  }
+  .log h1 {
+    text-align: center;
+    color: #e9ecf3;
+    font-size: 24px;
+    padding: 20px 0 20px 0;
+    border-bottom: 1px solid black;
+  }
+  .log form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px;
+  }
+  .log form input[type="password"]{
+    width: 310px;
+    height: 50px;
+    margin-bottom: 20px;
+    padding: 0 15px;
+  }
+  .log form input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #5866e9;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: #e9ecf3;
+    transition: background-color 0.2s;
+  }
+  .log form input[type="submit"]:hover {
+    background-color: #2868c7;
+    transition: background-color 0.2s;
+  }
+  
+  

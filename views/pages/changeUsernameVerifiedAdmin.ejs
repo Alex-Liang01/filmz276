@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FilmZ Changing Username Admin</title>
+  <link rel="stylesheet" type = "text/css" href="/stylesheets/changeInformation.css">
+  <script src="/scripts/signupscript.js" defer></script> 
+</head>
+
+<body>
+  <div class="log">
+    <h1>Changing Username</h1>
+  <form action="/updatedUsername" method = "post">
+    <output id="usernamealert"></output>
+    <div>New Username <input type = "password" id="username" name="username"></div>
+    <div>Confirm New Username <input type = "password" id="confirmusername" name="confirmusername" onkeyup="matchusername(this)"></div>
+    <div><input type = "submit" id="updatedUsername" value="Update Username"></div>
+  </form>
+</body>
+</html>

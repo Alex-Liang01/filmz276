@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FilmZ changeUsername</title>
+  <link rel="stylesheet" type = "text/css" href="/stylesheets/mystyle1.css">
+  <script defer></script>
+</head>
+
+<body>
+    <div class="log">
+        <h1>Please verify your password</h1>
+  <form action="/account/verifiedUsername" method = "post" >
+    <input type = "password" id="password" name="password">
+    <div><input type = "submit" id="verifypassword" value="Verify Password"></div>
+  </form>
+</body>
+</html>

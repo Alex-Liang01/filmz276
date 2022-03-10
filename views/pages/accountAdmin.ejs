@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FilmZ Account</title>
+  <link rel="stylesheet" type = "text/css" href="/stylesheets/account.css">
+  <script defer></script>
+</head>
+
+<body>
+  <div class="log">
+  <h1>Account information</h1>
+  <form action="/account" >
+    <% results.forEach(function(r) { %>
+        <div class="header">Uid</div>   <div><%=r.uid %></div> 
+        <div class="header">Username</div>    <div><%=r.username %></div> 
+        <a href="/account/verifyusername" class="link">Change Username</a>
+        <div class="header">First Name</div>  <div><%=r.firstname %></div>  
+        <div class="header">Last Name</div>   <div><%=r.password %></div>  
+        <a href="/account/verifypassword" class="link">Change Password</a>
+        <div class="header">Email</div>   <div><%=r.email %></div>      
+        <div class="header">Birthday   <div><%=r.email %></div>     
+
+        <% }); %>
+  </form>
+</div>
+</body>
+</html>
