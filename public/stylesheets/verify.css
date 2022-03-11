@@ -14,7 +14,7 @@
   .log {
     width: 400px;
     background-color: #363940;
-    margin: 300px auto;
+    margin: 100px auto;
   }
   .log h1 {
     text-align: center;
@@ -57,5 +57,37 @@
       padding-bottom: 20px;
 
   }
+
+  .navbar {
   
+    overflow: hidden;
+    background-color: #5866e9;
+    margin: 50px auto;
+    margin-left:100px;
+    margin-right:100px;
+  }
+
+  .navbar a {
+
+  float: left;
+  font-size: 16px;
+  color: white;
+
+  padding: 14px 16px;
+  text-decoration: none;
+  }
   
+  a:link {
+   
+    border: 1px solid #5866e9;
+    color: #e9ecf3;
+    background-color: #5866e9;
+    text-decoration: none;
+    font-size:larger
+  }
+  
+  .Title{
+    text-align:center;
+    font-size:75px;
+    color:#e9ecf3
+  }

@@ -1,21 +1,5 @@
 <!DOCTYPE html>
 <html>
-<<<<<<< HEAD
-  <head>
-    <title>FilmZ</title>
-  </head>
-
-  <body>
-      <div>FilmZ</div>
-
-      <div>Username:</div>
-      <div>Real Name:</div>
-      <div>Email:</div>
-      <div>Birthdate:</div>
-      <div>Gender:</div>
-    </form>
-  </body>
-=======
 <head>
   <title>FilmZ Account</title>
   <link rel="stylesheet" type = "text/css" href="/stylesheets/account.css">
@@ -23,6 +7,12 @@
 </head>
 
 <body>
+  <div class = "Title">Filmz</div>
+  <div class="navbar">
+    <a href="/mainpage">Home</a>
+    <a href="/account">Account</a>
+    <a href="/">Logout</a>
+  </div>
   <div class="log">
   <h1>Account information</h1>
   <form action="/account" >
@@ -35,10 +25,8 @@
         <a href="/account/verifypassword" class="link">Change Password</a>
         <div class="header">Email</div>   <div><%=r.email %></div>      
         <div class="header">Birthday   <div><%=r.email %></div>     
-
         <% }); %>
   </form>
 </div>
 </body>
->>>>>>> 3d940729b16ef663d54ec3708e251de078ee788b
-</html>
+</html> 

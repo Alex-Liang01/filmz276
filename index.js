@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    connectionString: process.env.DATABASE_URL|| "postgres://postgres:piechu@localhost/users",
+    // ssl: {
+    //   rejectUnauthorized: false
+    // }
 })
 
 const express = require('express')
@@ -40,7 +40,7 @@ app.get('/mainpage',(req,res)=>{
   res.render('pages/mainpage')
 })
 app.get('/account',(req,res)=>{
-  res.render('pages/account')
+  res.render('pages/account',val)
 })
 
 app.get('/admin', (req, res) => {
@@ -67,55 +67,100 @@ app.post('/signedup',async(req,res)=>{
     }
   })
 
-<<<<<<< HEAD
-//  app.post('/loginn', function(req, res) {
-//    let username = req.body.username;
-//    let password = req.body.password;
-//    let isValid = false;
-//    pool.query(`SELECT * FROM usr WHERE username='" + username + "' and password='" + password + "'"`, function(error, rows, fields) {
-//        if(rows.length > 0) {
-//          //the user is valid
-//          isValid = true;
-//        } else {
-//          //the user isn't valid
-//          isValid = false;
-//        }
-//    });
-//    res.send(isValid);
-//  });
-=======
 
-app.use(function(req, res, next) {
-  res.locals.user = req.session.user;
-  next();
-});
-app.post('/loginn', async(req,res)=>{
 
-  let un = req.body.username;
-  let pw = req.body.password;
-
-  const result = await pool.query(`SELECT * FROM usr WHERE username = '${un}' AND password = '${pw}'`);
-
-  const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE username = '${un}' AND password = '${pw}'`);
-  const results = { 'results': (result) ? result.rows : null};
-  const countResult ={'results': (count)?count.rows:null};
-  req.session.user = results;
-  val=req.session.user;
-  if (countResult['results'][0].count==0){
-      res.render('pages/loginIncorrect')  
-    }else{
-      if(results['results'][0].adminid == null){
-        res.render('pages/account',val);
+  app.use(function(req, res, next) {
+    res.locals.user = req.session.user;
+    next();
+  });
+  app.get('/loginn',(req,res)=>{
+    if(req.session.user){
+      res.render('pages/homepage');
+    }
+    else{
+      res.redirect('/')
+    }
+  })
+  app.post('/loginn', async(req,res)=>{
+  
+    let un = req.body.username;
+    let pw = req.body.password;
+  
+    const result = await pool.query(`SELECT * FROM usr WHERE username = '${un}' AND password = '${pw}'`);
+  
+    const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE username = '${un}' AND password = '${pw}'`);
+    const results = { 'results': (result) ? result.rows : null};
+    const countResult ={'results': (count)?count.rows:null};
+    req.session.user = results;
+    val=req.session.user;
+    if (countResult['results'][0].count==0){
+        res.render('pages/loginIncorrect')  
       }else{
-        res.render('pages/accountAdmin',val);
+        if(results['results'][0].adminid == null){
+          res.render('pages/mainpage',val);
+        }else{
+          res.render('pages/mainpageAdmin',val);
+        }
+    }
+  })
+  
+    app.get('/account/verifypassword',async(req,res)=>{
+      if(req.session.user){
+        try{ 
+          res.render('pages/changePassword') 
+        }
+        catch(err){
+          res.send("Error" + err);
+        }
+      }else{
+        res.redirect('/')
       }
-  }
-})
-
-  app.get('/account/verifypassword',async(req,res)=>{
+    })
+    
+    app.post('/account/verifiedpassword',async(req,res)=>{
+      if(req.session.user){
+        try{
+          let datapassword=req.body.password;
+          let id=val.results[0].uid;
+          const result= await pool.query(`SELECT Count(*) FROM usr WHERE uid='${id}' AND password = '${datapassword}'`);
+          const results = { 'results': (result) ? result.rows : null};
+          if (results['results'][0].count==0){
+            res.render('pages/changePasswordIncorrect')
+          }else{
+            res.render('pages/changePasswordVerified');
+          }
+        }
+        catch(err){
+          res.send(err);
+        }
+      }else{
+        res.redirect('/')
+      }
+    })
+  
+    app.post('/updatedPassword',async(req,res)=>{
+      if(req.session.user){
+        try{
+          let newPassword=req.body.password;
+          let id=val.results[0].uid;
+          const update= await pool.query(`UPDATE usr SET password= '${newPassword}' WHERE uid = '${id}'`);
+          req.session.destroy();
+          res.render('pages/index')
+        }
+        catch(err){
+          res.send(err);
+        }
+      }
+      else{
+        res.redirect('/')
+      }
+    })
+    
+  //Username change
+  app.get('/account/verifyusername',async(req,res)=>{
     if(req.session.user){
       try{ 
-        res.render('pages/changePassword') 
+        res.render('pages/changeUsername') 
       }
       catch(err){
         res.send("Error" + err);
@@ -125,7 +170,7 @@ app.post('/loginn', async(req,res)=>{
     }
   })
   
-  app.post('/account/verifiedpassword',async(req,res)=>{
+  app.post('/account/verifiedusername',async(req,res)=>{
     if(req.session.user){
       try{
         let datapassword=req.body.password;
@@ -133,9 +178,9 @@ app.post('/loginn', async(req,res)=>{
         const result= await pool.query(`SELECT Count(*) FROM usr WHERE uid='${id}' AND password = '${datapassword}'`);
         const results = { 'results': (result) ? result.rows : null};
         if (results['results'][0].count==0){
-          res.render('pages/changePasswordIncorrect')
+          res.render('pages/changeUsernameIncorrect')
         }else{
-          res.render('pages/changePasswordVerified');
+          res.render('pages/changeUsernameVerified');
         }
       }
       catch(err){
@@ -145,13 +190,13 @@ app.post('/loginn', async(req,res)=>{
       res.redirect('/')
     }
   })
-
-  app.post('/updatedPassword',async(req,res)=>{
+  
+  app.post('/updatedUsername',async(req,res)=>{
     if(req.session.user){
       try{
-        let newPassword=req.body.password;
+        let newUsername=req.body.username;
         let id=val.results[0].uid;
-        const update= await pool.query(`UPDATE usr SET password= '${newPassword}' WHERE uid = '${id}'`);
+        const update= await pool.query(`UPDATE usr SET username= '${newUsername}' WHERE uid = '${id}'`);
         req.session.destroy();
         res.render('pages/index')
       }
@@ -164,56 +209,11 @@ app.post('/loginn', async(req,res)=>{
     }
   })
   
-//Username change
-app.get('/account/verifyusername',async(req,res)=>{
-  if(req.session.user){
-    try{ 
-      res.render('pages/changeUsername') 
+  app.get("/account",(req,res)=>{
+    if(req.session.user){
+      res.render('pages/account',val);
     }
-    catch(err){
-      res.send("Error" + err);
+    else{
+      res.redirect('/')
     }
-  }else{
-    res.redirect('/')
-  }
-})
-
-app.post('/account/verifiedusername',async(req,res)=>{
-  if(req.session.user){
-    try{
-      let datapassword=req.body.password;
-      let id=val.results[0].uid;
-      const result= await pool.query(`SELECT Count(*) FROM usr WHERE uid='${id}' AND password = '${datapassword}'`);
-      const results = { 'results': (result) ? result.rows : null};
-      if (results['results'][0].count==0){
-        res.render('pages/changeUsernameIncorrect')
-      }else{
-        res.render('pages/changeUsernameVerified');
-      }
-    }
-    catch(err){
-      res.send(err);
-    }
-  }else{
-    res.redirect('/')
-  }
-})
-
-app.post('/updatedUsername',async(req,res)=>{
-  if(req.session.user){
-    try{
-      let newUsername=req.body.username;
-      let id=val.results[0].uid;
-      const update= await pool.query(`UPDATE usr SET username= '${newUsername}' WHERE uid = '${id}'`);
-      req.session.destroy();
-      res.render('pages/index')
-    }
-    catch(err){
-      res.send(err);
-    }
-  }
-  else{
-    res.redirect('/')
-  }
-})
->>>>>>> 3d940729b16ef663d54ec3708e251de078ee788b
+  })
