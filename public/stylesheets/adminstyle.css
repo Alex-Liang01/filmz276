@@ -28,3 +28,36 @@ tr {
   font-weight: 300;
 }
 tr:nth-child(even){background-color: #17181a;}
+.navbar {
+  
+  overflow: hidden;
+  background-color: #5866e9;
+  margin: 50px auto;
+  margin-left:100px;
+  margin-right:100px;
+}
+
+.navbar a {
+
+float: left;
+font-size: 16px;
+color: white;
+
+padding: 14px 16px;
+text-decoration: none;
+}
+
+.Title{
+  text-align:center;
+  font-size:75px;
+  color:#e9ecf3
+}
+
+a:link {
+
+  border: 1px solid #5866e9;
+  color: #e9ecf3;
+  background-color: #5866e9;
+  text-decoration: none;
+  font-size:larger
+}

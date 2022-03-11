@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    connectionString: process.env.DATABASE_URL|| "postgres://postgres:piechu@localhost/users",
+    // ssl: {
+    //   rejectUnauthorized: false
+    // }
 })
 
 const express = require('express')
@@ -37,10 +37,20 @@ app.get('/signup',(req,res)=>{
     res.render('pages/signup')
 })
 app.get('/mainpage',(req,res)=>{
-  res.render('pages/mainpage')
-})
-app.get('/account',(req,res)=>{
-  res.render('pages/account',val)
+  let adminid=val.results[0].adminid; 
+  if(adminid==null){             
+    res.render('pages/mainpage')
+  }else{
+    res.render('pages/mainpageAdmin')
+  }
+  })
+app.get('/account',(req,res)=>{ 
+  let adminid=val.results[0].adminid; 
+  if(adminid==null){
+    res.render('pages/account',val)
+  }else{
+    res.render('pages/accountAdmin',val)
+  }
 })
 
 app.get('/admin', (req, res) => {
@@ -106,8 +116,14 @@ app.post('/signedup',async(req,res)=>{
   
     app.get('/account/verifypassword',async(req,res)=>{
       if(req.session.user){
-        try{ 
-          res.render('pages/changePassword') 
+        let adminid=val.results[0].adminid; 
+        try{
+          if(adminid==null){
+            res.render('pages/changePassword')  
+          }
+          else{
+            res.render('pages/changePasswordAdmin') 
+          }
         }
         catch(err){
           res.send("Error" + err);
@@ -120,16 +136,26 @@ app.post('/signedup',async(req,res)=>{
     app.post('/account/verifiedpassword',async(req,res)=>{
       if(req.session.user){
         try{
+          let adminid=val.results[0].adminid; 
+          
           let datapassword=req.body.password;
           let id=val.results[0].uid;
           const result= await pool.query(`SELECT Count(*) FROM usr WHERE uid='${id}' AND password = '${datapassword}'`);
           const results = { 'results': (result) ? result.rows : null};
           if (results['results'][0].count==0){
-            res.render('pages/changePasswordIncorrect')
+            if(adminid==null){
+              res.render('pages/changePasswordIncorrect')
+            }else{
+              res.render('pages/changePasswordAdminIncorrect')
+            }
           }else{
-            res.render('pages/changePasswordVerified');
+            if(adminid==null){
+              res.render('pages/changePasswordVerified');
+          }else{
+            res.render('pages/changePasswordVerifiedAdmin')
           }
         }
+      }
         catch(err){
           res.send(err);
         }
@@ -141,6 +167,7 @@ app.post('/signedup',async(req,res)=>{
     app.post('/updatedPassword',async(req,res)=>{
       if(req.session.user){
         try{
+         
           let newPassword=req.body.password;
           let id=val.results[0].uid;
           const update= await pool.query(`UPDATE usr SET password= '${newPassword}' WHERE uid = '${id}'`);
@@ -159,8 +186,13 @@ app.post('/signedup',async(req,res)=>{
   //Username change
   app.get('/account/verifyusername',async(req,res)=>{
     if(req.session.user){
-      try{ 
-        res.render('pages/changeUsername') 
+      try{
+        let adminid=val.results[0].adminid; 
+        if(adminid==null){
+          res.render('pages/changeUsername') 
+        }else{
+          res.render('pages/changeUsernameAdmin')
+        }
       }
       catch(err){
         res.send("Error" + err);
@@ -173,14 +205,23 @@ app.post('/signedup',async(req,res)=>{
   app.post('/account/verifiedusername',async(req,res)=>{
     if(req.session.user){
       try{
+        let adminid=val.results[0].adminid; 
         let datapassword=req.body.password;
         let id=val.results[0].uid;
         const result= await pool.query(`SELECT Count(*) FROM usr WHERE uid='${id}' AND password = '${datapassword}'`);
         const results = { 'results': (result) ? result.rows : null};
         if (results['results'][0].count==0){
-          res.render('pages/changeUsernameIncorrect')
+          if(adminid==null){
+            res.render('pages/changeUsernameIncorrect')
+          }else{
+            res.render('pages/changeUsernameAdminIncorrect')
+          }
         }else{
-          res.render('pages/changeUsernameVerified');
+          if(adminid==null){
+            res.render('pages/changeUsernameVerified');
+          }else{
+            res.render('pages/changeUsernameVerifiedAdmin');
+          }
         }
       }
       catch(err){
@@ -209,11 +250,5 @@ app.post('/signedup',async(req,res)=>{
     }
   })
   
-  app.get("/account",(req,res)=>{
-    if(req.session.user){
-      res.render('pages/account',val);
-    }
-    else{
-      res.redirect('/')
-    }
-  })
+
+
