@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+    font-size: 16px;
+}
+
+body{
+      background-color: #212226;
+      margin: 0px;
+      position: relative;
+    } 
+
+.all{
+  background-color: #363940; 
+  height: 1000px;
+  width: 1000px;
+  margin: 100px auto; 
+  top: 0px;
+  overflow:auto;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid black;
+}
+
+h1{
+    /* text-align: center; */
+    font-size: 400%;
+    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen,
+      ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial,
+      sans-serif;
+    color: white;
+    margin-top: 400px;
+  }
+
+  ul{
+    position: absolute;
+    font-size: 250%;
+    font-family: 'Roboto', sans serif;
+    margin: 0px 0px 0px 310px;
+  }
+  
+  a:link {
+    color: #2868c7;
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: #2868c7;
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+
+  
