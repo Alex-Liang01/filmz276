@@ -68,7 +68,7 @@ app.post('/signedup',async(req,res)=>{
       let username=req.body.username; let password=req.body.password; let firstname=req.body.firstname; 
       let lastname=req.body.lastname; let email =req.body.email;
       let birthday=req.body.birthday; let gender=req.body.gender;
-      const newuser= await pool.query(`INSERT INTO usr VALUES ('${username}','${password}','${firstname}',
+      const newuser= await pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender) VALUES ('${username}','${password}','${firstname}',
       '${lastname}','${email}','${birthday}','${gender}')`);
       res.render('pages/thankyou');
     }
