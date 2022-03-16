@@ -1,4 +1,23 @@
-* {
+.card_item {
+	width: 20%
+}
+@media (max-width: 1024px) {
+	.card_item {
+		width: 25%
+	}
+}
+@media (max-width: 768px) {
+	.card_item {
+		width: 33.3%
+	}
+}
+@media (max-width: 528px) {
+	.card_item {
+		width: 50%
+	}
+}	
+
+/** {
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen,
       ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial,
@@ -116,4 +135,4 @@ a:link {
     color:#e9ecf3
   }
 
-  
+  */
