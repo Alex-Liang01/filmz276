@@ -203,7 +203,7 @@ app.post('/logout', async(req,res) => {
           let id=val.results[0].uid;
           const update= await pool.query(`UPDATE usr SET password= '${newPassword}' WHERE uid = '${id}'`);
           req.session.destroy();
-          res.render('pages/index')
+          res.redirect('/')
         }
         catch(err){
           res.send(err);
@@ -270,7 +270,7 @@ app.post('/logout', async(req,res) => {
         let id=val.results[0].uid;
         const update= await pool.query(`UPDATE usr SET username= '${newUsername}' WHERE uid = '${id}'`);
         req.session.destroy();
-        res.render('pages/index')
+        res.redirect('/')
       }
       catch(err){
         res.send(err);
