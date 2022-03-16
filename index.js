@@ -48,13 +48,14 @@ app.get('/',(req,res)=>{
   
 })
 
+// ----------- ACCOUNT PAGE -----------
 app.get('/account',(req,res)=>{ 
-  let adminid=val.results[0].adminid; 
-  if(adminid==null){
-    res.render('pages/account',val)
-  }else{
-    res.render('pages/accountAdmin',val)
-  }
+	if (typeof req.session.user === 'undefined') {
+		res.redirect('loginn')
+	}
+	else {
+		res.render('pages/account', {data: {user:val}})
+	}
 })
 
 // ----------- ADMIN PAGE -----------
