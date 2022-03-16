@@ -1,10 +1,10 @@
-* {
+/** {
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen,
     ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial,
     sans-serif;
   font-size: 16px;
-}
+}*/
 
 .header{
     color:#c9d4cc;
@@ -35,37 +35,11 @@ body {
   padding-bottom: 20px;
   padding-left:20px;
 }
-a:link {
+a.link {
 
   border: 1px solid #5866e9;
   color: #e9ecf3;
   background-color: #5866e9;
   text-decoration: none;
   font-size:larger
-}
-
-
-.navbar {
-  
-  overflow: hidden;
-  background-color: #5866e9;
-  margin: 50px auto;
-  margin-left:100px;
-  margin-right:100px;
-}
-
-.navbar a {
-
-float: left;
-font-size: 16px;
-color: white;
-
-padding: 14px 16px;
-text-decoration: none;
-}
-
-.Title{
-  text-align:center;
-  font-size:75px;
-  color:#e9ecf3
 }
