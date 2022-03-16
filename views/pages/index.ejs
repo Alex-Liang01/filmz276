@@ -1,34 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,minimum-scale=1" />
-    <title>Filmz</title>
-    <link href="/stylesheets/loginstyle.css" rel="stylesheet" type="text/css" />
+    <title>FilmZ</title>
   </head>
-  <body>
+  <%- include ("header.ejs") %>
+  <body class="text-white" style="background-color:#181818;">
+		
+    
+      <img src="interstelar.jpg" alt="Interstellar Poster">
+      <p1>What is Filmz? Filmz is a new and improved movie rating software!</p1>
+      <p2>Rate all of your favourite films and have discussions among others.</p2>
 
-    <div class="log">
-      <h1>Welcome to Filmz!</h1>
-      <form action="/loginn" method="post">
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          id="username"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          id="password"
-          required
-        />
-        <a href="/signup">Dont Have An Account?</a>
-        <input type="submit" value="Login" />
-      </form>
-    </div>
->>>>>>> 3d940729b16ef663d54ec3708e251de078ee788b
-  </body>
+      <h1>Movie Rating: 4.9/5</h1>
+      <h2>Leave Your Own Review!</h2>
+      <input type = "text" class="review" id="review" name="username" placeholder="Leave a review...">
+
+    
+    </body>
 </html>
