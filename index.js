@@ -36,14 +36,18 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 app.get('/signup',(req,res)=>{
     res.render('pages/signup')
 })
-app.get('/mainpage',(req,res)=>{
-  let adminid=val.results[0].adminid; 
-  if(adminid==null){             
-    res.render('pages/mainpage')
-  }else{
-    res.render('pages/mainpageAdmin')
-  }
-  })
+
+// ----------- MAIN PAGE -----------
+app.get('/',(req,res)=>{
+	if (typeof req.session.user === 'undefined') {
+		res.redirect('loginn')
+	}
+	else {
+		res.render('pages/', {data: {user:val}})
+	}
+  
+})
+
 app.get('/account',(req,res)=>{ 
   let adminid=val.results[0].adminid; 
   if(adminid==null){
@@ -53,14 +57,25 @@ app.get('/account',(req,res)=>{
   }
 })
 
+// ----------- ADMIN PAGE -----------
 app.get('/admin', (req, res) => {
-	var getUsersQuery = 'SELECT * FROM usr';
-	pool.query(getUsersQuery, (error,result) => {
-		if (error)
-			res.end(error);
-		var results = {'rows':result.rows}
-		res.render('pages/admin',results);
-	})
+	if (typeof req.session.user === 'undefined') {
+		res.redirect('loginn')
+	}
+	else {
+		if (typeof req.session.isAdmin === 'undefined') {
+			res.redirect('/')
+		}
+		else if (req.session.isAdmin == 1) {
+			var getUsersQuery = 'SELECT * FROM usr';
+			pool.query(getUsersQuery, (error,result) => {
+				if (error)
+					res.end(error);
+				var results = {'rows':result.rows}
+				res.render('pages/admin', {data: {user:val, userlist:results}});
+			})
+		}
+	}
 });
 
 app.post('/signedup',async(req,res)=>{
@@ -83,36 +98,41 @@ app.post('/signedup',async(req,res)=>{
     res.locals.user = req.session.user;
     next();
   });
-  app.get('/loginn',(req,res)=>{
-    if(req.session.user){
-      res.render('pages/homepage');
-    }
-    else{
-      res.redirect('/')
-    }
-  })
-  app.post('/loginn', async(req,res)=>{
-  
-    let un = req.body.username;
-    let pw = req.body.password;
-  
-    const result = await pool.query(`SELECT * FROM usr WHERE username = '${un}' AND password = '${pw}'`);
-  
-    const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE username = '${un}' AND password = '${pw}'`);
-    const results = { 'results': (result) ? result.rows : null};
-    const countResult ={'results': (count)?count.rows:null};
-    req.session.user = results;
-    val=req.session.user;
-    if (countResult['results'][0].count==0){
-        res.render('pages/loginIncorrect')  
-      }else{
-        if(results['results'][0].adminid == null){
-          res.render('pages/mainpage',val);
-        }else{
-          res.render('pages/mainpageAdmin',val);
-        }
-    }
-  })
+
+// ----------- LOGIN PAGE -----------
+app.get('/loginn',(req,res)=>{
+	if(req.session.user){
+	  res.redirect('/');
+	}
+	else{
+	  res.render('pages/login')
+	}
+})
+
+// ----------- LOGIN SCRIPT -----------
+app.post('/loginn', async(req,res)=>{
+
+	let un = req.body.username;
+	let pw = req.body.password;
+
+	const result = await pool.query(`SELECT * FROM usr WHERE username = '${un}' AND password = '${pw}'`);
+
+	const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE username = '${un}' AND password = '${pw}'`);
+	const results = { 'results': (result) ? result.rows : null};
+	const countResult ={'results': (count)?count.rows:null};
+	req.session.user = results;
+	val=req.session.user;
+	if (countResult['results'][0].count==0){
+		res.render('pages/loginIncorrect')  
+	  }else{
+		if(results['results'][0].adminid == 1){
+		  req.session.isAdmin = 1;
+		  
+		}
+		res.redirect('/');
+		//res.render('pages/', val)
+	}
+})
   
     app.get('/account/verifypassword',async(req,res)=>{
       if(req.session.user){
