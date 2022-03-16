@@ -134,7 +134,17 @@ app.post('/loginn', async(req,res)=>{
 		//res.render('pages/', val)
 	}
 })
-  
+
+// ----------- LOGOUT SCRIPT -----------
+app.post('/logout', async(req,res) => {
+	req.session.destroy((err) => {
+        if(err) {
+            return console.log(err);
+        }
+        res.redirect('/');
+    });
+})
+
     app.get('/account/verifypassword',async(req,res)=>{
       if(req.session.user){
         let adminid=val.results[0].adminid; 
