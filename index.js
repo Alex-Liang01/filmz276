@@ -1,16 +1,18 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    connectionString: process.env.DATABASE_URL|| "postgres://postgres:piechu@localhost/users",
+    // ssl: {
+    //   rejectUnauthorized: false
+    // }
 })
 
 const express = require('express')
 const path = require('path')
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const PORT = process.env.PORT || 5000
 
 var app=express()
+
 const session = require("express-session");
 const res = require('express/lib/response');
 const req = require('express/lib/request');
@@ -281,5 +283,28 @@ app.post('/logout', async(req,res) => {
     }
   })
   
+  app.get('/TMDB_10',async(req,res)=>{
+    if (typeof req.session.user === 'undefined') {
+      res.redirect('loginn')
+    }
+    try{
+      console.log("tsm")
+      const base_url="https://api.themoviedb.org/3/movie/top_rated?"
+      const api_key="api_key=430a4dbae6e33d3664541b0199ae6a38"
+      const url=base_url+api_key+"&language=en-US&page=1"
+      const img_url="https://image.tmdb.org/t/p/w500/"
+      await fetch(url).then(res=>res.json()).then(data=>{
+        results=data.results.slice(0, 10);
+     
+        res.render('pages/top10',results);
+        console.log("tsresm");
+        console.log(results);
+      })
+    }
+    catch(err){
+      res.send(err);
+    }
+  })
 
+  
 

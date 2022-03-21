@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FilmZ Top 10 TMDB Rated Movies</title>
+  <link rel="stylesheet" type = "text/css" href="/stylesheets/top10.css">
+</head>
+
+<body>
+    <h1>Top 10 TMDB Rated Movies</h1>
+    <% results.forEach(function(r) { %>
+        <div>
+            <table style="width:100%">
+
+        <tr>
+            <td class="text"><%=r.title%></td>
+            <td class="text">Rating: <%=r.vote_average %></td>
+        </tr>
+        <tr>
+            <td class="image"><img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.title%>"></td>
+            <td class="text"><%=r.overview %></td>
+        </tr>
+        </div>
+    
+    <% }); %>
+       
+       
+</body>
+</html>
