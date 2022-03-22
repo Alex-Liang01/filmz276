@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    connectionString: process.env.DATABASE_URL|| "postgres://postgres:piechu@localhost/users",
+    // ssl: {
+    //   rejectUnauthorized: false
+    // }
 })
 
 const express = require('express')
@@ -296,7 +296,7 @@ app.post('/logout', async(req,res) => {
       const img_url="https://image.tmdb.org/t/p/w500/"
       await fetch(url).then(res=>res.json()).then(data=>{
         results=data.results.slice(0, 10);
-        res.render('pages/top10',results);
+        res.render('pages/top10',{data: {user:val},results});
       })
     }
     catch(err){
