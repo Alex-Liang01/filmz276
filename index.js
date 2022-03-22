@@ -16,6 +16,7 @@ var app=express()
 const session = require("express-session");
 const res = require('express/lib/response');
 const req = require('express/lib/request');
+const { timeStamp } = require('console');
 app.use(session({
   name: "session",
   secret: 'Captain Teemo',
@@ -282,29 +283,46 @@ app.post('/logout', async(req,res) => {
       res.redirect('/')
     }
   })
-  
+  const api_key="api_key=430a4dbae6e33d3664541b0199ae6a38"
+
   app.get('/TMDB_10',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
     }
     try{
-      console.log("tsm")
+   
       const base_url="https://api.themoviedb.org/3/movie/top_rated?"
-      const api_key="api_key=430a4dbae6e33d3664541b0199ae6a38"
       const url=base_url+api_key+"&language=en-US&page=1"
       const img_url="https://image.tmdb.org/t/p/w500/"
       await fetch(url).then(res=>res.json()).then(data=>{
         results=data.results.slice(0, 10);
-     
         res.render('pages/top10',results);
-        console.log("tsresm");
-        console.log(results);
       })
     }
     catch(err){
       res.send(err);
     }
   })
+
+  app.get('/:id',async(req,res)=>{
+    if (typeof req.session.user === 'undefined') {
+      res.redirect('loginn')
+    }
+    try{
+      const base_url="https://api.themoviedb.org/3/movie/"
+      const movie_id=req.params.id+"?"
+      const url_movie=base_url+movie_id+api_key+"&language=en-US"
+      await fetch(url_movie).then(res=>res.json()).then(data=>{
+        results=data
+        res.render('pages/movie',{data: {user:val},results});
+      })
+    }
+  
+    catch(err){
+      res.send(err);
+    }
+  })
+
 
   
 

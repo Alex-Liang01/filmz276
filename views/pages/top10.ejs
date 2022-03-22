@@ -12,7 +12,8 @@
             <table style="width:100%">
 
         <tr>
-            <td class="text"><%=r.title%></td>
+            <td class="text"><a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
+                <%=r.title%></a></td>
             <td class="text">Rating: <%=r.vote_average %></td>
         </tr>
         <tr>
@@ -20,7 +21,6 @@
             <td class="text"><%=r.overview %></td>
         </tr>
         </div>
-    
     <% }); %>
        
        
