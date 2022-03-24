@@ -7,11 +7,12 @@
 	<%- include ("header.ejs") %>
 	<body class="text-white" style="background-color:#181818;">
 
-	<% results.forEach(function(r) { %>
-	<div class="flex items-center justify-center">
+	<!-- <% results.forEach(function(r) { %> -->
+	<!-- <div class="flex items-center justify-center"> -->
+
 		<div class="w-full max-w-6xl">
 			<div class="mt-4">
-				<h2 class="text-3xl">Top Rated</h2>
+				<h2 class="text-3xl">Trending</h2>
 				<div class="flex overflow-hidden my-4">
 					
 					<div class="card_item flex-none shadow-lg px-1">
@@ -22,18 +23,20 @@
 								<p class="leading-tight text-sm"><%=r.overview%></p>
 						
 							</div>
-							<div><b>4.9</b></div>
+							<div><b></b></div>
 						</div>
+
 					</div>
+					
 					</div>
 					</div>
 				</div>
-			</div>
+			<!-- </div> -->
 			
-			<% }); %>
+			<!-- <% }); %> -->
 
 			<div class="mt-4">
-				<h2 class="text-3xl">Trending</h2>
+				<h2 class="text-3xl">Top Rated</h2>
 				<div class="flex overflow-hidden my-4">
 					<div class="card_item flex-none shadow-lg px-1">
 						<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
