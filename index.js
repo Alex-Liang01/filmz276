@@ -5,6 +5,7 @@ var pool = new Pool({
   //  rejectUnauthorized: false
   //}
 })
+var cors = require("cors") // cross-origin resource sharing
 
 const express = require('express')
 const path = require('path')
@@ -12,6 +13,8 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const PORT = process.env.PORT || 5000
 
 var app=express()
+app.use("/", cors())
+
 
 const session = require("express-session");
 const res = require('express/lib/response');
@@ -315,6 +318,17 @@ app.post('/logout', async(req,res) => {
     }
   })
 
+  app.get('/test_TMDB_10', function(req, res) {
+    const base_url="https://api.themoviedb.org/3/movie/top_rated?"
+      const url=base_url+api_key+"&language=en-US&page=1"
+      const img_url="https://image.tmdb.org/t/p/w500/"
+      fetch(url).then(res=>res.json()).then(data=>{
+        results=data.results.slice(0, 10);
+        res.json(results);
+      })
+  });
+
+
   app.get('/:id',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
@@ -324,16 +338,41 @@ app.post('/logout', async(req,res) => {
       const movie_id=req.params.id+"?"
       const url_movie=base_url+movie_id+api_key+"&language=en-US"
       await fetch(url_movie).then(res=>res.json()).then(data=>{
+        if(data.success==false){
+          res.render('pages/notfound',{data:{user:val}})
+          return;
+        }
         results=data
         res.render('pages/movie',{data: {user:val},results});
       })
     }
-  
     catch(err){
       res.send(err);
     }
   })
 
+  app.get('/test_movieIdSuccess', function(req, res) {
+      fetch("https://api.themoviedb.org/3/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{
+        if(data.success==false){
+          res.json(data)
+          return;
+        }
+        results=data
+        res.json(results);
+      })
+  });
+
+  app.get('/test_movieIdFail', function(req, res) {
+    fetch("https://api.themoviedb.org/4/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{
+      if(data.success==false){
+        res.json(data)
+        return;
+      }
+      results=data
+      res.json(results);
+    })
+});
+  module.exports = app;
 
   
 
