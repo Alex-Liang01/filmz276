@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search results for <%= query %> | FilmZ</title>
+</head>
+<body>
+    <%- include ("header.ejs") %>
+	<div class="flex items-center justify-center">
+		<div class="w-full max-w-6xl p-4">
+			
+			<% if (results.length < 1) { %>
+				<h1 class="text-2xl my-2">No results found for <b><%= query %></b></h1>
+				<div>Check your spelling.</div>
+			<% } else { %>
+				<h1 class="text-2xl my-2">Search results for <b><%= query %></b></h1>
+				<% results.forEach(function(r) { %>
+					<div class="flex mb-2" style="background-color:#282828;">
+						<a href="/<%=r.id%>" class="flex-none">
+							<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>" class="mr-2" style="width:154px; height:231px" alt="<%=r.title%>">
+						</a>
+						<div class="p-4" style="">
+							<h2 class="text-xl"><b><%=r.title%></b></h2>
+							<div>Rating: <%=r.vote_average %></div>
+							<p class="overflow-hidden" style="max-height:144px; color:#adadad;"><%=r.overview %></p>
+						</div>
+						
+					</div>
+				<% }); %>
+			<% } %>
+			<% if (numPages > 1) { %>
+				<a href="/search?q=<%= query %>&page=<%= currentPage+1 %>">next page</a>
+			<% } %>
+		</div>
+	</div>
+</body>
+</html>
