@@ -1,10 +1,13 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
-})
+    connectionString: process.env.DATABASE_URL|| "postgres://postgres:123456789@localhost/proj",
+
+
+    // connectionString: process.env.DATABASE_URL
+    // ssl: {
+    // rejectUnauthorized: false
+    // }
+  })
 
 const express = require('express')
 const path = require('path')
@@ -40,16 +43,26 @@ app.get('/signup',(req,res)=>{
 })
 
 // ----------- MAIN PAGE -----------
-app.get('/',(req,res)=>{
+app.get('/',async(req,res)=>{
 	if (typeof req.session.user === 'undefined') {
 		res.redirect('loginn')
 	}
-	else {
-		res.render('pages/', {data: {user:val}})
+	try {
+
+    const base_url="https://api.themoviedb.org/3/movie/popular?"
+    const url=base_url+api_key+"&language=en-US&page=1"
+    const img_url="https://image.tmdb.org/t/p/w500/"
+    await fetch(url).then(res=>res.json()).then(data=>{
+      results=data.results.slice(0, 10);
+      res.render('pages/',{data: {user:val},results});
+    })
+
 	}
+  catch(err){
+    res.send(err);
+  }
   
 })
-
 // ----------- ACCOUNT PAGE -----------
 app.get('/account',(req,res)=>{ 
 	if (typeof req.session.user === 'undefined') {
