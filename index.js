@@ -1,11 +1,11 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString: process.env.DATABASE_URL||'postgres://postgres:Oreo4831@localhost/proj',
-  //ssl: {
-  //  rejectUnauthorized: false
-  //}
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+   rejectUnauthorized: false
+  }
 })
-var cors = require("cors") // cross-origin resource sharing
+var cors = require("cors")
 
 const express = require('express')
 const path = require('path')
@@ -297,8 +297,10 @@ app.post('/logout', async(req,res) => {
       res.redirect('/')
     }
   })
-  const api_key="api_key=430a4dbae6e33d3664541b0199ae6a38"
 
+  const api_key="api_key=430a4dbae6e33d3664541b0199ae6a38"
+  
+  
   app.get('/TMDB_10',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
@@ -318,7 +320,11 @@ app.post('/logout', async(req,res) => {
     }
   })
 
+  //Testing of top 10 TMDB page
   app.get('/test_TMDB_10', function(req, res) {
+    if (typeof req.session.user === 'undefined') {
+      res.redirect('loginn')
+    }
     const base_url="https://api.themoviedb.org/3/movie/top_rated?"
       const url=base_url+api_key+"&language=en-US&page=1"
       const img_url="https://image.tmdb.org/t/p/w500/"
@@ -351,8 +357,10 @@ app.post('/logout', async(req,res) => {
     }
   })
 
+//Testing of each individual movie page
   app.get('/test_movieIdSuccess', function(req, res) {
-      fetch("https://api.themoviedb.org/3/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{
+      fetch("https://api.themoviedb.org/3/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US")
+      .then(res=>res.json()).then(data=>{
         if(data.success==false){
           res.json(data)
           return;
@@ -363,7 +371,8 @@ app.post('/logout', async(req,res) => {
   });
 
   app.get('/test_movieIdFail', function(req, res) {
-    fetch("https://api.themoviedb.org/4/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{
+    fetch("https://api.themoviedb.org/4/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US")
+    .then(res=>res.json()).then(data=>{
       if(data.success==false){
         res.json(data)
         return;
