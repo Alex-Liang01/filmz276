@@ -322,9 +322,6 @@ app.post('/logout', async(req,res) => {
 
   //Testing of top 10 TMDB page
   app.get('/test_TMDB_10', function(req, res) {
-    if (typeof req.session.user === 'undefined') {
-      res.redirect('loginn')
-    }
     const base_url="https://api.themoviedb.org/3/movie/top_rated?"
       const url=base_url+api_key+"&language=en-US&page=1"
       const img_url="https://image.tmdb.org/t/p/w500/"
