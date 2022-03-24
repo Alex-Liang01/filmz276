@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-   rejectUnauthorized: false
-  }
+  connectionString: process.env.DATABASE_URL|| "postgres://postgres:piechu@localhost/users",
+  // ssl: {
+  //  rejectUnauthorized: false
+  // }
 })
 var cors = require("cors")
 
@@ -47,7 +47,7 @@ app.get('/signup',(req,res)=>{
 app.get('/',async(req,res)=>{
 	if (typeof req.session.user === 'undefined') {
 		res.redirect('loginn')
-	}
+	}else{
 	try {
 
     const base_url="https://api.themoviedb.org/3/movie/popular?"
@@ -62,7 +62,7 @@ app.get('/',async(req,res)=>{
   catch(err){
     res.send(err);
   }
-  
+}
 })
 
 // ----------- ACCOUNT PAGE -----------
@@ -337,7 +337,8 @@ else {
   app.get('/TMDB_10',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
-    }
+    }else{
+
     try{
    
       const base_url="https://api.themoviedb.org/3/movie/top_rated?"
@@ -351,6 +352,7 @@ else {
     catch(err){
       res.send(err);
     }
+  }
   })
 
   //Testing of top 10 TMDB page
@@ -369,6 +371,7 @@ else {
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
     }
+    else{
     try{
       const base_url="https://api.themoviedb.org/3/movie/"
       const movie_id=req.params.id+"?"
@@ -377,14 +380,16 @@ else {
         if(data.success==false){
           res.render('pages/notfound',{data:{user:val}})
           return;
-        }
+        }else{
         results=data
         res.render('pages/movie',{data: {user:val},results});
+        }
       })
     }
     catch(err){
       res.send(err);
     }
+  }
   })
 
 //Testing of each individual movie page
@@ -394,9 +399,10 @@ else {
         if(data.success==false){
           res.json(data)
           return;
-        }
+        }else{
         results=data
         res.json(results);
+        }
       })
   });
 
@@ -406,11 +412,25 @@ else {
       if(data.success==false){
         res.json(data)
         return;
-      }
+      }else{
       results=data
       res.json(results);
+      }
     })
-});
+  });
+  us=[];
+  app.post('/testSignup', function(req, res) {
+    signup_query=`....`
+    //`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender) VALUES ('${username}','${password}','${firstname}','${lastname}','${email}','${birthday}','${gender}')`
+    const newuser=pool.query(signup_query);
+
+    ob={'username':'test','password':'myPassword','firstname':'Joe',
+    'lastname':'Wong','email':'cmpt@sfu.ca','birthday':'2001-02-01','gender':'male'}
+    us.push(ob);
+    res.json(us);
+  });
+
+  
   module.exports = app;
 
   
