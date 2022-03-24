@@ -6,66 +6,37 @@
 	</head>
 	<%- include ("header.ejs") %>
 	<body class="text-white" style="background-color:#181818;">
-	
-	<div class="flex items-center justify-center">
+
+	<!-- <% results.forEach(function(r) { %> -->
+	<!-- <div class="flex items-center justify-center"> -->
+
 		<div class="w-full max-w-6xl">
 			<div class="mt-4">
-				<h2 class="text-3xl">Top</h2>
+				<h2 class="text-3xl">Trending</h2>
 				<div class="flex overflow-hidden my-4">
+					
 					<div class="card_item flex-none shadow-lg px-1">
-						<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
+						<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>" alt="Movie Poster" style="width:100%; display:block;">
 						<div class="p-2" style="background-color:#282828;">
 							<div class="overflow-hidden" style="height:5rem;">
-								<h2 class="whitespace-no-wrap overflow-hidden font-bold text-lg">lorem ipsum</h2>
-								<p class="leading-tight text-sm">ucoligic dadido nac va apenevu ra niquega fahasot cohadah ci</p>
+								<h2 class="whitespace-no-wrap overflow-hidden font-bold text-lg"><%=r.title%></h2>
+								<p class="leading-tight text-sm"><%=r.overview%></p>
+						
 							</div>
-							<div><b>4.9</b></div>
+							<div><b></b></div>
 						</div>
+
 					</div>
-					<div class="card_item flex-none shadow-lg px-1">
-						<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
-						<div class="p-2" style="background-color:#282828;">
-							<div class="overflow-hidden" style="height:5rem;">
-								<h2 class="whitespace-no-wrap overflow-hidden font-bold text-lg">lorem ipsum dolor sit amet</h2>
-								<p class="leading-tight text-sm">ucoligic dadido nac va apenevu ra niquega fahasot cohadah ci</p>
-							</div>
-							<div><b>4.9</b></div>
-						</div>
+					
 					</div>
-					<div class="card_item flex-none shadow-lg px-1">
-						<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
-						<div class="p-2" style="background-color:#282828;">
-							<div class="overflow-hidden" style="height:5rem;">
-								<h2 class="whitespace-no-wrap overflow-hidden font-bold text-lg">lorem ipsum</h2>
-								<p class="leading-tight text-sm">ucoligic dadido nac va apenevu ra niquega fahasot cohadah ci, yu manesie</p>
-							</div>
-							<div><b>4.9</b></div>
-						</div>
-					</div>
-					<div class="card_item flex-none shadow-lg px-1">
-						<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
-						<div class="p-2" style="background-color:#282828;">
-							<div class="overflow-hidden" style="height:5rem;">
-								<h2 class="whitespace-no-wrap overflow-hidden font-bold text-lg">lorem ipsum dolor sit amet</h2>
-								<p class="leading-tight text-sm">ucoligic dadido nac va apenevu ra </p>
-							</div>
-							<div><b>4.9</b></div>
-						</div>
-					</div>
-					<div class="card_item flex-none shadow-lg px-1">
-						<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
-						<div class="p-2" style="background-color:#282828;">
-							<div class="overflow-hidden" style="height:5rem;">
-								<h2 class="whitespace-no-wrap overflow-hidden font-bold text-lg">lorem ipsum dolor sit</h2>
-								<p class="leading-tight text-sm">ucoligic dadido nac</p>
-							</div>
-							<div><b>4.9</b></div>
-						</div>
 					</div>
 				</div>
-			</div>
+			<!-- </div> -->
+			
+			<!-- <% }); %> -->
+
 			<div class="mt-4">
-				<h2 class="text-3xl">Category name</h2>
+				<h2 class="text-3xl">Top Rated</h2>
 				<div class="flex overflow-hidden my-4">
 					<div class="card_item flex-none shadow-lg px-1">
 						<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
@@ -127,6 +98,6 @@
 			<input type = "text" class="review" id="review" name="username" placeholder="Leave a review...">
 		</div>
 	</div>
-    
+
     </body>
 </html>

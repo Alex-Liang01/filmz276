@@ -11,6 +11,8 @@
     }
     body {
       font-family: 'Cairo', sans-serif;
+	  background-color: #181818;
+	  color: white;
     }
 	#dropdown:hover #dropdown-content {
 		display:block;
@@ -21,36 +23,36 @@
   </style>
 <html>
 	<body>
-		<header class="w-full text-white" style="">
-			<div class="flex items-center justify-center">
-				<div class="w-full max-w-6xl shadow-xl">
-					<div class="justify-between items-center flex p-4" style="background-image:linear-gradient(#2e2e2e, #242424);">
-						<div>
-							<a href="/">
-								<!--<img class="h-8 w-8 rounded-full mr-4" src="">-->
-								<div id="filmz" class="text-5xl 5xl:mx-4 md:mx-2">FilmZ</div>
-							</a>
-						</div>	
-						
-						<div id="dropdown" class="p-2 inline-block relative" style="float:right;">
-							<button>
-								Hello, <b><%= data.user.results[0].firstname %></b>
-							</button>
-							<ul id="dropdown-content" class="absolute right-0 hidden shadow-lg rounded border" style="min-width: 200px; background-color:#282828">
-							  <% if (data.user.results[0].adminid == 1) { %>
-								<li class="rounded p-2"><a class="flex" href="/admin">Admin page</a></li>
-							  <% } %>
-							  <li class="rounded p-2"><a class="flex" href="/TMDB_10">Top 10 TMDB</a></li>
-							  <li class="rounded p-2"><a class="flex" href="/account">Account</a></li>
-							  <li class="rounded p-2"><form action="/logout" method="post"><button class="w-full flex" type="submit">Logout</button></form></li>
-							</ul>
-						</div>					
+		<header class="w-full text-white shadow-xl">
+			<div class="w-full justify-center items-center flex py-2" style="background-image:linear-gradient(#2e2e2e, #242424);">
+				<div class="w-full max-w-6xl flex justify-between items-center">
+					<div>
+						<a href="/">
+							<!--<img class="h-8 w-8 rounded-full mr-4" src="">-->
+							<div id="filmz" class="text-4xl px-4">FilmZ</div>
+						</a>
 					</div>
-					<div class="bg-blue-800">
-					<form id="searchform" class="flex flex-grow items-center justify-center py-2 px-4">
-						<input id="search" class="appearance-none text-xl rounded-lg py-2 px-4 placeholder:text-white leading-tight focus:outline-none focus:bg-white focus:text-black w-full m-2" type="text" placeholder="Search..."></input>
+					<div id="dropdown" class="inline-block relative px-4" style="float:right;">
+						<button>
+							Hello, <b><%= data.user.results[0].firstname %></b>
+						</button>
+						<ul id="dropdown-content" class="absolute right-0 hidden shadow-lg rounded border" style="min-width: 200px; background-color:#282828">
+						  <% if (data.user.results[0].adminid == 1) { %>
+							<li class="rounded p-2"><a class="flex" href="/admin">Admin page</a></li>
+						  <% } %>
+						  <li class="rounded p-2"><a class="flex" href="/">Home</a></li>
+						  <li class="rounded p-2"><a class="flex" href="/TMDB_10">Top 10 TMDB</a></li>
+						  <li class="rounded p-2"><a class="flex" href="/account">Account</a></li>
+						  <li class="rounded p-2"><form action="/logout" method="post"><button class="w-full flex" type="submit">Logout</button></form></li>
+						</ul>
+					</div>					
+				</div>
+			</div>
+			<div class="w-full justify-center items-center flex bg-blue-800">
+				<div class="w-full max-w-6xl flex justify-between items-center">
+					<form id="searchform" action="/search" method="post" class="flex flex-grow items-center justify-center py-2 px-4">
+						<input name="searchquery" class="appearance-none text-xl rounded-lg py-2 px-4 placeholder:text-white leading-tight focus:outline-none focus:bg-white focus:text-black w-full my-1" type="text" placeholder="Search..."></input>
 					</form>
-					</div>
 				</div>
 			</div>
 		</header>
