@@ -1,18 +1,21 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString:  'postgres://postgres:sanjit12@localhost/users',
+  connectionString: process.env.DATABASE_URL||'postgres://postgres:Oreo4831@localhost/proj',
   // ssl: {
   //  rejectUnauthorized: false
   // }
- 
 })
-var cors = require("cors")
+var cors = require("cors") // cross-origin resource sharing
+
 const express = require('express')
 const path = require('path')
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const PORT = process.env.PORT || 5000
+
 var app=express()
 app.use("/", cors())
+
+
 const session = require("express-session");
 const res = require('express/lib/response');
 const req = require('express/lib/request');
@@ -24,22 +27,30 @@ app.use(session({
   saveUninitialized: false,
   maxAge: 30 * 60 * 1000, 
 }))
+
+
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+
 //app.get('/', (req, res) => res.render('pages/index'))
+
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+
 app.get('/signup',(req,res)=>{
     res.render('pages/signup')
 })
+
 // ----------- MAIN PAGE -----------
 app.get('/',async(req,res)=>{
 	if (typeof req.session.user === 'undefined') {
 		res.redirect('loginn')
-	}else{
+	}
+  else{
 	try {
+
     const base_url="https://api.themoviedb.org/3/movie/popular?"
     const url=base_url+api_key+"&language=en-US&page=1"
     const img_url="https://image.tmdb.org/t/p/w500/"
@@ -47,12 +58,15 @@ app.get('/',async(req,res)=>{
       results=data.results.slice(0, 10);
       res.render('pages/',{data: {user:val},results});
     })
+
 	}
   catch(err){
     res.send(err);
   }
 }
+  
 })
+
 // ----------- ACCOUNT PAGE -----------
 app.get('/account',(req,res)=>{ 
 	if (typeof req.session.user === 'undefined') {
@@ -62,6 +76,7 @@ app.get('/account',(req,res)=>{
 		res.render('pages/account', {data: {user:val}})
 	}
 })
+
 // ----------- ADMIN PAGE -----------
 app.get('/admin', (req, res) => {
 	if (typeof req.session.user === 'undefined') {
@@ -82,6 +97,7 @@ app.get('/admin', (req, res) => {
 		}
 	}
 });
+
 app.post('/signedup',async(req,res)=>{
     try{
       let username=req.body.username; let password=req.body.password; let firstname=req.body.firstname; 
@@ -95,10 +111,14 @@ app.post('/signedup',async(req,res)=>{
       res.send("Error" + err);
     }
   })
+
+
+
   app.use(function(req, res, next) {
     res.locals.user = req.session.user;
     next();
   });
+
 // ----------- LOGIN PAGE -----------
 app.get('/loginn',(req,res)=>{
 	if(req.session.user){
@@ -108,11 +128,15 @@ app.get('/loginn',(req,res)=>{
 	  res.render('pages/login')
 	}
 })
+
 // ----------- LOGIN SCRIPT -----------
 app.post('/loginn', async(req,res)=>{
+
 	let un = req.body.username;
 	let pw = req.body.password;
+
 	const result = await pool.query(`SELECT * FROM usr WHERE username = '${un}' AND password = '${pw}'`);
+
 	const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE username = '${un}' AND password = '${pw}'`);
 	const results = { 'results': (result) ? result.rows : null};
 	const countResult ={'results': (count)?count.rows:null};
@@ -129,6 +153,7 @@ app.post('/loginn', async(req,res)=>{
 		//res.render('pages/', val)
 	}
 })
+
 // ----------- LOGOUT SCRIPT -----------
 app.post('/logout', async(req,res) => {
 	req.session.destroy((err) => {
@@ -138,6 +163,7 @@ app.post('/logout', async(req,res) => {
         res.redirect('/');
     });
 })
+
     app.get('/account/verifypassword',async(req,res)=>{
       if(req.session.user){
         let adminid=val.results[0].adminid; 
@@ -275,43 +301,43 @@ app.post('/logout', async(req,res) => {
   })
   const api_key="api_key=430a4dbae6e33d3664541b0199ae6a38"
   // ----------- SEARCH -----------
-app.post('/search', async(req,res) => {
+  app.post('/search', async(req,res) => {
+    if (typeof req.session.user === 'undefined') {
+    res.redirect('/loginn')
+  } else {
+    let query = req.body.searchquery;
+        res.redirect('/search?q='+query)
+  }
+  })
+  // ----------- SEARCH RESULTS -----------
+  app.get('/search', async(req,res) => {
   if (typeof req.session.user === 'undefined') {
-  res.redirect('/loginn')
-} else {
-  let query = req.body.searchquery;
-      res.redirect('/search?q='+query)
-}
-})
-// ----------- SEARCH RESULTS -----------
-app.get('/search', async(req,res) => {
-if (typeof req.session.user === 'undefined') {
-  res.redirect('/loginn')
-}
-else {
-  try{
-    const query = req.query.q;
-    const page = req.query.page;
-    const url="https://api.themoviedb.org/3/search/movie?query="+query+"&page="+page+"&api_key=430a4dbae6e33d3664541b0199ae6a38"
-	if (typeof query != 'string' || query == "") {
-		// error page
-		res.redirect('/')
-	}
-	else {
-		await fetch(url).then(res=>res.json()).then(data=>{
-			//results = data.results.slice(0, 10);
-			results = data.results;
-			currentPage = data.page;
-			numPages = data.total_pages;
-			res.render('pages/search',{data: {user:val},results, currentPage, numPages, query});
-		})
-	}
+    res.redirect('/loginn')
   }
-  catch(err){
-    res.send(err);
+  else {
+    try{
+      const query = req.query.q;
+      const page = req.query.page;
+      const url="https://api.themoviedb.org/3/search/movie?query="+query+"&page="+page+"&api_key=430a4dbae6e33d3664541b0199ae6a38"
+    if (typeof query != 'string' || query == "") {
+      // error page
+      res.redirect('/')
+    }
+    else {
+      await fetch(url).then(res=>res.json()).then(data=>{
+        //results = data.results.slice(0, 10);
+        results = data.results;
+        currentPage = data.page;
+        numPages = data.total_pages;
+        res.render('pages/search',{data: {user:val},results, currentPage, numPages, query});
+      })
+    }
+    }
+    catch(err){
+      res.send(err);
+    }
   }
-}
-})
+  })
   app.get('/TMDB_10',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
@@ -331,7 +357,7 @@ else {
     }
   }
   })
-  //Testing of top 10 TMDB page
+//Testing of top 10 TMDB page
   app.get('/test_TMDB_10', function(req, res) {
     const base_url="https://api.themoviedb.org/3/movie/top_rated?"
       const url=base_url+api_key+"&language=en-US&page=1"
@@ -341,6 +367,8 @@ else {
         res.json(results);
       })
   });
+
+
   app.get('/:id',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
@@ -365,8 +393,7 @@ else {
   })
 //Testing of each individual movie page
   app.get('/test_movieIdSuccess', function(req, res) {
-      fetch("https://api.themoviedb.org/3/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US")
-      .then(res=>res.json()).then(data=>{
+      fetch("https://api.themoviedb.org/3/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{
         if(data.success==false){
           res.json(data)
           return;
@@ -375,9 +402,9 @@ else {
         res.json(results);
       })
   });
+
   app.get('/test_movieIdFail', function(req, res) {
-    fetch("https://api.themoviedb.org/4/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US")
-    .then(res=>res.json()).then(data=>{
+    fetch("https://api.themoviedb.org/4/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{
       if(data.success==false){
         res.json(data)
         return;
@@ -385,7 +412,8 @@ else {
       results=data
       res.json(results);
     })
-  });
+});
+  module.exports = app;
   us=[];
   app.post('/testSignup', function(req, res) {
     signup_query=`....`
@@ -410,3 +438,4 @@ else {
 
 
   module.exports = app;
+  
