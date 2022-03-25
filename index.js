@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    connectionString: 'postgres://postgres:sanjit12@localhost/users',
+    // ssl: {
+    //   rejectUnauthorized: false
+    // }
 })
 
 const express = require('express')
@@ -152,10 +152,10 @@ app.post('/logout', async(req,res) => {
         let adminid=val.results[0].adminid; 
         try{
           if(adminid==null){
-            res.render('pages/changePassword')  
+            res.render('pages/changePassword', {data: {user:val}})  
           }
           else{
-            res.render('pages/changePasswordAdmin') 
+            res.render('pages/changePasswordAdmin', {data: {user:val}}) 
           }
         }
         catch(err){
@@ -177,23 +177,23 @@ app.post('/logout', async(req,res) => {
           const results = { 'results': (result) ? result.rows : null};
           if (results['results'][0].count==0){
             if(adminid==null){
-              res.render('pages/changePasswordIncorrect')
+              res.render('pages/changePasswordIncorrect', {data: {user:val}})
             }else{
-              res.render('pages/changePasswordAdminIncorrect')
+              res.render('pages/changePasswordAdminIncorrect', {data: {user:val}})
             }
           }else{
             if(adminid==null){
-              res.render('pages/changePasswordVerified');
+              res.render('pages/changePasswordVerified', {data: {user:val}});
           }else{
-            res.render('pages/changePasswordVerifiedAdmin')
+            res.render('pages/changePasswordVerifiedAdmin', {data: {user:val}})
           }
         }
       }
         catch(err){
-          res.send(err);
+          res.send(err, {data: {user:val}});
         }
       }else{
-        res.redirect('/')
+        res.redirect('/', {data: {user:val}})
       }
     })
   
@@ -208,11 +208,11 @@ app.post('/logout', async(req,res) => {
           res.redirect('/')
         }
         catch(err){
-          res.send(err);
+          res.send(err, {data: {user:val}});
         }
       }
       else{
-        res.redirect('/')
+        res.redirect('/', {data: {user:val}})
       }
     })
     
@@ -222,16 +222,16 @@ app.post('/logout', async(req,res) => {
       try{
         let adminid=val.results[0].adminid; 
         if(adminid==null){
-          res.render('pages/changeUsername') 
+          res.render('pages/changeUsername', {data: {user:val}}) 
         }else{
-          res.render('pages/changeUsernameAdmin')
+          res.render('pages/changeUsernameAdmin', {data: {user:val}})
         }
       }
       catch(err){
-        res.send("Error" + err);
+        res.send("Error" + err, {data: {user:val}});
       }
     }else{
-      res.redirect('/')
+      res.redirect('/', {data: {user:val}})
     }
   })
   
@@ -245,23 +245,23 @@ app.post('/logout', async(req,res) => {
         const results = { 'results': (result) ? result.rows : null};
         if (results['results'][0].count==0){
           if(adminid==null){
-            res.render('pages/changeUsernameIncorrect')
+            res.render('pages/changeUsernameIncorrect', {data: {user:val}})
           }else{
-            res.render('pages/changeUsernameAdminIncorrect')
+            res.render('pages/changeUsernameAdminIncorrect', {data: {user:val}})
           }
         }else{
           if(adminid==null){
-            res.render('pages/changeUsernameVerified');
+            res.render('pages/changeUsernameVerified', {data: {user:val}});
           }else{
-            res.render('pages/changeUsernameVerifiedAdmin');
+            res.render('pages/changeUsernameVerifiedAdmin', {data: {user:val}});
           }
         }
       }
       catch(err){
-        res.send(err);
+        res.send(err,{data: {user:val}});
       }
     }else{
-      res.redirect('/')
+      res.redirect('/',{data: {user:val}})
     }
   })
   
@@ -275,11 +275,11 @@ app.post('/logout', async(req,res) => {
         res.redirect('/')
       }
       catch(err){
-        res.send(err);
+        res.send(err,{data: {user:val}});
       }
     }
     else{
-      res.redirect('/')
+      res.redirect('/',{data: {user:val}})
     }
   })
   

@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>FilmZ Change Username</title>
-  <link rel="stylesheet" type = "text/css" href="/stylesheets/verify.css">
-  <script defer></script>
-</head>
-
-<body>
-  <div class = "Title">Filmz</div>
-  <div class="navbar">
-    <a href="/mainpage">Home</a>
-    <a href="/account">Account</a>
-    <a href="/">Logout</a>
-  </div>
+  <head>
+    <title>FilmZ Change Username</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/verify.css" />
+    <script defer></script>
+  </head>
+  <body>
+    <%- include ("header.ejs") %>
   <div class="log">
   <h1>Please verify your password</h1>
   <form action="/account/verifiedUsername" method = "post" >
