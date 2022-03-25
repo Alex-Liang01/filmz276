@@ -21,24 +21,30 @@ describe('Signup test', function() {
           res.body[0].gender.should.equal('male');
           done();
         });
-
-
-
   });
+});
 
-  
+describe('Test admin',function() {
+  it('should return all users on a /testAdmin GET', function(done){
+      chai.request(server).get('/testAdmin').end(function(err,res){
+        res.should.have.status(200);
+        res.body.should.be.a("object")
+        console.log(res.body)
+        done();
+      });
+    });
 });
 
 describe('TMDB_10 test', function() {
-    it('should list top 10 rated movies on TMDB on /test_TMDB_10 GET', function(done){
-        chai.request(server).get('/test_TMDB_10').end(function(err,res){
-          res.should.have.status(200);
-          res.should.be.json;
-          var num_movies=res.body.length;
-          num_movies.should.equal(10);
-          done();
-        });
-      });
+  it('should list top 10 rated movies on TMDB on /test_TMDB_10 GET', function(done){
+    chai.request(server).get('/test_TMDB_10').end(function(err,res){
+      res.should.have.status(200);
+      res.should.be.json;
+      var num_movies=res.body.length;
+      num_movies.should.equal(10);
+      done();
+    });
+  });
     
 });
 
@@ -52,7 +58,7 @@ describe('CanFindMovietest', function() {
       });
 });
 
-describe('CanFindMovieFail', function() {
+describe('CanNotFindMovie', function() {
     it('should not give a movie with the correct TMDB id on /test_movieIdSuccess GET as it does not exist', function(done){
         chai.request(server).get('/test_movieIdFail').end(function(err,res){
           res.should.have.status(200);
@@ -61,3 +67,4 @@ describe('CanFindMovieFail', function() {
         });
       });
 });
+
