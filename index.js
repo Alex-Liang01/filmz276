@@ -1,9 +1,16 @@
 const { Pool } = require('pg');
 var pool = new Pool({
+<<<<<<< Updated upstream
   connectionString: process.env.DATABASE_URL,
   ssl: {
    rejectUnauthorized: false
   }
+=======
+  connectionString:'postgres://postgres:sanjit12@localhost/users',
+  // ssl: {
+  //  rejectUnauthorized: false
+  // }
+>>>>>>> Stashed changes
 })
 var cors = require("cors") // cross-origin resource sharing
 
