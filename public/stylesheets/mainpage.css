@@ -17,6 +17,35 @@
 	}
 }	
 
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen,
+      ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial,
+      sans-serif;
+    font-size: 16px;
+  } 
+  .text{
+    color: #e9ecf3;
+}
+body {
+  background-color: #212226;
+}
+
+.image{
+    width:10%;
+    text-align: left;
+}
+td{
+    
+    text-align: left;
+}
+
+h1{
+    text-align:center;
+    font-size:75px;
+    color:#e9ecf3
+}
+
 /** {
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen,
@@ -30,42 +59,36 @@ h1{
     left:50%;
     z-index:5;
 }
-
 h2{
     position:absolute;
     top:125px;
     left:5%;
     z-index:5;
 }
-
 h3{
     position:absolute;
     top:130px;
     left:82%;
     z-index:5;
 }
-
 h4{
     position:absolute;
     top:130px;
     left:90%;
     z-index:5;
 }
-
 p1{
     position:absolute;
     top:230px;
     left:7%;
     z-index:5;
 }
-
 p2{
     position:absolute;
     top:250px;
     left:7%;
     z-index:5;
 }
-
 img{
     position:absolute;
     top:65%;
@@ -74,7 +97,6 @@ img{
     height:384px;
     z-index:5;
 }
-
 h1{
     position:absolute;
     top:430px;
@@ -82,7 +104,6 @@ h1{
     z-index:5;
     font-size:xx-large;
 }
-
 h2{
     position:absolute;
     top:500px;
@@ -90,7 +111,6 @@ h2{
     z-index:5;
     font-size:xx-large;
 }
-
 .review{
     position:absolute;
     top:620px;
@@ -99,9 +119,7 @@ h2{
     width:320px;
     height:100px;
 }
-
 a:link {
-
     border: 1px solid #5866e9;
     color: #e9ecf3;
     background-color: #5866e9;
@@ -134,5 +152,4 @@ a:link {
     font-size:75px;
     color:#e9ecf3
   }
-
   */

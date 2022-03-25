@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+	<link rel="stylesheet" type = "text/css" href="/stylesheets/movie.css">
+	<title>Filmz <%=results.title%></title>
+</head>
+<body>
+	<%- include ("header.ejs") %>
+	
+	<section class="task">
+		<div class="task__holder">
+		  <div class="box">
+			<img class="box__image"src="ht	tps://image.tmdb.org/t/p/w400/<%=results.poster_path%>" alt="<%=results.title%>">
+			
+			  <h2 class="box__title"><%=results.title%></h2>
+			  <p class="box__text">Release Date: <%=results.release_date%></p>
+			  <% results.genres.forEach(function(r) { %>
+				<span class="box__text"><%=r.name%></span>
+				<% }); %> 
+			  <p class="box__text">TMDB Rating: <%=results.vote_average %> out of <%=results.vote_count%> user reviews</p>
+			  <span class="box__text">Filmz Rating: 9.4</span>
+			  <p class="box__text"></p>
+
+			  <p class="box__text"><%=results.overview%></p>
+			
+		   </div>
+		</div>
+	  </section>
+
+	  <section class="task">
+		<div class="task__holder">
+		  <div class="box">
+				
+			  <h2 class="box__title">Add a Review</h2>
+			  <table style="width:60%">
+				<tr>
+					<td  class="box__text">Comment</td>
+					<td  class="box__text">Add Rating between 0.0-10.0</td>
+				</tr> 
+				<tr>
+					<td><input type="text"></td>
+					<td><input type="text"></td>
+
+				</tr>
+				<tr>
+					<td><input type="submit" value="Submit Review">
+					</td>
+				</tr>
+			
+		   </div>
+
+		</div>
+
+	  </section>
+	
+	
+</body>
+</html>
