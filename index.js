@@ -293,13 +293,19 @@ else {
     const query = req.query.q;
     const page = req.query.page;
     const url="https://api.themoviedb.org/3/search/movie?query="+query+"&page="+page+"&api_key=430a4dbae6e33d3664541b0199ae6a38"
-    await fetch(url).then(res=>res.json()).then(data=>{
-      //results = data.results.slice(0, 10);
-      results = data.results;
-      currentPage = data.page;
-      numPages = data.total_pages;
-      res.render('pages/search',{data: {user:val},results, currentPage, numPages, query});
-    })
+	if (typeof query != 'string' || query == "") {
+		// error page
+		res.redirect('/')
+	}
+	else {
+		await fetch(url).then(res=>res.json()).then(data=>{
+			//results = data.results.slice(0, 10);
+			results = data.results;
+			currentPage = data.page;
+			numPages = data.total_pages;
+			res.render('pages/search',{data: {user:val},results, currentPage, numPages, query});
+		})
+	}
   }
   catch(err){
     res.send(err);
