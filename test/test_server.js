@@ -29,7 +29,6 @@ describe('Test admin',function() {
       chai.request(server).get('/testAdmin').end(function(err,res){
         res.should.have.status(200);
         res.body.should.be.a("object")
-        console.log(res.body)
         done();
       });
     });
@@ -42,6 +41,20 @@ describe('TMDB_10 test', function() {
       res.should.be.json;
       var num_movies=res.body.length;
       num_movies.should.equal(10);
+      res.body[0].should.have.property('title')
+      res.body[0].should.have.property('adult')
+      res.body[0].should.have.property('backdrop_path')
+      res.body[0].should.have.property('genre_ids')
+      res.body[0].should.have.property('id')
+      res.body[0].should.have.property('original_language')
+      res.body[0].should.have.property('original_title')
+      res.body[0].should.have.property('overview')
+      res.body[0].should.have.property('popularity')
+      res.body[0].should.have.property('poster_path')
+      res.body[0].should.have.property('release_date')
+      res.body[0].should.have.property('video')
+      res.body[0].should.have.property('vote_average')
+      res.body[0].should.have.property('vote_count')
       done();
     });
   });
@@ -61,10 +74,10 @@ describe('CanFindMovietest', function() {
 describe('CanNotFindMovie', function() {
     it('should not give a movie with the correct TMDB id on /test_movieIdSuccess GET as it does not exist', function(done){
         chai.request(server).get('/test_movieIdFail').end(function(err,res){
-          res.should.have.status(200);
           res.body.should.be.a("object")
           done();
         });
       });
 });
 
+ 

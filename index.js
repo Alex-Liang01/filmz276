@@ -379,8 +379,8 @@ else {
       results=data
       res.json(results);
     })
-});
-us=[];
+  });
+  us=[];
   app.post('/testSignup', function(req, res) {
     signup_query=`....`
     //`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender) VALUES ('${username}','${password}','${firstname}','${lastname}','${email}','${birthday}','${gender}')`
@@ -397,7 +397,10 @@ us=[];
 				if (error)
 					res.end(error);
 				var results = {'rows':result.rows}
-				res.send('pages/admin', {data: {user:val, userlist:results}});
+				res.json({data: {user:val, userlist:results}});
 			})
-});
+  });
+
+
+
   module.exports = app;
