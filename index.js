@@ -386,7 +386,7 @@ app.post('/logout', async(req,res) => {
         }
         results=data;
         fetch(url_similar).then(res=>res.json()).then(data=>{
-          simResults=data.results.slice(0, 12);
+          simResults=data.results.slice(0, 9);
           res.render('pages/movie',{data: {user:val},results,simResults});
         })
       })
