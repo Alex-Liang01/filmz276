@@ -47,7 +47,7 @@
 		<h2 class="box__title">Movies Similar to <%=results.title%></h2>
 		<div style="display: inline">	  
 	  		<% simResults.forEach(function(r) { %>
-			<a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
+			<a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
 			<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>" class="image"  alt="<%=r.title%>"></a>
 		    <% }); %>
 		</div>

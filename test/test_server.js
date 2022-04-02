@@ -69,6 +69,60 @@ describe('TMDB_10 test', function() {
     
 });
 
+describe('Trending Movies test', function() {
+  it('should list 10 Trending movies on TMDB on /testTrending GET', function(done){
+    chai.request(server).get('/testTrending').end(function(err,res){
+      res.should.have.status(200);
+      res.should.be.json;
+      var num_movies=res.body.length;
+      num_movies.should.equal(10);
+      res.body[0].should.have.property('title')
+      res.body[0].should.have.property('adult')
+      res.body[0].should.have.property('backdrop_path')
+      res.body[0].should.have.property('genre_ids')
+      res.body[0].should.have.property('id')
+      res.body[0].should.have.property('original_language')
+      res.body[0].should.have.property('original_title')
+      res.body[0].should.have.property('overview')
+      res.body[0].should.have.property('popularity')
+      res.body[0].should.have.property('poster_path')
+      res.body[0].should.have.property('release_date')
+      res.body[0].should.have.property('video')
+      res.body[0].should.have.property('vote_average')
+      res.body[0].should.have.property('vote_count')
+      done();
+    });
+  });
+});
+
+describe('Upcoming Movies test', function() {
+  it('should list 10 upcoming movies on TMDB on /testUpcoming GET', function(done){
+    chai.request(server).get('/testUpcoming').end(function(err,res){
+      res.should.have.status(200);
+      res.should.be.json;
+      var num_movies=res.body.length;
+      num_movies.should.equal(10);
+      res.body[0].should.have.property('title')
+      res.body[0].should.have.property('adult')
+      res.body[0].should.have.property('backdrop_path')
+      res.body[0].should.have.property('genre_ids')
+      res.body[0].should.have.property('id')
+      res.body[0].should.have.property('original_language')
+      res.body[0].should.have.property('original_title')
+      res.body[0].should.have.property('overview')
+      res.body[0].should.have.property('popularity')
+      res.body[0].should.have.property('poster_path')
+      res.body[0].should.have.property('release_date')
+      res.body[0].should.have.property('video')
+      res.body[0].should.have.property('vote_average')
+      res.body[0].should.have.property('vote_count')
+      done();
+    });
+  });
+    
+});
+
+
 describe('CanFindMovietest', function() {
     it('should give a movie with the correct TMDB id on /test_movieIdSuccess GET', function(done){
         chai.request(server).get('/test_movieIdSuccess').end(function(err,res){
@@ -127,5 +181,34 @@ describe('Similar Movies', function() {
     });
   });
 });
+
+describe('Search Spider-Man', function() {
+  it('should list serach results of spiderman on /testSearchSpider-Man GET', function(done){
+    chai.request(server).get('/testSearchSpider-Man').end(function(err,res){
+      res.should.have.status(200);
+      res.should.be.json;
+      var num_movies=res.body.length;
+      num_movies.should.equal(20);
+      res.body[0].title.match('(Spider-man)')
+      res.body[0].should.have.property('title')
+      res.body[0].should.have.property('adult')
+      res.body[0].should.have.property('backdrop_path')
+      res.body[0].should.have.property('genre_ids')
+      res.body[0].should.have.property('id')
+      res.body[0].should.have.property('original_language')
+      res.body[0].should.have.property('original_title')
+      res.body[0].should.have.property('overview')
+      res.body[0].should.have.property('popularity')
+      res.body[0].should.have.property('poster_path')
+      res.body[0].should.have.property('release_date')
+      res.body[0].should.have.property('video')
+      res.body[0].should.have.property('vote_average')
+      res.body[0].should.have.property('vote_count')
+      done(); 
+    });
+  });
+});
+
+
 
  
