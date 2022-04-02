@@ -1,9 +1,7 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-   rejectUnauthorized: false
-  }
+  connectionString: process.env.DATABASE_URL|| "postgres://postgres:123456789@localhost/proj",
+
 })
 var cors = require("cors") 
 const express = require('express')
@@ -348,13 +346,8 @@ app.post('/logout', async(req,res) => {
       res.redirect('loginn')
     }else{
     try{
-<<<<<<< HEAD
    
       const base_url="https://api.themoviedb.org/3/movie/popular?"
-=======
-
-      const base_url="https://api.themoviedb.org/3/trending/all/day?"
->>>>>>> f39f02a55904c29a57ac43dcdb8a3c6e949fbbdb
       const url=base_url+api_key+"&language=en-US&page=1"
       const img_url="https://image.tmdb.org/t/p/w154/"
       await fetch(url).then(res=>res.json()).then(data=>{
@@ -368,7 +361,6 @@ app.post('/logout', async(req,res) => {
   }
  })
 
-<<<<<<< HEAD
 //--------------Upcoming Movies---------------->
  app.get('/upcoming',async(req,res)=>{
   if (typeof req.session.user === 'undefined') {
@@ -431,9 +423,7 @@ app.post('/logout', async(req,res) => {
     }
   }
   })
-=======
- 
->>>>>>> f39f02a55904c29a57ac43dcdb8a3c6e949fbbdb
+
 //Testing of each individual movie page
   app.get('/test_movieIdSuccess', function(req, res) {
       fetch("https://api.themoviedb.org/3/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{

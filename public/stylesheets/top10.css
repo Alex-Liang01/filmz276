@@ -12,8 +12,8 @@ body {
   background-color: #212226;
 }
 
-.image{
-    width:10%;
+.img{
+    width:20%;
     text-align: left;
     padding-bottom: 40px;
 }
@@ -22,8 +22,9 @@ td{
     text-align: left;
 }
 
-h1{
-    text-align:center;
+h2{
+    text-align:left;
     font-size:300px;
-    color:#e9ecf3
+    color:#e9ecf3;
+    padding-bottom: 50px;
 }

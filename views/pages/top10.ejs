@@ -1,31 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>FilmZ Top 10 TMDB Rated Movies</title>
-  <link rel="stylesheet" type = "text/css" href="/stylesheets/top10.css">
-</head>
+	<head>
+		<title>FilmZ</title>
+		<link href="/stylesheets/trending.css" rel="stylesheet" type="text/css">
+	</head>
+	<%- include ("header.ejs") %>
+	<body class="text-white" style="background-color:#181818;">
 
-<body>
-    <%- include ("header.ejs") %>
 
-    <h1>Top 10 TMDB Rated Movies</h1>
-    <% results.forEach(function(r) { %>
-        <div>
-            <table style="width:100%">
+		<h2 class="text-3xl">TOP 10 TMDB RATED MOVIES</h2>
+	<% results.forEach(function(r) { %>
+	<!-- <div class="flex items-center justify-center"> -->
+		<!-- <div class="w-full max-w-6xl"> -->
+			<div class="mt-4">
+				<div class="flex overflow-hidden my-4">
+					
+					<div>
+						<table style="width:80%">
+			
+					<tr>
+						<div class="p-2" style="background-color:#282828;">
+						<h2 class="text"><a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
+							<%=r.title%></a></h2>
+						<h2 class="text">Rating: <%=r.vote_average %></h2>
+					</div>
+					</tr>
+					<tr>
+						<div class="p-2" style="background-color:#282828;">
+						<td class="image"><a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
+							<image src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.title%>"></a></td>
+						<td class="text"><%=r.overview %></td>
+					</div>
+					</tr>
+					</div>
+					
+					<!-- </div> -->
+					</div>
+				</div>
+			<!-- </div> -->
+			
+			<% }); %>
 
-        <tr>
-            <td class="text"><a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
-                <%=r.title%></a></td>
-            <td class="text">Rating: <%=r.vote_average %></td>
-        </tr>
-        <tr>
-            <td class="image"><a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
-                <img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.title%>"></a></td>
-            <td class="text"><%=r.overview %></td>
-        </tr>
-        </div>
-    <% }); %>
-       
-       
-</body>
+
+
+    </body>
 </html>
