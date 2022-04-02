@@ -2,13 +2,13 @@
 <html>
 	<head>
 		<title>FilmZ</title>
-		<link href="/stylesheets/trending.css" rel="stylesheet" type="text/css">
+		<link href="/stylesheets/upcoming.css" rel="stylesheet" type="text/css">
 	</head>
 	<%- include ("header.ejs") %>
 	<body class="text-white" style="background-color:#181818;">
 
 
-		<h2 class="text-3xl">Trending</h2>
+		<h2 class="text-3xl">Upcoming Movies</h2>
 	<% results.forEach(function(r) { %>
 	<!-- <div class="flex items-center justify-center"> -->
 		<!-- <div class="w-full max-w-6xl"> -->
@@ -20,9 +20,10 @@
 			
 					<tr>
 						<div class="p-2" style="background-color:#282828;">
-						<h2 class="text"><a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
+						<h2 class="title"><a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
 							<%=r.title%></a></h2>
-						<h2 class="text">Rating: <%=r.vote_average %></h2>
+						<!-- <td class="text"> Release Date: <%=r.release_dates %></td> -->
+							
 					</div>
 					</tr>
 					<tr>

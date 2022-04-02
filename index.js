@@ -365,7 +365,7 @@ app.post('/logout', async(req,res) => {
     }else{
     try{
    
-      const base_url="https://api.themoviedb.org/3/trending/all/day?"
+      const base_url="https://api.themoviedb.org/3/movie/popular?"
       const url=base_url+api_key+"&language=en-US&page=1"
       const img_url="https://image.tmdb.org/t/p/w154/"
       await fetch(url).then(res=>res.json()).then(data=>{
@@ -378,6 +378,28 @@ app.post('/logout', async(req,res) => {
     }
   }
  })
+
+//--------------Upcoming Movies---------------->
+ app.get('/upcoming',async(req,res)=>{
+  if (typeof req.session.user === 'undefined') {
+    res.redirect('loginn')
+  }else{
+  try{
+ 
+    const base_url="https://api.themoviedb.org/3/movie/upcoming?"
+    const url=base_url+api_key+"&language=en-US&page=1"
+    const img_url="https://image.tmdb.org/t/p/w154/"
+    await fetch(url).then(res=>res.json()).then(data=>{
+      results=data.results.slice(0, 10);
+      res.render('pages/upcoming',{data: {user:val},results});
+    })
+  }
+  catch(err){
+    res.send(err);
+  }
+}
+})
+
 
 
 //Testing of top 10 TMDB page
