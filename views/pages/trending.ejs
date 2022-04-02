@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>FilmZ</title>
+		<link href="/stylesheets/trending.css" rel="stylesheet" type="text/css">
+	</head>
+	<%- include ("header.ejs") %>
+	<body class="text-white" style="background-color:#181818;">
+
+
+		<h2 class="text-3xl">Trending</h2>
+	<% results.forEach(function(r) { %>
+	<!-- <div class="flex items-center justify-center"> -->
+		<!-- <div class="w-full max-w-6xl"> -->
+			<div class="mt-4">
+				<div class="flex overflow-hidden my-4">
+					
+					<div>
+						<table style="width:80%">
+			
+					<tr>
+						<div class="p-2" style="background-color:#282828;">
+						<td class="text"><a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
+							<%=r.title%></a></td>
+						<td class="text">Rating: <%=r.vote_average %></td>
+					</div>
+					</tr>
+					<tr>
+						<div class="p-2" style="background-color:#282828;">
+						<td class="image"><a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
+							<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.title%>"></a></td>
+						<td class="text"><%=r.overview %></td>
+					</div>
+					</tr>
+					</div>
+					
+					<!-- </div> -->
+					</div>
+				</div>
+			<!-- </div> -->
+			
+			<% }); %>
+
+
+
+    </body>
+</html>

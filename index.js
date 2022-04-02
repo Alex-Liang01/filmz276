@@ -1,10 +1,8 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-   rejectUnauthorized: false
-  }
+  connectionString: process.env.DATABASE_URL|| "postgres://postgres:123456789@localhost/proj",
 })
+
 var cors = require("cors") 
 
 const express = require('express')
@@ -338,6 +336,9 @@ app.post('/logout', async(req,res) => {
     }
   }
   })
+
+
+  // -------------TOP 10------------------?
   app.get('/TMDB_10',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
@@ -356,7 +357,29 @@ app.post('/logout', async(req,res) => {
       res.send(err);
     }
   }
-  })
+
+  // ---------------TRENDING------------------>
+  app.get('/trending',async(req,res)=>{
+    if (typeof req.session.user === 'undefined') {
+      res.redirect('loginn')
+    }else{
+    try{
+   
+      const base_url="https://api.themoviedb.org/3/trending/all/day?"
+      const url=base_url+api_key+"&language=en-US&page=1"
+      const img_url="https://image.tmdb.org/t/p/w154/"
+      await fetch(url).then(res=>res.json()).then(data=>{
+        results=data.results.slice(0, 10);
+        res.render('pages/trending',{data: {user:val},results});
+      })
+    }
+    catch(err){
+      res.send(err);
+    }
+  }
+ })
+
+
 //Testing of top 10 TMDB page
   app.get('/test_TMDB_10', function(req, res) {
     const base_url="https://api.themoviedb.org/3/movie/top_rated?"
@@ -443,4 +466,4 @@ app.post('/logout', async(req,res) => {
 
 
   module.exports = app;
-  
+})
