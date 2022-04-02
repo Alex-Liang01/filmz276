@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-   rejectUnauthorized: false
-  }
+  connectionString: process.env.DATABASE_URL|| "postgres://postgres:piechu@localhost/users",
+  // ssl: {
+  //  rejectUnauthorized: false
+  // }
 })
 var cors = require("cors") 
 
@@ -349,7 +349,7 @@ app.post('/logout', async(req,res) => {
       const img_url="https://image.tmdb.org/t/p/w500/"
       await fetch(url).then(res=>res.json()).then(data=>{
         results=data.results.slice(0, 10);
-        res.render('pages/top10',{data: {user:val},results});
+        res.render('pages/top10'  ,{data: {user:val},results});
       })
     }
     catch(err){
@@ -368,34 +368,17 @@ app.post('/logout', async(req,res) => {
       })
   });
 
-
-  app.get('/:id',async(req,res)=>{
-    if (typeof req.session.user === 'undefined') {
-      res.redirect('loginn')
-    }else{
-    try{
-      const base_url="https://api.themoviedb.org/3/movie/"
-      const movie_id=req.params.id+"?"
-      const similar_id=req.params.id+"/recommendations?"
-      const url_movie=base_url+movie_id+api_key+"&language=en-US"
-      const url_similar=base_url+similar_id+api_key+"&language=en-US&page=1"
-      await fetch(url_movie).then(res=>res.json()).then(data=>{
-        if(data.success==false){
-          res.render('pages/notfound',{data:{user:val}})
-          return;
-        }
-        results=data;
-        fetch(url_similar).then(res=>res.json()).then(data=>{
-          simResults=data.results.slice(0, 9);
-          res.render('pages/movie',{data: {user:val},results,simResults});
-        })
+  app.get('/testSimilar', function(req, res) {
+    const base_url="https://api.themoviedb.org/3/movie/"
+    const similar_id="25/recommendations?"
+    const url_similar=base_url+similar_id+api_key+"&language=en-US&page=1"
+      fetch(url_similar).then(res=>res.json()).then(data=>{
+        similar=data.results.slice(0, 9);
+        res.json(similar);
       })
-    }
-    catch(err){
-      res.send(err);
-    }
-  }
-  })
+  });
+
+  
 //Testing of each individual movie page
   app.get('/test_movieIdSuccess', function(req, res) {
       fetch("https://api.themoviedb.org/3/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{
@@ -436,11 +419,36 @@ app.post('/logout', async(req,res) => {
 				if (error)
 					res.end(error);
 				var results = {'rows':result.rows}
-				res.json({data: {user:val, userlist:results}});
+				res.json(results);
 			})
   });
 
-
-
+  app.get('/:id',async(req,res)=>{
+    if (typeof req.session.user === 'undefined') {
+      res.redirect('loginn')
+    }else{
+    try{
+      const base_url="https://api.themoviedb.org/3/movie/"
+      const movie_id=req.params.id+"?"
+      const similar_id=req.params.id+"/recommendations?"
+      const url_movie=base_url+movie_id+api_key+"&language=en-US"
+      const url_similar=base_url+similar_id+api_key+"&language=en-US&page=1"
+      await fetch(url_movie).then(res=>res.json()).then(data=>{
+        if(data.success==false){
+          res.render('pages/notfound',{data:{user:val}})
+          return;
+        }
+        results=data;
+        fetch(url_similar).then(res=>res.json()).then(data=>{
+          simResults=data.results.slice(0, 9);
+          res.render('pages/movie',{data: {user:val},results,simResults});
+        })
+      })
+    }
+    catch(err){
+      res.send(err);
+    }
+  }
+  })
   module.exports = app;
   
