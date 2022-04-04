@@ -20,14 +20,14 @@
 			
 					<tr>
 						<div class="p-2" style="background-color:#282828;">
-						<h2 class="name"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
+						<h2 class="name"><a href="/tvshow/" onclick="location.href=this.href+<%=r.id%>;return false">
 							<%=r.name%></a></h2>
 						<h2 class="text">Rating: <%=r.vote_average %></h2>
 					</div>
 					</tr>
 					<tr>
 						<div class="p-2" style="background-color:#282828;">
-						<td class="image"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
+						<td class="image"><a href="/tvshow/" onclick="location.href=this.href+<%=r.id%>;return false">
 							<image src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.name%>"></a></td>
 						<td class="text"><%=r.overview %></td>
 					</div>

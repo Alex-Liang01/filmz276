@@ -490,6 +490,30 @@ app.post('/submitrating', async(req,res) => {
 			}
 		})
 	})
+  app.get('/api/tvshow/:id',async(req,res)=>{
+		const movie_id = req.params.id;// needs sanitization
+		var getReviewsQuery = "SELECT review_id, user_id, rating, review_text, firstname, lastname, username FROM reviews INNER JOIN usr ON reviews.user_id=usr.uid WHERE reviews.tvshow_id=$1";
+		pool.query(getReviewsQuery, [movie_id], (error,result) => {
+			if (error)
+				res.end(error);
+			res.setHeader('Content-Type', 'application/json');
+			if (result.rows.length == 0) {
+				success = "false";
+				res.end(JSON.stringify({success:success}, null, 3));
+			}
+			else {
+				success = "true";
+				var reviews = {'rows':result.rows}
+				var num = 0;
+				result.rows.forEach( function(item) {
+					num += item.rating;
+				})
+				//console.log(num)
+				var avg = num/result.rows.length;
+				res.end(JSON.stringify({success:success, resultCount:result.rows.length, avgRating:avg, reviews:reviews}, null, 3));
+			}
+		})
+	})
 //Testing of each individual movie page
   app.get('/test_movieIdSuccess', function(req, res) {
       fetch("https://api.themoviedb.org/3/movie/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{
@@ -572,6 +596,34 @@ app.post('/submitrating', async(req,res) => {
         fetch(url_similar).then(res=>res.json()).then(data=>{
           simResults=data.results.slice(0, 9);
           res.render('pages/movie',{data: {user:val},results,simResults});
+        })
+      })
+    }
+    catch(err){
+      res.send(err);
+    }
+  }
+  })
+
+  app.get('/tvshow/:id',async(req,res)=>{
+    if (typeof req.session.user === 'undefined') {
+      res.redirect('/loginn')
+    }else{
+    try{
+      const base_url="https://api.themoviedb.org/3/tv/top_rated?"
+      const movie_id=req.params.id+"?"
+      const similar_id=req.params.id+"/recommendations?"
+      const url_movie=base_url+movie_id+api_key+"&language=en-US"
+      const url_similar=base_url+similar_id+api_key+"&language=en-US&page=1"
+      await fetch(url_movie).then(res=>res.json()).then(data=>{
+        if(data.success==false){
+          res.render('pages/notfound',{data:{user:val}})
+          return;
+        }
+        results=data
+        fetch(url_similar).then(res=>res.json()).then(data=>{
+          simResults=data.results.slice(0, 9);
+          res.render('pages/tvshow',{data: {user:val},results,simResults});
         })
       })
     }
