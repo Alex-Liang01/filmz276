@@ -8,7 +8,7 @@
 	<body class="text-white" style="background-color:#181818;">
 
 
-		<h2 class="text-3xl">TOP 10 TMDB RATED MOVIES</h2>
+		<h2 class="text-3xl">Trending</h2>
 	<% results.forEach(function(r) { %>
 	<!-- <div class="flex items-center justify-center"> -->
 		<!-- <div class="w-full max-w-6xl"> -->
@@ -28,7 +28,7 @@
 					<tr>
 						<div class="p-2" style="background-color:#282828;">
 						<td class="image"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
-							<image src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.title%>"></a></td>
+							<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.title%>"></a></td>
 						<td class="text"><%=r.overview %></td>
 					</div>
 					</tr>

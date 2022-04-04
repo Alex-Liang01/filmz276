@@ -9,7 +9,7 @@
 	<section class="task">
 		<div class="task__holder">
 		  <div class="box">
-			<img class="box__image"src="ht	tps://image.tmdb.org/t/p/w400/<%=results.poster_path%>" alt="<%=results.title%>">
+			<img class="box__image"src="https://image.tmdb.org/t/p/w400/<%=results.poster_path%>" alt="<%=results.title%>">
 			
 			  <h2 class="box__title"><%=results.title%></h2>
 			  <p class="box__text">Release Date: <%=results.release_date%></p>
@@ -18,18 +18,14 @@
 				<% }); %> 
 			  <p class="box__text">TMDB Rating: <%=results.vote_average %> out of <%=results.vote_count%> user reviews</p>
 			  <span class="box__text">Filmz Rating: 9.4</span>
-			  <p class="box__text"></p>
-
 			  <p class="box__text"><%=results.overview%></p>
-			
 		   </div>
 		</div>
-	  </section>
+	</section>
 
-	  <section class="task">
+	<section class="task">
 		<div class="task__holder">
 		  <div class="box">
-				
 			  <h2 class="box__title">Add a Review</h2>
 			  <table style="width:60%">
 				<tr>
@@ -39,19 +35,24 @@
 				<tr>
 					<td><input type="text"></td>
 					<td><input type="text"></td>
-
 				</tr>
 				<tr>
-					<td><input type="submit" value="Submit Review">
-					</td>
+					<td><input type="submit" value="Submit Review"></td>
 				</tr>
-			
+			</table>
 		   </div>
-
 		</div>
-
-	  </section>
-	
+	</section>
+	<form class="similar">
+		<h2 class="box__title">Movies Similar to <%=results.title%></h2>
+		<div style="display: inline">	  
+	  		<% simResults.forEach(function(r) { %>
+			<a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
+			<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>" class="image"  alt="<%=r.title%>"></a>
+		    <% }); %>
+		</div>
+	</form>  
+		
 	
 </body>
 </html>

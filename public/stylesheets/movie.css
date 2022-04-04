@@ -49,3 +49,15 @@ input[type="submit"] {
   color: #e9ecf3;
   transition: background-color 0.2s;
 }
+
+.similar{
+  margin-top: 200px;
+  background-color: #363940;
+  margin-left: 10px;
+  margin-right:10px;
+}
+
+.image{
+  float:left;
+  margin-left: 12px;
+}
