@@ -2,13 +2,13 @@
 <html>
 	<head>
 		<title>FilmZ</title>
-		<link href="/stylesheets/top10.css" rel="stylesheet" type="text/css">
+		<link href="/stylesheets/trending.css" rel="stylesheet" type="text/css">
 	</head>
 	<%- include ("header.ejs") %>
 	<body class="text-white" style="background-color:#181818;">
 
 
-		<h2 class="text-3xl">Top Rated TV Shows</h2>
+		<h2 class="text-3xl">TOP 10 RATED TV SHOWS</h2>
 	<% results.forEach(function(r) { %>
 	<!-- <div class="flex items-center justify-center"> -->
 		<!-- <div class="w-full max-w-6xl"> -->
@@ -20,16 +20,15 @@
 			
 					<tr>
 						<div class="p-2" style="background-color:#282828;">
-						<h2 class="title"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
-							<%=r.title%></a></h2>
-						<!-- <td class="text"> Release Date: <%=r.release_dates %></td> -->
-							
+						<h2 class="name"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
+							<%=r.name%></a></h2>
+						<h2 class="text">Rating: <%=r.vote_average %></h2>
 					</div>
 					</tr>
 					<tr>
 						<div class="p-2" style="background-color:#282828;">
 						<td class="image"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
-							<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.title%>"></a></td>
+							<image src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.name%>"></a></td>
 						<td class="text"><%=r.overview %></td>
 					</div>
 					</tr>
@@ -45,5 +44,4 @@
 
 
     </body>
-</html>
 </html>
