@@ -2,6 +2,9 @@
 <head>
 	<meta charset="UTF-8">
 	<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
@@ -20,17 +23,39 @@
 	#dropdown-content li:hover {
 		background-color: #181818;
 	}
+	/* width */
+	::-webkit-scrollbar {
+	  width: 10px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+	  background: #f1f1f1; 
+	}
+	 
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+	  background: #888; 
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+	  background: #555; 
+	}
   </style>
 <html>
 	<body>
 		<header class="w-full text-white shadow-xl">
 			<div class="w-full justify-center items-center flex py-2" style="background-image:linear-gradient(#2e2e2e, #242424);">
 				<div class="w-full max-w-6xl flex justify-between items-center">
-					<div>
+					<div class="flex items-center">
 						<a href="/">
 							<!--<img class="h-8 w-8 rounded-full mr-4" src="">-->
-							<div id="filmz" class="text-4xl px-4">FilmZ</div>
+							<div id="filmz" class="text-4xl px-4 mr-4">FilmZ</div>
 						</a>
+						<div class="px-4" style="color:#adadad;"><a class="flex text-sm hover:text-blue-300" href="/trending">Trending</a></div>
+						<div class="px-4" style="color:#adadad;"><a class="flex text-sm hover:text-blue-300" href="/TMDB_10">Top Rated Movies</a></div>
+						<div class="px-4" style="color:#adadad;"><a class="flex text-sm hover:text-blue-300" href="/TMDB_10_TV">Top Rated TV Shows</a></div>
 					</div>
 					<div id="dropdown" class="inline-block relative px-4" style="float:right;">
 						<button>
@@ -41,8 +66,6 @@
 							<li class="rounded p-2"><a class="flex" href="/admin">Admin page</a></li>
 						  <% } %>
 						  <li class="rounded p-2"><a class="flex" href="/">Home</a></li>
-						  <li class="rounded p-2"><a class="flex" href="/TMDB_10_TV">Top Rated TV Shows Of All Time</a></li>
-						  <li class="rounded p-2"><a class="flex" href="/TMDB_10">Top Rated Movies Of All Time</a></li>
 						  <li class="rounded p-2"><a class="flex" href="/account">Account</a></li>
 						  <li class="rounded p-2"><form action="/logout" method="post"><button class="w-full flex" type="submit">Logout</button></form></li>
 						</ul>
