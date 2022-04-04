@@ -6,7 +6,7 @@ $(document).ready( function() {
 	// get reviews
 	var template = document.getElementsByTagName("template")[0];
 	html = template.content.querySelector("div");
-	var api = "http://localhost:5000/api/movie/"+movie_id;
+	var api = window.location.origin+"/api/movie/"+movie_id;
 	$.getJSON(api, function(data) {
 		if (data.success == "true") {
 			$.each(data.reviews.rows, function(i, item) {
