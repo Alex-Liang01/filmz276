@@ -1,16 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-<<<<<<< Updated upstream
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-   rejectUnauthorized: false
-  }
-=======
   connectionString:'postgres://postgres:sanjit12@localhost/users',
   // ssl: {
   //  rejectUnauthorized: false
   // }
->>>>>>> Stashed changes
 })
 var cors = require("cors") // cross-origin resource sharing
 
@@ -296,7 +289,7 @@ app.post('/logout', async(req,res) => {
         let id=val.results[0].uid;
         const update= await pool.query(`UPDATE usr SET username= '${newUsername}' WHERE uid = '${id}'`);
         req.session.destroy();
-        res.redirect('/')
+        res.redirect('/', {data: {user:val}})
       }
       catch(err){
         res.send(err);
@@ -364,6 +357,27 @@ app.post('/logout', async(req,res) => {
     }
   }
   })
+
+  app.get('/TMDB_10_TV',async(req,res)=>{
+    if (typeof req.session.user === 'undefined') {
+      res.redirect('loginn')
+    }else{
+    try{
+   
+      const base_url="https://api.themoviedb.org/3/tv/top_rated?"
+      const url=base_url+api_key+"&language=en-US&page=1"
+      const img_url="https://image.tmdb.org/t/p/w500/"
+      await fetch(url).then(res=>res.json()).then(data=>{
+        results=data.results.slice(0, 10);
+        res.render('pages/top10TV',{data: {user:val},results});
+      })
+    }
+    catch(err){
+      res.send(err);
+    }
+  }
+  })
+
 //Testing of top 10 TMDB page
   app.get('/test_TMDB_10', function(req, res) {
     const base_url="https://api.themoviedb.org/3/movie/top_rated?"

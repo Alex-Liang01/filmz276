@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FilmZ Top Rated TV Shows Of All Time</title>
+  <link rel="stylesheet" type = "text/css" href="/stylesheets/top10.css">
+</head>
+
+<body>
+    <%- include ("header.ejs") %>
+
+    <h1>Top Rated TV Shows Of All Time</h1>
+    <% results.forEach(function(r) { %>
+        <div>
+            <table style="width:100%">
+
+        <tr>
+            <td class="text"><a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
+                <%=r.title%></a></td>
+            <td class="text">Rating: <%=r.vote_average %></td>
+        </tr>
+        <tr>
+            <td class="image"><a href="/" onclick="location.href=this.href+<%=r.id%>;return false">
+                <img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.title%>"></a></td>
+            <td class="text"><%=r.overview %></td>
+        </tr>
+        </div>
+    <% }); %>
+       
+       
+</body>
+</html>
