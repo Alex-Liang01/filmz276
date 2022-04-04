@@ -15,7 +15,7 @@
 				<h1 class="text-2xl my-2">Search results for <b><%= query %></b></h1>
 				<% results.forEach(function(r) { %>
 					<div class="flex mb-2" style="background-color:#282828;">
-						<a href="/<%=r.id%>" class="flex-none">
+						<a href="/movie/<%=r.id%>" class="flex-none">
 							<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>" class="mr-2" style="width:154px; height:231px" alt="<%=r.title%>">
 						</a>
 						<div class="p-4" style="">
