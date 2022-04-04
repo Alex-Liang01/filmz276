@@ -610,7 +610,7 @@ app.post('/submitrating', async(req,res) => {
       res.redirect('/loginn')
     }else{
     try{
-      const base_url="https://api.themoviedb.org/3/tv/top_rated?"
+      const base_url="https://api.themoviedb.org/3/tv/"
       const movie_id=req.params.id+"?"
       const similar_id=req.params.id+"/recommendations?"
       const url_movie=base_url+movie_id+api_key+"&language=en-US"
