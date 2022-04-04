@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <head>
 	<link rel="stylesheet" type = "text/css" href="/stylesheets/movie.css">
-	<title>Filmz <%=results.title%></title>
+	<title><%=results.title%> | Filmz</title>
+	<script src="/scripts/moviepage.js" defer></script>
 </head>
 <body>
 	<%- include ("header.ejs") %>
 	
-	<section class="task">
+	<!--<section class="task">
 		<div class="task__holder">
 		  <div class="box">
-			<img class="box__image"src="https://image.tmdb.org/t/p/w400/<%=results.poster_path%>" alt="<%=results.title%>">
+			<img class="box__image"src="ht	tps://image.tmdb.org/t/p/w400/<%=results.poster_path%>" alt="<%=results.title%>">
 			
 			  <h2 class="box__title"><%=results.title%></h2>
 			  <p class="box__text">Release Date: <%=results.release_date%></p>
@@ -18,14 +19,69 @@
 				<% }); %> 
 			  <p class="box__text">TMDB Rating: <%=results.vote_average %> out of <%=results.vote_count%> user reviews</p>
 			  <span class="box__text">Filmz Rating: 9.4</span>
+			  <p class="box__text"></p>
+
 			  <p class="box__text"><%=results.overview%></p>
+			
 		   </div>
 		</div>
-	</section>
+	  </section>-->
+	  
+	  <section class="justify-center flex">
+		<div class="flex w-full max-w-6xl overflow-hidden p-4">
+			<div class="flex-none">
+				<img src="https://image.tmdb.org/t/p/w300/<%=results.poster_path%>" id="filmz-movieposter" alt="<%=results.title%>">
+			</div>
+			<div class="w-full h-full justify-between p-4" style="background-color:#282828;">
+			<div class="flex w-full justify-between">
+				<div class="w-full max-w-2xl pb-4">
+					<div class="mb-4">
+					  <h2 class="text-3xl -mt-2"><b><%=results.title%></b></h2>
+					  <p class="box__text" style="color:#adadad;">Release Date: <%=results.release_date%></p>
+					  <p id="filmz-overview" class="overflow-y-auto mt-2" style="height:11rem;"><%=results.overview%></p>
+					</div>
+					<div class='flex flex-wrap'>
+						<% results.genres.forEach(function(r) { %>
+						<span class='mr-2 bg-gray-600 hover:bg-gray-700 rounded-full px-2 font-semibold text-sm leading-loose cursor-pointer'><%=r.name%></span>
+						<% }); %> 
+					</div>
+				</div>
+				<div class="w-full pl-4" style="max-width:12rem;">
+					<div class="p-2" style="background-color:#383838;">
+						<div><span id="filmz-rating" class="text-3xl"></span>/10</div>
+						<h3 class="text-sm" style="color:#adadad;"><span class="resultcount"></span> Filmz ratings<h3>
+					</div>
+					<div class="p-2" style="background-color:#383838;">
+						<div><span class="text-3xl"><%=results.vote_average %></span>/10</div>
+						<h3 class="text-sm" style="color:#adadad;"><%=results.vote_count%> TMDB ratings</h3>
+					</div>
+				</div>
+			</div>
+			<div class='flex border-t border-gray-400 pt-4'>
+					<form action="/submitrating" method="post" class='w-full'>
+						<b class='text-xl'>Rate this movie</b>
+						<div id='rateYo' data-rateyo-rating='0' data-rateyo-full-star='true' style="padding:0.5rem 0 0.5rem 0;"></div>
+						<div id='create-rating-area' class='hidden flex items-center border-b border-blue-500 pt-2'>
+							<input type='hidden' id="movie_id" name='movie_id' value=''>
+							<input type='hidden' name='rating'>							
+							<textarea id='review' class='review-area appearance-none bg-transparent border-none w-full leading-tight resize-none focus:outline-none p-1' placeholder='Add a review...' name='review_text' style="color:#adadad;"></textarea><br>								
+						</div>
+						<div class='flex justify-end items-center pt-2'>
+							<div>
+								<button id='cancel-review' class='hidden flex-shrink-0 border-transparent border-4 text-blue-500 hover:bg-gray-700 text-base py-1 px-4 rounded' type='button'>CANCEL</button>
+								<button id='submit-review' class='hidden flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-base border-4 text-white py-1 px-4 rounded' type="submit">REVIEW</button>
+							</div>
+						</div>
+					</form>
+			</div>
+			</div>
+		</div>
+	  </section>
 
-	<section class="task">
+	  <!--<section class="task">
 		<div class="task__holder">
 		  <div class="box">
+				
 			  <h2 class="box__title">Add a Review</h2>
 			  <table style="width:60%">
 				<tr>
@@ -35,14 +91,43 @@
 				<tr>
 					<td><input type="text"></td>
 					<td><input type="text"></td>
+
 				</tr>
 				<tr>
-					<td><input type="submit" value="Submit Review"></td>
+					<td><input type="submit" value="Submit Review">
+					</td>
 				</tr>
-			</table>
+			
 		   </div>
+
 		</div>
-	</section>
+
+	  </section>-->
+	<div class="justify-center flex">
+		<div class="w-full max-w-6xl overflow-hidden p-4">
+			<div class='reviewsection' style="background-color:#282828;">
+				<div id="reviews-header" class="text-xl border-b p-4"><span class="resultcount"></span> Reviews</div>
+				<template>
+				<div class='flex justify-center rounded'>
+					<div class='max-w-6xl w-full flex justify-start relative m-4'>				
+						<!--<img class='h-10 w-10 rounded-full mr-2' src=''>-->
+						<div>
+							<div class='flex'>
+								<b class='filmz-name'></b>
+								<!--<div class='filmz-username text-gray-600 mx-2'></div>-->
+							</div>
+							<div class='filmz-stars' style='padding:0;'></div>
+							<p class='filmz-userreview' style="color:#adadad;"></p>
+							<button class='show-more text-white hidden'>Show more</button>
+							<div class='absolute top-0 right-0'>
+							</div>
+						</div>					
+					</div>
+				</div>
+				</template>
+			</div>
+		</div>
+	</div>
 	<form class="similar">
 		<h2 class="box__title">Movies Similar to <%=results.title%></h2>
 		<div style="display: inline">	  
@@ -51,8 +136,6 @@
 			<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>" class="image"  alt="<%=r.title%>"></a>
 		    <% }); %>
 		</div>
-	</form>  
-		
-	
+	</form> 
 </body>
 </html>
