@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString: "postgres://postgres:sanjit12@localhost/users",
-  // ssl: {
-  //  rejectUnauthorized: false
-  // }
+  connectionString:  process.env.DATABASE_URL,
+  ssl: {
+   rejectUnauthorized: false
+  }
 })
 var cors = require("cors") 
 
@@ -536,7 +536,6 @@ app.post('/submitrating', async(req,res) => {
       res.json(results);
     })
 });
-  module.exports = app;
   us=[];
   app.post('/testSignup', function(req, res) {
     signup_query=`....`
@@ -568,6 +567,16 @@ app.post('/submitrating', async(req,res) => {
     })
   });
 
+  app.get('/testSimilarTv', function(req, res) {
+    const base_url="https://api.themoviedb.org/3/tv/"
+    const similar_id="25/recommendations?"
+    const url_similar=base_url+similar_id+api_key+"&language=en-US&page=1"
+    fetch(url_similar).then(res=>res.json()).then(data=>{
+      simResultsTv=data.results.slice(0, 9);
+      res.json(simResultsTv);
+    })
+  });
+
   app.get('/testSearchSpider-Man', function(req, res) {
     const url="https://api.themoviedb.org/3/search/movie?query=spiderman&page=1&api_key=430a4dbae6e33d3664541b0199ae6a38"
     fetch(url).then(res=>res.json()).then(data=>{
@@ -575,6 +584,18 @@ app.post('/submitrating', async(req,res) => {
       res.json(results);
     })
   });
+
+  app.get('/test_TvIdSuccess', function(req, res) {
+      fetch("https://api.themoviedb.org/3/tv/25?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{
+        if(data.success==false){
+          res.json(data)
+          return;
+        }
+        results=data
+        res.json(results);
+      })
+  });
+
 
 // ----------- MOVIE PAGE -----------
   app.get('/movie/:id',async(req,res)=>{
@@ -605,6 +626,7 @@ app.post('/submitrating', async(req,res) => {
   }
   })
 
+  
   app.get('/tvshow/:id',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('/loginn')
