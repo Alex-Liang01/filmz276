@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString:  process.env.DATABASE_URL,
-  ssl: {
-   rejectUnauthorized: false
-  }
+  connectionString:  "postgres://postgres:sanjit12@localhost/users"
+  // ssl: {
+  //  rejectUnauthorized: false
+  // }
 })
 var cors = require("cors") 
 
@@ -103,6 +103,10 @@ app.post('/signedup',async(req,res)=>{
       let username=req.body.username; let password=req.body.password; let firstname=req.body.firstname; 
       let lastname=req.body.lastname; let email =req.body.email;
       let birthday=req.body.birthday; let gender=req.body.gender;
+      // const banneduser = await pool.query(`SELECT * FROM banned WHERE username = '${username}'`);
+      // if(banneduser){
+      //   res.render('pages/login');
+      // }
       const newuser= await pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender) VALUES ('${username}','${password}','${firstname}',
       '${lastname}','${email}','${birthday}','${gender}')`);
       res.render('pages/thankyou');
@@ -111,6 +115,19 @@ app.post('/signedup',async(req,res)=>{
       res.send("Error" + err);
     }
   })
+
+  app.post('/deleteuser', async (req, res) => {
+    var username = req.body.username;
+    console.log(username);
+  
+    try{
+      await pool.query(`DELETE FROM usr WHERE username='${username}'`);
+      const banneduser = await pool.query(`INSERT INTO banned (username) VALUES ('${username}')`);
+      res.redirect('/admin');
+
+    }catch(err) {
+    }
+  });
 
 
 
