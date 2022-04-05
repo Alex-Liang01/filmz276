@@ -103,14 +103,11 @@ app.post('/signedup',async(req,res)=>{
       let username=req.body.username; let password=req.body.password; let firstname=req.body.firstname; 
       let lastname=req.body.lastname; let email =req.body.email;
       let birthday=req.body.birthday; let gender=req.body.gender;
-      // const banneduser = await pool.query(`SELECT * FROM banned WHERE username = '${username}'`);
-      // if(banneduser){
-      //   res.render('pages/login');
-      // }
       const newuser= await pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender) VALUES ('${username}','${password}','${firstname}',
       '${lastname}','${email}','${birthday}','${gender}')`);
       res.render('pages/thankyou');
-    }
+      }
+    //}
     catch(err){
       res.send("Error" + err);
     }
@@ -121,8 +118,9 @@ app.post('/signedup',async(req,res)=>{
     console.log(username);
   
     try{
-      await pool.query(`DELETE FROM usr WHERE username='${username}'`);
-      const banneduser = await pool.query(`INSERT INTO banned (username) VALUES ('${username}')`);
+      // await pool.query(`DELETE FROM usr WHERE username='${username}'`);
+      // const banneduser = await pool.query(`INSERT INTO banned (username) VALUES ('${username}')`);
+      const banneduser = await pool.query(`UPDATE usr SET banned = '1' WHERE username = '${username}'`);
       res.redirect('/admin');
 
     }catch(err) {
@@ -159,12 +157,11 @@ app.post('/loginn', async(req,res)=>{
 	const countResult ={'results': (count)?count.rows:null};
 	req.session.user = results;
 	val=req.session.user;
-	if (countResult['results'][0].count==0){
+	if (countResult['results'][0].count==0 || results['results'][0].banned == 1){
 		res.render('pages/loginIncorrect')  
 	  }else{
 		if(results['results'][0].adminid == 1){
 		  req.session.isAdmin = 1;
-		  
 		}
 		res.redirect('/');
 		//res.render('pages/', val)

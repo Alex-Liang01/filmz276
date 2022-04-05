@@ -1,56 +1,126 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>FilmZ Signup</title>
-  <link rel="stylesheet" type = "text/css" href="/stylesheets/signup.css">
-  <script src="/scripts/signupscript.js" defer></script>
-</head>
+  <head>
+    <title>FilmZ Signup</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/signup.css" />
+    <script src="/scripts/signupscript.js" defer></script>
+  </head>
 
-<body>
-  <div  class = "all" >
+  <body>
+    <div class="all">
+      <form action="/signedup" method="post">
+        <h1>Don't Miss Out on FilmZ!</h1>
+        <h2>Sign up Now!</h2>
 
-  <form action="/signedup" method = "post">
+        <div class="line"></div>
 
-    <h1> Don't Miss Out on FilmZ!</h1>
-    <h2>Sign up Now!</h2>
+        <div class="information">
+          <div>
+            <input
+              type="text"
+              class="firstname"
+              id="firstname"
+              name="firstname"
+              placeholder="First Name"
+              required
+            />
+            <input
+              type="text"
+              class="lastname"
+              id="lastname"
+              name="lastname"
+              placeholder="Last Name"
+              required
+            />
+          </div>
 
-    <div class="line"> </div>
+          <div>
+            <input
+              type="text"
+              class="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+            />
+            <input
+              type="text"
+              class="confirmemail"
+              id="confirmemail"
+              name="confirmemail"
+              placeholder="Confirm Email"
+              onkeyup="matchemail(this)"
+              required
+            />
+          </div>
 
-    <div class = "information" >
+          <div>
+            <input
+              type="date"
+              class="birthdate"
+              id="birthday"
+              name="birthday"
+              placeholder="Birthdate"
+              required
+            />
+          </div>
 
-    <div> <input type = "text" class ="firstname" id="firstname" name="firstname" placeholder="First Name"> <input type = "text" class ="lastname" id="lastname" name="lastname" placeholder="Last Name" required></div>
+          <p1> Gender </p1>
+          <p2> Birthdate</p2>
+          <div>
+            <select id="gender" class="gender" name="gender" required>
+              <option disabled selected value>-- Select --</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
 
-    <div> <input type = "text" class ="email" id="email" name="email" placeholder="Email"> <input type = "text" class ="confirmemail" id="confirmemail" name="confirmemail" placeholder="Confirm Email" onkeyup="matchemail(this)" required></div>
+          <div>
+            <input
+              type="text"
+              class="username"
+              id="username"
+              name="username"
+              placeholder="Username"
+              required
+            />
+          </div>
 
-    <div><input type="date" class="birthdate" id="birthday" name="birthday" placeholder="Birthdate" required></div>
+          <div>
+            <input
+              type="password"
+              class="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+          </div>
 
-    <p1> Gender </p1>
-    <p2> Birthdate</p2>
-    <div><select id= "gender" class="gender" name="gender" required>
-      <option disabled selected value> -- Select -- </option>
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-      <option value="other">Other</option>
-  </select></div> 
+          <div>
+            <input
+              type="password"
+              class="confirmpassword"
+              id="confirmpassword"
+              name="confirmpassword"
+              placeholder="Confirm Password"
+              onkeyup="matchpassword(this)"
+              required
+            />
+          </div>
+          <output id="passwordalert"></output>
 
-    <div> <input type = "text" class="username" id="username" name="username" placeholder="Username" required> </div>
+          <output id="emailalert"></output>
 
-    <div> <input type = "password" class="password" id="password" name="password" placeholder="Password" required></div>
+          <div>
+            <input type="submit" class="signup" id="signedup" value="SIGN UP" />
+          </div>
 
-    <div> <input type = "password" class="confirmpassword" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" onkeyup="matchpassword(this)" required></div>
-    <output id="passwordalert"></output>
-
-    <output id="emailalert"></output>
-
-    <div><input type = "submit" class="signup" id="signedup" value="SIGN UP"></div>
-    
-    <ul> <a href="/">Already Have an Account? </a> </ul>
-
+          <ul>
+            <a href="/">Already Have an Account? </a>
+          </ul>
+        </div>
+      </form>
     </div>
-
-  </form>
-
-  </div>
-
-</body>
+  </body>
 </html>

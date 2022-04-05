@@ -17,6 +17,7 @@
           <th>EMAIL</th>
           <th>BIRTHDAY</th>
           <th>GENDER</th>
+          <th>BANNED</th>
         </tr>
         <% data.userlist.rows.forEach(function(r) { %>
 			<tr>
@@ -28,16 +29,17 @@
 				<td><%= r.email %></td>
 				<td><%= r.birthday %></td>
 				<td><%= r.gender %></td>
+        <td><%= r.banned %></td>
 			</tr>
 		<% }); %>
       </table>
     </center>
 
-    <p class = "header2">To Delete</p>
-    <form class="" action="/deleteuser" method="post">
-      <p class = "second">ID:</p>
-      <input class = "textboxid" type ="text" name="username" id="username" /></br>
-      <button class = "button1" onclick="deleterow();">Delete</button>
+    <p class = "header2">Delete User</p>
+    <form class="header1" action="/deleteuser" method="post">
+      <p class = "header2">Username:</p>
+      <input class = "header1" type ="text" name="username" id="username" /></br>
+      <button class = "button1">Delete</button>
     </form>
     </div>
   </div>
