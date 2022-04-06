@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString:  "postgres://postgres:Oreo4831@localhost/proj"
-  // ssl: {
-  //  rejectUnauthorized: false
-  // }
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+   rejectUnauthorized: false
+  }
 })
 var cors = require("cors") 
 
