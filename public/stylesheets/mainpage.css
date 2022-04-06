@@ -70,9 +70,9 @@ h3{
   font-weight: bold;
 }
 
-.a{
-  position: absolute;
-  top: 550px;
+.b{
+  padding-left: 70px;
+  padding-right: 70px;
 }
 
 

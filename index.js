@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString:  "postgres://postgres:sanjit12@localhost/users"
+  connectionString:  "postgres://postgres:Oreo4831@localhost/proj"
   // ssl: {
   //  rejectUnauthorized: false
   // }

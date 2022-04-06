@@ -65,17 +65,23 @@
 </div>
 </div>
 -->
-<h2 class="text-4xl"> Top Trending Movie Right Now:</h2>
-<a class="text-3xl" href="/trending"> Find Other Trending Movies Here </a>
 
-<div class="a">
+<div class="b">
+
 </div>
 
 
+<div class="flex items-center justify-center"> 
+	<div class="w-full max-w-6xl"> 
+		
+<h2 class="text-4xl"> Top Trending Movie Right Now:</h2>
+<a class="text-3xl" href="/trending"> Find Other Trending Movies Here </a>
 
-<% results.forEach(function(r) { %>
-	<!-- <div class="flex items-center justify-center"> -->
-		<!-- <div class="w-full max-w-6xl"> -->
+
+
+
+	 <div class="flex items-center justify-center"> 
+		 <div class="w-full max-w-6xl"> 
 			<div class="mt-4">
 				<div class="flex overflow-hidden my-4">
 					
@@ -84,16 +90,16 @@
 			
 					<tr>
 						
-						<h2 class="text-3xl" class="text"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
-							<%=r.title%></a></h2>
+						<h2 class="text-3xl" class="text"><a href="/movie/" onclick="location.href=this.href+<%=results[0].id%>;return false">
+							<%=results[0].title%></a></h2>
 							
 					</div>
 					</tr>
 					<tr>
 						
-						<td class="image"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
-							<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.title%>"></a></td>
-						<td class="text"><%=r.overview %></td>
+						<td class="image"><a href="/movie/" onclick="location.href=this.href+<%=results[0].id%>;return false">
+							<img src="https://image.tmdb.org/t/p/w154/<%=results[0].poster_path%>"  alt="<%=results[0].title%>"></a></td>
+						<td class="text"><%=results[0].overview %></td>
 					</div>
 					</tr>
 					</div>
@@ -102,13 +108,7 @@
 					</div>
 				</div>
 			<!-- </div> -->
-			
-			<% }); %>
-
-
-
-
-
+			</div>
 
     </body>
 </html>
