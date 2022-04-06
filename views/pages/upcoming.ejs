@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>FilmZ</title>
-		<link href="/stylesheets/upcoming.css" rel="stylesheet" type="text/css">
+		<link href="/stylesheets/trending.css" rel="stylesheet" type="text/css">
 	</head>
 	<%- include ("header.ejs") %>
 	<body class="text-white" style="background-color:#181818;">
@@ -23,7 +23,7 @@
 			
 					<tr>
 						<div class="p-2" style="background-color:#282828;">
-						<h2 class="title"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
+						<h2 class="text"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
 							<%=r.title%></a></h2>
 						<!-- <td class="text"> Release Date: <%=r.release_dates %></td> -->
 							
