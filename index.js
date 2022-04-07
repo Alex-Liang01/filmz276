@@ -207,7 +207,7 @@ app.post('/loginn', async(req,res)=>{
 	const countResult ={'results': (count)?count.rows:null};
 
 	if (countResult['results'][0].count == 0 ) {
-    res.render('pages/loginincorrect') 
+    res.render('pages/loginIncorrect') 
   }
   else if(results['results'][0].banned == 1) {
     req.session.destroy((err) => {
