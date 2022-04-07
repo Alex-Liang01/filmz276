@@ -213,17 +213,19 @@ app.post('/loginn', async(req,res)=>{
     req.session.destroy((err) => {
       if(err) {
           return console.log(err);
-      }
-      res.render('pages/bannedscreen') 
+      }else{
+        res.render('pages/bannedscreen')
+      } 
    });
   }
     else{
       req.session.user = results;
       val=req.session.user;
-		if(results['results'][0].adminid == 1){
+		  if(results['results'][0].adminid == 1){
 		  req.session.isAdmin = 1;
-		}
-		res.redirect('/');
+		  }else{
+		  res.redirect('/');
+      }
 	}
 })
 
