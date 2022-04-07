@@ -21,8 +21,10 @@ tr {
 .header2{
   color:white;
   text-align: center;
+  padding-top:30px;
 }
 .header1{
+  color:white;
   text-align:center;
 }
 .header1 > input{

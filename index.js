@@ -103,17 +103,30 @@ app.post('/signedup',async(req,res)=>{
       let username=req.body.username; let password=req.body.password; let firstname=req.body.firstname; 
       let lastname=req.body.lastname; let email =req.body.email;
       let birthday=req.body.birthday; let gender=req.body.gender;
-      const newuser= await pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender) VALUES ('${username}','${password}','${firstname}',
-      '${lastname}','${email}','${birthday}','${gender}')`);
-      res.render('pages/thankyou');
+
+      const result = await pool.query(`SELECT * FROM usr WHERE email = '${email}'`);
+      const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE email = '${email}'`);
+      const results = { 'results': (result) ? result.rows : null};
+      req.session.user = results;
+      val=req.session.user;
+      if(results['results'][0].banned == 1) {
+        req.session.destroy((err) => {
+          if(err) {
+              return console.log(err);
+          }
+          res.render('pages/bannedscreen') 
+       });
       }
-    //}
+      const newuser= await pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender, banned) VALUES ('${username}','${password}','${firstname}',
+      '${lastname}','${email}','${birthday}','${gender}', 0)`);
+      res.render('pages/thankyou');
+    }
     catch(err){
       res.send("Error" + err);
     }
   })
 
-  app.post('/deleteuser', async (req, res) => {
+  app.post('/banuser', async (req, res) => {
     var username = req.body.username;
     console.log(username);
   
@@ -121,6 +134,19 @@ app.post('/signedup',async(req,res)=>{
       // await pool.query(`DELETE FROM usr WHERE username='${username}'`);
       // const banneduser = await pool.query(`INSERT INTO banned (username) VALUES ('${username}')`);
       const banneduser = await pool.query(`UPDATE usr SET banned = '1' WHERE username = '${username}'`);
+      res.redirect('/admin');
+
+    }catch(err) {
+    }
+  });
+  app.post('/unbanuser', async (req, res) => {
+    var username = req.body.username;
+    console.log(username);
+  
+    try{
+      // await pool.query(`DELETE FROM usr WHERE username='${username}'`);
+      // const banneduser = await pool.query(`INSERT INTO banned (username) VALUES ('${username}')`);
+      const banneduser = await pool.query(`UPDATE usr SET banned = '0' WHERE username = '${username}'`);
       res.redirect('/admin');
 
     }catch(err) {
@@ -157,14 +183,22 @@ app.post('/loginn', async(req,res)=>{
 	const countResult ={'results': (count)?count.rows:null};
 	req.session.user = results;
 	val=req.session.user;
-	if (countResult['results'][0].count==0 || results['results'][0].banned == 1){
-		res.render('pages/loginIncorrect')  
-	  }else{
+	if (countResult['results'][0].count == 0 ) {
+    res.render('pages/loginincorrect') 
+  }
+  else if(results['results'][0].banned == 1) {
+    req.session.destroy((err) => {
+      if(err) {
+          return console.log(err);
+      }
+      res.render('pages/bannedscreen') 
+   });
+  }
+    else{
 		if(results['results'][0].adminid == 1){
 		  req.session.isAdmin = 1;
 		}
 		res.redirect('/');
-		//res.render('pages/', val)
 	}
 })
 
