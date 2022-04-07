@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString: 'postgres://postgres:sanjit12@localhost/users'
+  connectionString: 'postgres://postgres:123456789@localhost/proj'
   // ssl: {
   //  rejectUnauthorized: false
   // }
@@ -463,6 +463,32 @@ app.get('/testTrending', function(req, res) {
     res.json(results);
   })
 });
+
+
+//------------------- Trending TV Shows --------------->
+app.get('/tv_trending',async(req,res)=>{
+  if (typeof req.session.user === 'undefined') {
+    res.redirect('loginn')
+  }else{
+  try{
+ 
+    const base_url="https://api.themoviedb.org/3/tv/popular?"
+    const url=base_url+api_key+"&language=en-US&page=1"
+    const img_url="https://image.tmdb.org/t/p/w154/"
+    await fetch(url).then(res=>res.json()).then(data=>{
+      results=data.results.slice(0, 10);
+      res.render('pages/tv_trending',{data: {user:val},results});
+    })
+  }
+  catch(err){
+    res.send(err);
+  }
+}
+})
+
+
+
+
 
 // ----------- SUBMIT RATING -----------  
 app.post('/submitrating', async(req,res) => {

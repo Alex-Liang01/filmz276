@@ -2,18 +2,18 @@
 <html>
 	<head>
 		<title>FilmZ</title>
-		<link href="/stylesheets/trending.css" rel="stylesheet" type="text/css">
+		<link href="/stylesheets/tv_trending.css" rel="stylesheet" type="text/css">
 	</head>
 	<%- include ("header.ejs") %>
 	<body class="text-white" style="background-color:#181818;">
 
 		<div class="flex items-center justify-center"> 
-			<div class="w-full max-w-6xl">
+			<div class="w-full max-w-6xl"> 
 
-		<h2 class="text-3xl">Trending Movies</h2>
+		<h2 class="text-3xl">Trending TV Shows</h2>
 	<% results.forEach(function(r) { %>
 	 <div class="flex items-center justify-center"> 
-		 <div class="w-full max-w-6xl">
+		 <div class="w-full max-w-6xl"> 
 			<div class="mt-4">
 				<div class="flex overflow-hidden my-4">
 					
@@ -22,15 +22,15 @@
 			
 					<tr>
 						<div class="p-2" style="background-color:#282828;">
-						<h2 class="text"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
-							<%=r.title%></a></h2>
+						<h2 class="text"><a href="/tvshow/" onclick="location.href=this.href+<%=r.id%>;return false">
+							<%=r.name%></a></h2>
 						<h2 class="text">Rating: <%=r.vote_average %></h2>
 					</div>
 					</tr>
 					<tr>
 						<div class="p-2" style="background-color:#282828;">
-						<td class="image"><a href="/movie/" onclick="location.href=this.href+<%=r.id%>;return false">
-							<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.title%>"></a></td>
+						<td class="image"><a href="/tvshow/" onclick="location.href=this.href+<%=r.id%>;return false">
+							<image src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>"  alt="<%=r.name%>"></a></td>
 						<td class="text"><%=r.overview %></td>
 					</div>
 					</tr>
