@@ -11,10 +11,16 @@
       <form action="/signedup" method="post">
         <h1>Don't Miss Out on FilmZ!</h1>
         <h2>Sign up Now!</h2>
-
+        <% if (flag == 1) { %>
+          <h3>That email is already in use!</h3>
+        <% } %>
+        <% if (flag == 2) { %>
+            <h3>Sorry, Your username is already taken!</h3>
+        <% } %>
         <div class="line"></div>
 
         <div class="information">
+         
           <div>
             <input
               type="text"
