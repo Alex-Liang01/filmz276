@@ -1,16 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-<<<<<<< HEAD
-  connectionString: 'postgres://postgres:123456789@localhost/proj'
-  // ssl: {
-  //  rejectUnauthorized: false
-  // }
-=======
   connectionString: process.env.DATABASE_URL,
   ssl: {
    rejectUnauthorized: false
   }
->>>>>>> e0eddae34aeb97440e24f93c22e4c1cee1112caa
 })
 var cors = require("cors") 
 
@@ -48,7 +41,6 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 app.get('/signup',(req,res)=>{
   let flag=0;
-  console.log(flag)
     res.render('pages/signup',{flag})
 })
 
