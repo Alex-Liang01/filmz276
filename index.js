@@ -210,15 +210,9 @@ app.post('/loginn', async(req,res)=>{
     res.render('pages/loginIncorrect') 
   }
   else if(results['results'][0].banned == 1) {
-    req.session.destroy((err) => {
-      if(err) {
-          return console.log(err);
-      }else{
-        res.render('pages/bannedscreen')
-      } 
-   });
+      res.render('pages/bannedscreen')
   }
-    else{
+  else{
       req.session.user = results;
       val=req.session.user;
 		  if(results['results'][0].adminid == 1){
