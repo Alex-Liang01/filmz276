@@ -352,6 +352,7 @@ app.post('/logout', async(req,res) => {
     }
   }
   })
+  //-------------- TOP 10 MOVIES ------------->
   app.get('/TMDB_10',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
@@ -372,6 +373,7 @@ app.post('/logout', async(req,res) => {
   }
   })
   
+  //---------------- TOP 10 TV SHOWS ----------------->
   app.get('/TMDB_10_TV',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
@@ -403,6 +405,7 @@ app.post('/logout', async(req,res) => {
       })
   });
 
+  //--------------------- Trending Movies ----------------->
   app.get('/trending',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
@@ -478,6 +481,28 @@ app.get('/tv_trending',async(req,res)=>{
     await fetch(url).then(res=>res.json()).then(data=>{
       results=data.results.slice(0, 10);
       res.render('pages/tv_trending',{data: {user:val},results});
+    })
+  }
+  catch(err){
+    res.send(err);
+  }
+}
+})
+
+
+//------------------- Trending Actors --------------->
+app.get('/actors',async(req,res)=>{
+  if (typeof req.session.user === 'undefined') {
+    res.redirect('loginn')
+  }else{
+  try{
+ 
+    const base_url="https://api.themoviedb.org/3/person/popular?"
+    const url=base_url+api_key+"&language=en-US&page=1"
+    const img_url="https://image.tmdb.org/t/p/w154/"
+    await fetch(url).then(res=>res.json()).then(data=>{
+      results=data.results.slice(0, 10);
+      res.render('pages/actors',{data: {user:val},results});
     })
   }
   catch(err){
