@@ -1,9 +1,9 @@
 const { Pool } = require('pg');
 var pool = new Pool({
-  connectionString: 'postgres://postgres:sanjit12@localhost/users'
-  // ssl: {
-  //  rejectUnauthorized: false
-  // }
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+   rejectUnauthorized: false
+  }
 })
 var cors = require("cors") 
 
@@ -437,6 +437,16 @@ app.post('/logout', async(req,res) => {
       })
   });
 
+  app.get('/test_Tv_10', function(req, res) {
+    const base_url="https://api.themoviedb.org/3/tv/top_rated?"
+      const url=base_url+api_key+"&language=en-US&page=1"
+      const img_url="https://image.tmdb.org/t/p/w500/"
+      fetch(url).then(res=>res.json()).then(data=>{
+        results=data.results.slice(0, 10);
+        res.json(results);
+      })
+  });
+
   app.get('/trending',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('loginn')
@@ -497,6 +507,40 @@ app.get('/testTrending', function(req, res) {
     res.json(results);
   })
 });
+
+
+//------------------- Trending TV Shows --------------->
+app.get('/tv_trending',async(req,res)=>{
+  if (typeof req.session.user === 'undefined') {
+    res.redirect('loginn')
+  }else{
+  try{
+ 
+    const base_url="https://api.themoviedb.org/3/tv/popular?"
+    const url=base_url+api_key+"&language=en-US&page=1"
+    const img_url="https://image.tmdb.org/t/p/w154/"
+    await fetch(url).then(res=>res.json()).then(data=>{
+      results=data.results.slice(0, 10);
+      res.render('pages/tv_trending',{data: {user:val},results});
+    })
+  }
+  catch(err){
+    res.send(err);
+  }
+}
+})
+
+app.get('/testTrendingTv', function(req, res) {
+  const base_url="https://api.themoviedb.org/3/tv/popular?"
+  const url=base_url+api_key+"&language=en-US&page=1"
+  const img_url="https://image.tmdb.org/t/p/w154/"
+  fetch(url).then(res=>res.json()).then(data=>{
+    results=data.results.slice(0, 10);
+    res.json(results);
+  })
+  
+});
+
 
 // ----------- SUBMIT RATING -----------  
 app.post('/submitrating', async(req,res) => {
@@ -583,8 +627,10 @@ app.post('/submitrating', async(req,res) => {
       results=data
       res.json(results);
     })
-});
+  });
+
   us=[];
+  
   app.post('/testSignup', function(req, res) {
     signup_query=`....`
     //`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender) VALUES ('${username}','${password}','${firstname}','${lastname}','${email}','${birthday}','${gender}')`
@@ -644,8 +690,18 @@ app.post('/submitrating', async(req,res) => {
       })
   });
 
+  app.get('/test_TvIdFail', function(req, res) {
+    fetch("https://api.themoviedb.org/3/tv/10000000000000?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{
+      if(data.success==false){
+        res.json(data)
+        return;
+      }
+      results=data
+      res.json(results);
+    })
+});
 
-// ----------- MOVIE PAGE -----------
+  // ----------- MOVIE PAGE -----------
   app.get('/movie/:id',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('/loginn')
@@ -701,6 +757,30 @@ app.post('/submitrating', async(req,res) => {
       res.send(err);
     }
   }
+  })
+
+  //Rendering main page for all other endpoints
+  app.get('*',async(req,res)=>{
+    if (typeof req.session.user === 'undefined') {
+      res.redirect('loginn')
+    }
+    else{
+    try {
+  
+      const base_url="https://api.themoviedb.org/3/movie/popular?"
+      const url=base_url+api_key+"&language=en-US&page=1"
+      const img_url="https://image.tmdb.org/t/p/w500/"
+      await fetch(url).then(res=>res.json()).then(data=>{
+        results=data.results.slice(0, 10);
+        res.render('pages/',{data: {user:val},results});
+      })
+  
+    }
+    catch(err){
+      res.send(err);
+    }
+  }
+    
   })
 
   module.exports = app;
