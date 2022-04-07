@@ -216,10 +216,10 @@ app.post('/loginn', async(req,res)=>{
       req.session.user = results;
       val=req.session.user;
 		  if(results['results'][0].adminid == 1){
-		  req.session.isAdmin = 1;
-		  }else{
+		    req.session.isAdmin = 1;
+		  }
 		  res.redirect('/');
-      }
+      
 	}
 })
 
