@@ -6,79 +6,22 @@
 	</head>
 	<%- include ("header.ejs") %>
 	<body class="text-white" style="background-color:#181818;">
-<!--
-	<div class="mt-4">
-		<h2 class="text-3xl">Top Rated</h2>
-		<div class="flex overflow-hidden my-4">
-			<div class="card_item flex-none shadow-lg px-1">
-				<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
-				<div class="p-2" style="background-color:#282828;">
-					<div class="overflow-hidden" style="height:5rem;">
-						<h2 class="whitespace-no-wrap overflow-hidden font-bold text-lg">lorem ipsum dolor sit amet</h2>
-						<p class="leading-tight text-sm">ucoligic dadido nac va apenevu ra niquega fahasot cohadah ci</p>
-					</div>
-					<div><b>4.9</b></div>
-				</div>
-			</div>
-			<div class="card_item flex-none shadow-lg px-1">
-				<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
-				<div class="p-2" style="background-color:#282828;">
-					<div class="overflow-hidden" style="height:5rem;">
-						<h2 class="whitespace-no-wrap overflow-hidden font-bold text-lg">lorem ipsum dolor sit amet</h2>
-						<p class="leading-tight text-sm">lorem ipsum dolor sit amet consectetur elit ucoligic dadido nac va apenevu ra niquega fahasot cohadah ci, yu manesie bipanie imey fo reve se.</p>
-					</div>
-					<div><b>4.9</b></div>
-				</div>
-			</div>
-			<div class="card_item flex-none shadow-lg px-1">
-				<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
-				<div class="p-2" style="background-color:#282828;">
-					<div class="overflow-hidden" style="height:5rem;">
-						<h2 class="whitespace-no-wrap overflow-hidden font-bold text-lg">lorem ipsum dolor sit amet</h2>
-						<p class="leading-tight text-sm">ucoligic dadido nac va apenevu ra niquega fahasot cohadah ci</p>
-					</div>
-					<div><b>4.9</b></div>
-				</div>
-			</div>
-			<div class="card_item flex-none shadow-lg px-1">
-				<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
-				<div class="p-2" style="background-color:#282828;">
-					<div class="overflow-hidden" style="height:5rem;">
-						<h2 class="whitespace-no-wrap overflow-hidden font-bold text-lg">lorem ipsum dolor sit amet</h2>
-						<p class="leading-tight text-sm">ucoligic dadido nac va apenevu ra niquega fahasot cohadah ci</p>
-					</div>
-					<div><b>4.9</b></div>
-				</div>
-			</div>
-			<div class="card_item flex-none shadow-lg px-1">
-				<img src="interstelar.jpg" alt="Interstellar Poster" style="width:100%; display:block;">
-				<div class="p-2" style="background-color:#282828;">
-					<div class="overflow-hidden" style="height:5rem;">
-						<h2 class="whitespace-no-wrap overflow-hidden font-bold text-lg">lorem ipsum dolor sit amet</h2>
-						<p class="leading-tight text-sm">ucoligic dadido nac va apenevu ra niquega fahasot cohadah ci</p>
-					</div>
-					<div><b>4.9</b></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
--->
 
-<div class="b">
-
-</div>
 
 
 <div class="flex items-center justify-center"> 
-	<div class="w-full max-w-6xl"> 
-		
+	<div class="w-full max-w-6xl">
+
+<h5 class="text-5xl"> Welcome to Filmz!</h5>
+<h4 class="text-xl"> Filmz is a new and improved movie rating software.
+	Our mission is to provide reliable audience-based information about
+	your favourite movies! We offer our users from around the world 
+	the opportunity to leave their own ratings and reviews on their
+	favourite movies and share it with other users.
+</h4>
+
 <h2 class="text-4xl"> Top Trending Movie Right Now:</h2>
 <a class="text-3xl" href="/trending"> Find Other Trending Movies Here </a>
-
-
-
 
 	 <div class="flex items-center justify-center"> 
 		 <div class="w-full max-w-6xl"> 
@@ -103,11 +46,36 @@
 					</div>
 					</tr>
 					</div>
-					
-					<!-- </div> -->
 					</div>
 				</div>
-			<!-- </div> -->
+			</div>
+
+		<div class="flex items-center justify-center"> 
+			<div class="w-full max-w-6xl"> 
+			<div class="mt-4">
+				<div class="flex overflow-hidden my-4">
+								
+					<div>
+					<table style="width:80%">
+						
+					<tr>
+						<h2 class="text-4xl"> Top Rated Movies Right Now:</h2>
+						<a class="text-3xl" href="/TMDB_10"> Find Other Top Rated Movies Here </a>	
+						<h2 class="text-3xl" class="text"><a href="/movie/" onclick="location.href=this.href+<%=results2[0].id%>;return false">
+							<%=results2[0].title%></a></h2>
+										
+					</div>
+					</tr>
+					<tr>
+									
+						<td class="image"><a href="/movie/" onclick="location.href=this.href+<%=results[0].id%>;return false">
+										<img src="https://image.tmdb.org/t/p/w154/<%=results2[0].poster_path%>"  alt="<%=results2[0].title%>"></a></td>
+						<td class="text"><%=results2[0].overview %></td>
+					</div>
+					</tr>
+					</div>
+					</div>
+				</div>
 			</div>
 
     </body>
