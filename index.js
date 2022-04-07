@@ -205,8 +205,7 @@ app.post('/loginn', async(req,res)=>{
 	const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE username = '${un}' AND password = '${pw}'`);
 	const results = { 'results': (result) ? result.rows : null};
 	const countResult ={'results': (count)?count.rows:null};
-	req.session.user = results;
-	val=req.session.user;
+
 	if (countResult['results'][0].count == 0 ) {
     res.render('pages/loginincorrect') 
   }
@@ -219,6 +218,8 @@ app.post('/loginn', async(req,res)=>{
    });
   }
     else{
+      req.session.user = results;
+      val=req.session.user;
 		if(results['results'][0].adminid == 1){
 		  req.session.isAdmin = 1;
 		}
