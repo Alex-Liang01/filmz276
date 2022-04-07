@@ -1,9 +1,16 @@
 const { Pool } = require('pg');
 var pool = new Pool({
+<<<<<<< HEAD
   connectionString: 'postgres://postgres:123456789@localhost/proj'
   // ssl: {
   //  rejectUnauthorized: false
   // }
+=======
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+   rejectUnauthorized: false
+  }
+>>>>>>> e0eddae34aeb97440e24f93c22e4c1cee1112caa
 })
 var cors = require("cors") 
 
@@ -40,7 +47,9 @@ app.set('view engine', 'ejs')
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 app.get('/signup',(req,res)=>{
-    res.render('pages/signup')
+  let flag=0;
+  console.log(flag)
+    res.render('pages/signup',{flag})
 })
 
 // ----------- MAIN PAGE -----------
@@ -107,33 +116,41 @@ app.post('/signedup',async(req,res)=>{
       let username=req.body.username; let password=req.body.password; let firstname=req.body.firstname; 
       let lastname=req.body.lastname; let email =req.body.email;
       let birthday=req.body.birthday; let gender=req.body.gender;
-
-      const result = await pool.query(`SELECT * FROM usr WHERE email = '${email}'`); 
-      const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE email = '${email}' AND banned = 1`);
-      const results = { 'results': (result) ? result.rows : null};
-      req.session.user = results;
-      val=req.session.user;
-      // if(results['results'][0].banned == 1) {
-      //   req.session.destroy((err) => {
-      //     if(err) {
-      //         return console.log(err);
-      //     }
-      //     res.render('pages/bannedscreen') 
-      //  });
-      // }
-      if(count == 1) {
-        req.session.destroy((err) => {
-          if(err) {
-            return console.log(err);
-          }
-          return res.render('pages/bannedscreen') 
-       });
-      }
-      else {
-        const newuser= await pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender, banned) VALUES ('${username}','${password}','${firstname}',
-        '${lastname}','${email}','${birthday}','${gender}', 0)`);
-        res.render('pages/thankyou');
-      }
+      var banned = `SELECT * FROM usr WHERE email = '${email}' AND banned = 1`;
+      await pool.query(banned, (error,result) => {
+				if (error){
+					res.end(error);
+        }
+        if(result.rows.length==1){
+				  return(res.render('pages/bannedscreen'))
+        }else{
+          var userExist=`SELECT * FROM usr WHERE email = '${email}'`;
+          pool.query(userExist, (error,results) => {
+            if (error){
+              res.end(error);
+            }
+            if(results.rows.length==1){
+              var flag=1;
+              res.render('pages/signup',{flag})
+            }else{
+              var userExist=`SELECT * FROM usr WHERE username = '${username}'`;
+              pool.query(userExist, (error,results) => {
+                if (error){
+                  res.end(error);
+                }
+                if(results.rows.length==1){
+                  flag=2;
+                  res.render('pages/signup',{flag})
+                }else{
+                  const newuser=pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender, banned) VALUES ('${username}','${password}','${firstname}',
+                  '${lastname}','${email}','${birthday}','${gender}', 0)`);
+                  res.render('pages/thankyou');
+                }
+              })
+            }
+          })
+        }
+      })
     }
     catch(err){
       res.send("Error" + err);
@@ -142,7 +159,7 @@ app.post('/signedup',async(req,res)=>{
 
   app.post('/banuser', async (req, res) => {
     var username = req.body.username;
-    console.log(username);
+   
   
     try{
       // await pool.query(`DELETE FROM usr WHERE username='${username}'`);
@@ -155,7 +172,7 @@ app.post('/signedup',async(req,res)=>{
   });
   app.post('/unbanuser', async (req, res) => {
     var username = req.body.username;
-    console.log(username);
+  
   
     try{
       // await pool.query(`DELETE FROM usr WHERE username='${username}'`);
@@ -195,24 +212,21 @@ app.post('/loginn', async(req,res)=>{
 	const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE username = '${un}' AND password = '${pw}'`);
 	const results = { 'results': (result) ? result.rows : null};
 	const countResult ={'results': (count)?count.rows:null};
-	req.session.user = results;
-	val=req.session.user;
+
 	if (countResult['results'][0].count == 0 ) {
-    res.render('pages/loginincorrect') 
+    res.render('pages/loginIncorrect') 
   }
   else if(results['results'][0].banned == 1) {
-    req.session.destroy((err) => {
-      if(err) {
-          return console.log(err);
-      }
-      res.render('pages/bannedscreen') 
-   });
+      res.render('pages/bannedscreen')
   }
-    else{
-		if(results['results'][0].adminid == 1){
-		  req.session.isAdmin = 1;
-		}
-		res.redirect('/');
+  else{
+      req.session.user = results;
+      val=req.session.user;
+		  if(results['results'][0].adminid == 1){
+		    req.session.isAdmin = 1;
+		  }
+		  res.redirect('/');
+      
 	}
 })
 
