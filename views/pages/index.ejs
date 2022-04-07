@@ -7,24 +7,50 @@
 	<%- include ("header.ejs") %>
 	<body class="text-white" style="background-color:#181818;">
 
-<div class="b">
-
-</div>
 
 
 <div class="flex items-center justify-center"> 
-	<div class="w-full max-w-6xl"> 
-		
-<h2 class="text-4xl"> Top Trending Movie Right Now:</h2>
-<a class="text-3xl" href="/trending"> Find Other Trending Movies Here </a>
+	<div class="w-full max-w-6xl">
 
+<div class="p-2" style="background-color:#282828;">
+	<div class="b" style="background-color:#363940;">
+<h5 class="text-6xl" style="text-decoration: underline;"> Welcome to Filmz!</h5>
+<h4 class="text-xl"> Filmz is an all in one stop for movie and tv watchers alike! Our database allows for all users to access previous ratings and reviews in addition to allowing you to write your own reviews! Our mission is to provide reliable audience-based information about your favorite movies!
+<h6 class="text-xl"> 
+	Want to leave a review? Simply click on your favorite movie or show and type out your opinions! Don’t forget to leave a star rating as this will help us rate shows for other customers! 
+<div class="spacing"></div>
+	<div  class="w-full justify-center items-center flex py-1" style="background-image:linear-gradient(#282828, #282828);">
+	<div class="w-full justify-center items-center flex py-3">
+		<div class="w-full max-w-3xl flex justify-between items-center">
+			<div class="flex items-center">
 
+	<div class="px-4" style="color:#adadad;"><a class="flex text-sm hover:text-blue-300" href="/trending">Trending Movies</a></div>
+	<div class="px-4" style="color:#adadad;"><a class="flex text-sm hover:text-blue-300" href="/upcoming">Upcoming Movies</a></div>
+	<div class="px-4" style="color:#adadad;"><a class="flex text-sm hover:text-blue-300" href="/TMDB_10">Top Rated Movies</a></div>
+	<div class="px-4" style="color:#adadad;"><a class="flex text-sm hover:text-blue-300" href="/TMDB_10_TV">Top Rated TV Shows</a></div>
+	<div class="px-4" style="color:#adadad;"><a class="flex text-sm hover:text-blue-300" href="/tv_trending">Trending TV Shows</a></div>
+</h4>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
+<div class="spacing"></div>
+
+<div class="flex items-center justify-center"> 
+	<div class="w-full max-w-6xl">
+
+		<div class="p-2" style="background-color:#282828;">
+			
+<a class="text-3xl" href="/trending"> Trending Right Now: </a>
 
 	 <div class="flex items-center justify-center"> 
 		 <div class="w-full max-w-6xl"> 
 			<div class="mt-4">
 				<div class="flex overflow-hidden my-4">
+					
 					
 					<div>
 						<table style="width:80%">
@@ -37,6 +63,7 @@
 					</div>
 					</tr>
 					<tr>
+
 						
 						<td class="image"><a href="/movie/" onclick="location.href=this.href+<%=results[0].id%>;return false">
 							<img src="https://image.tmdb.org/t/p/w154/<%=results[0].poster_path%>"  alt="<%=results[0].title%>"></a></td>
@@ -44,11 +71,36 @@
 					</div>
 					</tr>
 					</div>
-					
-					<!-- </div> -->
 					</div>
 				</div>
-			<!-- </div> -->
+			</div>
+			</div>
+
+		<div class="flex items-center justify-center"> 
+			<div class="w-full max-w-6xl"> 
+			<div class="mt-4">
+				<div class="flex overflow-hidden my-4">
+								
+					<div>
+					<table style="width:80%">
+						
+					<tr>
+						<a class="text-3xl" href="/TMDB_10"> Top Rated Movies Right Now: </a>	
+						<h2 class="text-3xl" class="text"><a href="/movie/" onclick="location.href=this.href+<%=results2[0].id%>;return false">
+							<%=results2[0].title%></a></h2>
+										
+					</div>
+					</tr>
+					<tr>
+									
+						<td class="image"><a href="/movie/" onclick="location.href=this.href+<%=results[0].id%>;return false">
+										<img src="https://image.tmdb.org/t/p/w154/<%=results2[0].poster_path%>"  alt="<%=results2[0].title%>"></a></td>
+						<td class="text"><%=results2[0].overview %></td>
+					</div>
+					</tr>
+					</div>
+					</div>
+				</div>
 			</div>
 
     </body>

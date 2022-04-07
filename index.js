@@ -52,19 +52,23 @@ app.get('/',async(req,res)=>{
 	try {
 
     const base_url="https://api.themoviedb.org/3/movie/popular?"
+    const base_url2="https://api.themoviedb.org/3/movie/top_rated?"
     const url=base_url+api_key+"&language=en-US&page=1"
+    const url2=base_url2+api_key+"&language=en-US&page=1"
     const img_url="https://image.tmdb.org/t/p/w500/"
     await fetch(url).then(res=>res.json()).then(data=>{
       results=data.results.slice(0, 10);
-      res.render('pages/',{data: {user:val},results});
-    })
 
-	}
+      fetch(url2).then(res=>res.json()).then(data=>{
+        results2=data.results.slice(0,10);
+        res.render('pages/',{data: {user:val},results});
+      })
+    })
+  }
   catch(err){
     res.send(err);
   }
 }
-  
 })
 
 // ----------- ACCOUNT PAGE -----------
@@ -103,17 +107,40 @@ app.post('/signedup',async(req,res)=>{
       let username=req.body.username; let password=req.body.password; let firstname=req.body.firstname; 
       let lastname=req.body.lastname; let email =req.body.email;
       let birthday=req.body.birthday; let gender=req.body.gender;
-      const newuser= await pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender) VALUES ('${username}','${password}','${firstname}',
-      '${lastname}','${email}','${birthday}','${gender}')`);
-      res.render('pages/thankyou');
+
+      const result = await pool.query(`SELECT * FROM usr WHERE email = '${email}'`); 
+      const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE email = '${email}' AND banned = 1`);
+      const results = { 'results': (result) ? result.rows : null};
+      req.session.user = results;
+      val=req.session.user;
+      // if(results['results'][0].banned == 1) {
+      //   req.session.destroy((err) => {
+      //     if(err) {
+      //         return console.log(err);
+      //     }
+      //     res.render('pages/bannedscreen') 
+      //  });
+      // }
+      if(count == 1) {
+        req.session.destroy((err) => {
+          if(err) {
+            return console.log(err);
+          }
+          return res.render('pages/bannedscreen') 
+       });
       }
-    //}
+      else {
+        const newuser= await pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender, banned) VALUES ('${username}','${password}','${firstname}',
+        '${lastname}','${email}','${birthday}','${gender}', 0)`);
+        res.render('pages/thankyou');
+      }
+    }
     catch(err){
       res.send("Error" + err);
     }
   })
 
-  app.post('/deleteuser', async (req, res) => {
+  app.post('/banuser', async (req, res) => {
     var username = req.body.username;
     console.log(username);
   
@@ -121,6 +148,19 @@ app.post('/signedup',async(req,res)=>{
       // await pool.query(`DELETE FROM usr WHERE username='${username}'`);
       // const banneduser = await pool.query(`INSERT INTO banned (username) VALUES ('${username}')`);
       const banneduser = await pool.query(`UPDATE usr SET banned = '1' WHERE username = '${username}'`);
+      res.redirect('/admin');
+
+    }catch(err) {
+    }
+  });
+  app.post('/unbanuser', async (req, res) => {
+    var username = req.body.username;
+    console.log(username);
+  
+    try{
+      // await pool.query(`DELETE FROM usr WHERE username='${username}'`);
+      // const banneduser = await pool.query(`INSERT INTO banned (username) VALUES ('${username}')`);
+      const banneduser = await pool.query(`UPDATE usr SET banned = '0' WHERE username = '${username}'`);
       res.redirect('/admin');
 
     }catch(err) {
@@ -157,14 +197,22 @@ app.post('/loginn', async(req,res)=>{
 	const countResult ={'results': (count)?count.rows:null};
 	req.session.user = results;
 	val=req.session.user;
-	if (countResult['results'][0].count==0 || results['results'][0].banned == 1){
-		res.render('pages/loginIncorrect')  
-	  }else{
+	if (countResult['results'][0].count == 0 ) {
+    res.render('pages/loginincorrect') 
+  }
+  else if(results['results'][0].banned == 1) {
+    req.session.destroy((err) => {
+      if(err) {
+          return console.log(err);
+      }
+      res.render('pages/bannedscreen') 
+   });
+  }
+    else{
 		if(results['results'][0].adminid == 1){
 		  req.session.isAdmin = 1;
 		}
 		res.redirect('/');
-		//res.render('pages/', val)
 	}
 })
 
@@ -600,8 +648,10 @@ app.post('/submitrating', async(req,res) => {
       results=data
       res.json(results);
     })
-});
+  });
+
   us=[];
+  
   app.post('/testSignup', function(req, res) {
     signup_query=`....`
     //`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender) VALUES ('${username}','${password}','${firstname}','${lastname}','${email}','${birthday}','${gender}')`
@@ -661,8 +711,18 @@ app.post('/submitrating', async(req,res) => {
       })
   });
 
+  app.get('/test_TvIdFail', function(req, res) {
+    fetch("https://api.themoviedb.org/3/tv/10000000000000?api_key=430a4dbae6e33d3664541b0199ae6a38&language=en-US").then(res=>res.json()).then(data=>{
+      if(data.success==false){
+        res.json(data)
+        return;
+      }
+      results=data
+      res.json(results);
+    })
+});
 
-// ----------- MOVIE PAGE -----------
+  // ----------- MOVIE PAGE -----------
   app.get('/movie/:id',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
       res.redirect('/loginn')
@@ -718,6 +778,30 @@ app.post('/submitrating', async(req,res) => {
       res.send(err);
     }
   }
+  })
+
+  //Rendering main page for all other endpoints
+  app.get('*',async(req,res)=>{
+    if (typeof req.session.user === 'undefined') {
+      res.redirect('loginn')
+    }
+    else{
+    try {
+  
+      const base_url="https://api.themoviedb.org/3/movie/popular?"
+      const url=base_url+api_key+"&language=en-US&page=1"
+      const img_url="https://image.tmdb.org/t/p/w500/"
+      await fetch(url).then(res=>res.json()).then(data=>{
+        results=data.results.slice(0, 10);
+        res.render('pages/',{data: {user:val},results});
+      })
+  
+    }
+    catch(err){
+      res.send(err);
+    }
+  }
+    
   })
 
   module.exports = app;

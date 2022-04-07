@@ -1,5 +1,6 @@
 var chai = require('chai');
 var chaiHttp = require('chai-http');
+const { shallowCopyFromList } = require('ejs/lib/utils');
 var server = require('../index');
 var should = chai.should(); 
 
@@ -41,7 +42,29 @@ describe('Test admin',function() {
       });
     });
 });
-
+//
+describe('Top 10 Tv shows test', function() {
+  it('should list top 10 rated tv shows on TMDB on /test_Tv_10 GET', function(done){
+    chai.request(server).get('/test_Tv_10').end(function(err,res){
+      res.should.have.status(200);
+      res.should.be.json;
+      var num_movies=res.body.length;
+      num_movies.should.equal(10);
+      res.body[0].should.have.property('name')
+      res.body[0].should.have.property('backdrop_path')
+      res.body[0].should.have.property('id')
+      res.body[0].should.have.property('original_language')
+      res.body[0].should.have.property('overview')
+      res.body[0].should.have.property('popularity')
+      res.body[0].should.have.property('poster_path')
+      res.body[0].should.have.property('first_air_date')
+      res.body[0].should.have.property('vote_average')
+      res.body[0].should.have.property('vote_count')
+      done();
+    });
+  });
+    
+});
 describe('TMDB_10 test', function() {
   it('should list top 10 rated movies on TMDB on /test_TMDB_10 GET', function(done){
     chai.request(server).get('/test_TMDB_10').end(function(err,res){
@@ -88,6 +111,28 @@ describe('Trending Movies test', function() {
       res.body[0].should.have.property('poster_path')
       res.body[0].should.have.property('release_date')
       res.body[0].should.have.property('video')
+      res.body[0].should.have.property('vote_average')
+      res.body[0].should.have.property('vote_count')
+      done();
+    });
+  });
+});
+
+describe('Trending Tv shows test', function() {
+  it('should list 10 Tv shows on TMDB on /testTrendingTv GET', function(done){
+    chai.request(server).get('/testTrendingTv').end(function(err,res){
+      res.should.have.status(200);
+      res.should.be.json;
+      var num_movies=res.body.length;
+      num_movies.should.equal(10);
+      res.body[0].should.have.property('name')
+      res.body[0].should.have.property('backdrop_path')
+      res.body[0].should.have.property('id')
+      res.body[0].should.have.property('original_language')
+      res.body[0].should.have.property('overview')
+      res.body[0].should.have.property('popularity')
+      res.body[0].should.have.property('poster_path')
+      res.body[0].should.have.property('first_air_date')
       res.body[0].should.have.property('vote_average')
       res.body[0].should.have.property('vote_count')
       done();
@@ -176,6 +221,18 @@ describe('CanNotFindMovie', function() {
           done();
         });
       });
+});
+
+describe('CanNotFindTvShow', function() {
+  it('should not give a tv show with the correct TMDB tv show id on /test_TvIdFail GET as it does not exist', function(done){
+      chai.request(server).get('/test_TvIdFail').end(function(err,res){
+        res.body.should.be.a("object")
+        res.body.should.have.property('success')
+        res.body.should.have.property('status_message')
+        res.body.should.have.property('status_code')
+        done();
+      });
+    });
 });
 
 describe('Similar Movies', function() {

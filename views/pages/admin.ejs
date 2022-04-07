@@ -17,7 +17,7 @@
           <th>EMAIL</th>
           <th>BIRTHDAY</th>
           <th>GENDER</th>
-          <th>BANNED</th>
+          <th>BANNED <br>0 = Not Banned <br>1 = Banned</th></th>
         </tr>
         <% data.userlist.rows.forEach(function(r) { %>
 			<tr>
@@ -35,14 +35,20 @@
       </table>
     </center>
 
-    <p class = "header2">Delete User</p>
-    <form class="header1" action="/deleteuser" method="post">
-      <p class = "header2">Username:</p>
+    <p class = "header2">Ban User</p>
+    <form class="header1" action="/banuser" method="post">
+      <p class = "header1">Username:</p>
       <input class = "header1" type ="text" name="username" id="username" /></br>
-      <button class = "button1">Delete</button>
+      <button class = "button1">Ban</button>
     </form>
     </div>
-  </div>
+    <p class = "header2">Unban User</p>
+    <form class="header1" action="/unbanuser" method="post">
+      <p class = "header1">Username:</p>
+      <input class = "header1" type ="text" name="username" id="username" /></br>
+      <button class = "button1">Unban</button>
+    </form>
+    </div>
 
     <!--<script src="/script.js"></script>-->
   </body>
