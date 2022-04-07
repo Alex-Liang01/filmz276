@@ -104,22 +104,32 @@ app.post('/signedup',async(req,res)=>{
       let lastname=req.body.lastname; let email =req.body.email;
       let birthday=req.body.birthday; let gender=req.body.gender;
 
-      const result = await pool.query(`SELECT * FROM usr WHERE email = '${email}'`);
-      const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE email = '${email}'`);
+      const result = await pool.query(`SELECT * FROM usr WHERE email = '${email}'`); 
+      const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE email = '${email}' AND banned = 1`);
       const results = { 'results': (result) ? result.rows : null};
       req.session.user = results;
       val=req.session.user;
-      if(results['results'][0].banned == 1) {
+      // if(results['results'][0].banned == 1) {
+      //   req.session.destroy((err) => {
+      //     if(err) {
+      //         return console.log(err);
+      //     }
+      //     res.render('pages/bannedscreen') 
+      //  });
+      // }
+      if(count == 1) {
         req.session.destroy((err) => {
           if(err) {
-              return console.log(err);
+            return console.log(err);
           }
-          res.render('pages/bannedscreen') 
+          return res.render('pages/bannedscreen') 
        });
       }
-      const newuser= await pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender, banned) VALUES ('${username}','${password}','${firstname}',
-      '${lastname}','${email}','${birthday}','${gender}', 0)`);
-      res.render('pages/thankyou');
+      else {
+        const newuser= await pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender, banned) VALUES ('${username}','${password}','${firstname}',
+        '${lastname}','${email}','${birthday}','${gender}', 0)`);
+        res.render('pages/thankyou');
+      }
     }
     catch(err){
       res.send("Error" + err);
