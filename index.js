@@ -1,25 +1,10 @@
 const { Pool } = require('pg');
 var pool = new Pool({
 
-<<<<<<< HEAD
-  connectionString: 'postgres://postgres:123456789@localhost/proj'
-  // ssl: {
-  //  rejectUnauthorized: false
-  // }
-
-// =======
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: {
-//    rejectUnauthorized: false
-//   }
-// >>>>>>> 13f98ae76e5cce7db650bfa56dc4a0019f78e32b
-=======
   connectionString: process.env.DATABASE_URL,
   ssl: {
    rejectUnauthorized: false
   }
-
->>>>>>> f7898a3cc743db34fc48f1be8f6f6d56c1dc5c05
 })
 var cors = require("cors") 
 
