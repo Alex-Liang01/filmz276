@@ -129,10 +129,19 @@
 		</div>
 	</div>
 	<form class="similar">
-		<h2 class="box__title">TV Shows Similar to <%=results.title%></h2>
+
+		<div class="justify-center flex">
+			<div class="w-full max-w-6xl overflow-hidden p-4">
+
+		<h2 class="box__title" style="background-color:#282828;">TV Shows Similar to <%=results.title%></h2>
+		<section class="justify-center flex">
+			<div class="flex w-full max-w-6xl overflow-hidden p-4">
 		<div style="display: inline">	  
 	  		<% simResults.forEach(function(r) { %>
+
+		
 			<a href="/tvshow/" onclick="location.href=this.href+<%=r.id%>;return false">
+				<section class="justify-center flex">
 			<img src="https://image.tmdb.org/t/p/w154/<%=r.poster_path%>" class="image"  alt="<%=r.title%>"></a>
 		    <% }); %>
 		</div>
