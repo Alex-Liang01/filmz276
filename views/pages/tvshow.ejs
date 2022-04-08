@@ -2,7 +2,7 @@
 <head>
 	<link rel="stylesheet" type = "text/css" href="/stylesheets/movie.css">
 	<title><%=results.name%> | Filmz</title>
-	<script src="/scripts/moviepage.js" defer></script>
+	<script src="/scripts/tvshowpage.js" defer></script>
 </head>
 <body>
 	<%- include ("header.ejs") %>
@@ -58,7 +58,7 @@
 				</div>
 			</div>
 			<div class='flex border-t border-gray-400 pt-4'>
-					<form action="/submitrating" method="post" class='w-full'>
+					<form action="/submitrating_tv" method="post" class='w-full'>
 						<b class='text-xl'>Rate this TV show</b>
 						<div id='rateYo' data-rateyo-rating='0' data-rateyo-full-star='true' style="padding:0.5rem 0 0.5rem 0;"></div>
 						<div id='create-rating-area' class='hidden flex items-center border-b border-blue-500 pt-2'>
