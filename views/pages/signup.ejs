@@ -1,46 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FilmZ Signup</title>
+    <title>Sign up | FilmZ</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/signup.css" />
     <script src="/scripts/signupscript.js" defer></script>
   </head>
 
   <body>
+	<div class="container">
     <div class="all">
-      <form action="/signedup" method="post">
-        <h1>Don't Miss Out on FilmZ!</h1>
-        <h2>Sign up Now!</h2>
+	<h1>Don't Miss Out on FilmZ!</h1>
+        <!--<h2>Sign up Now!</h2>-->
         <% if (flag == 1) { %>
           <h3>That email is already in use!</h3>
         <% } %>
         <% if (flag == 2) { %>
             <h3>Sorry, Your username is already taken!</h3>
         <% } %>
-        <div class="line"></div>
+        <!--<div class="line"></div>-->
+      <form action="/signedup" method="post">
+        
 
         <div class="information">
          
-          <div>
-            <input
-              type="text"
-              class="firstname"
-              id="firstname"
-              name="firstname"
-              placeholder="First Name"
-              required
-            />
-            <input
-              type="text"
-              class="lastname"
-              id="lastname"
-              name="lastname"
-              placeholder="Last Name"
-              required
-            />
+          <div class="input-container">
+			<div>
+				<label>First name</label>
+				<input
+				  type="text"
+				  class="firstname"
+				  id="firstname"
+				  name="firstname"
+				  placeholder="First Name"
+				  required
+				/>
+			</div>
+			<div>
+				<label>Last name</label>
+				<input
+				  type="text"
+				  class="lastname"
+				  id="lastname"
+				  name="lastname"
+				  placeholder="Last Name"
+				  required
+				/>
+			</div>
           </div>
-
-          <div>
+		  <div class="label-input-box">
+			<label>Email address</label>
             <input
               type="text"
               class="email"
@@ -48,18 +56,11 @@
               name="email"
               placeholder="Email"
             />
-            <input
-              type="text"
-              class="confirmemail"
-              id="confirmemail"
-              name="confirmemail"
-              placeholder="Confirm Email"
-              onkeyup="matchemail(this)"
-              required
-            />
-          </div>
+		</div>
 
-          <div>
+          <div class="input-container">
+		  <div>
+		  <label>Birthday</label>
             <input
               type="date"
               class="birthdate"
@@ -68,20 +69,23 @@
               placeholder="Birthdate"
               required
             />
-          </div>
+			</div>
 
-          <p1> Gender </p1>
-          <p2> Birthdate</p2>
-          <div>
+          <!--<p1> Gender </p1>
+          <p2> Birthdate</p2>-->
+			<div>
+			<label>Gender</label>
             <select id="gender" class="gender" name="gender" required>
               <option disabled selected value>-- Select --</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
             </select>
+			</div>
           </div>
 
-          <div>
+          <div class="label-input-box">
+			<label>Choose username</label>
             <input
               type="text"
               class="username"
@@ -92,7 +96,8 @@
             />
           </div>
 
-          <div>
+          <div class="label-input-box">
+		  <label>Choose password</label>
             <input
               type="password"
               class="password"
@@ -103,7 +108,7 @@
             />
           </div>
 
-          <div>
+          <div class="label-input-box">
             <input
               type="password"
               class="confirmpassword"
@@ -118,15 +123,16 @@
 
           <output id="emailalert"></output>
 
-          <div>
-            <input type="submit" class="signup" id="signedup" value="SIGN UP" />
-          </div>
+          <center>
+            <button type="submit" class="signup" id="signedup" />Sign up</button>
+          </center>
 
-          <ul>
+          <center>
             <a href="/">Already Have an Account? </a>
-          </ul>
+          </center>
         </div>
       </form>
     </div>
+	</div>
   </body>
 </html>
