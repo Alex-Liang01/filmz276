@@ -434,7 +434,30 @@ app.post('/logout', async(req,res) => {
     }
   }
   })
+
+  //Testing top 10 rated tv shows
+  app.get('/test_Tv_10', function(req, res) {
+    const base_url="https://api.themoviedb.org/3/tv/top_rated?"
+      const url=base_url+api_key+"&language=en-US&page=1"
+      const img_url="https://image.tmdb.org/t/p/w500/"
+      fetch(url).then(res=>res.json()).then(data=>{
+        results=data.results.slice(0, 10);
+        res.json(results);
+      })
+  });
   
+  //Testing trending tv shows
+  app.get('/testTrendingTv', function(req, res) {
+    const base_url="https://api.themoviedb.org/3/tv/popular?"
+    const url=base_url+api_key+"&language=en-US&page=1"
+    const img_url="https://image.tmdb.org/t/p/w154/"
+    fetch(url).then(res=>res.json()).then(data=>{
+      results=data.results.slice(0, 10);
+      res.json(results);
+    })
+  
+  });
+
   //---------------- TOP 10 TV SHOWS ----------------->
   app.get('/TMDB_10_TV',async(req,res)=>{
     if (typeof req.session.user === 'undefined') {
