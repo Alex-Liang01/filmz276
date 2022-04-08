@@ -17,7 +17,7 @@
   margin-right: 10px;
   border: 5px solid #000;
   border-radius: 5px;
-  max-width: 100%;
+  max-width: 75%;
   background-color: #363940;
 }
 
@@ -35,6 +35,7 @@
   font-size: 40px;
   margin: 0 0 10px 0;
   color: #e9ecf3;
+  padding-left: 15px;
 }
 
 body {
@@ -65,11 +66,12 @@ input[type="submit"] {
 
 .similar{
   margin-top: 10px;
-  background-color: #363940;
+  background-color: #181818;
   margin-left: 10px;
   margin-right:10px;
 }
 .image{
   float:left;
   margin-left: 12px;
+  padding-top: 10px;
 }
