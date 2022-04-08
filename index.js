@@ -92,7 +92,7 @@ app.get('/admin', (req, res) => {
 			res.redirect('/')
 		}
 		else if (req.session.isAdmin == 1) {
-			var getUsersQuery = 'SELECT * FROM usr';
+			var getUsersQuery = 'SELECT * FROM usr ORDER BY uid';
 			pool.query(getUsersQuery, (error,result) => {
 				if (error)
 					res.end(error);
@@ -108,16 +108,16 @@ app.post('/signedup',async(req,res)=>{
       let username=req.body.username; let password=req.body.password; let firstname=req.body.firstname; 
       let lastname=req.body.lastname; let email =req.body.email;
       let birthday=req.body.birthday; let gender=req.body.gender;
-      var banned = `SELECT * FROM usr WHERE email = '${email}' AND banned = 1`;
-      await pool.query(banned, (error,result) => {
+      var banned = `SELECT * FROM usr WHERE email = $1 AND banned = 1`;
+      await pool.query(banned, [email], (error,result) => {
 				if (error){
 					res.end(error);
         }
         if(result.rows.length==1){
 				  return(res.render('pages/bannedscreen'))
         }else{
-          var userExist=`SELECT * FROM usr WHERE email = '${email}'`;
-          pool.query(userExist, (error,results) => {
+          var userExist=`SELECT * FROM usr WHERE email = $1`;
+          pool.query(userExist, [email], (error,results) => {
             if (error){
               res.end(error);
             }
@@ -125,8 +125,8 @@ app.post('/signedup',async(req,res)=>{
               var flag=1;
               res.render('pages/signup',{flag})
             }else{
-              var userExist=`SELECT * FROM usr WHERE username = '${username}'`;
-              pool.query(userExist, (error,results) => {
+              var userExist=`SELECT * FROM usr WHERE username = $1`;
+              pool.query(userExist, [username], (error,results) => {
                 if (error){
                   res.end(error);
                 }
@@ -134,8 +134,8 @@ app.post('/signedup',async(req,res)=>{
                   flag=2;
                   res.render('pages/signup',{flag})
                 }else{
-                  const newuser=pool.query(`INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender, banned) VALUES ('${username}','${password}','${firstname}',
-                  '${lastname}','${email}','${birthday}','${gender}', 0)`);
+					var adduserQuery = `INSERT INTO usr (username, password, firstname, lastname, email, birthday, gender, banned) VALUES ($1, $2, $3, $4, $5, $6, $7, 0)`
+                  const newuser=pool.query(adduserQuery, [username, password, firstname, lastname, email, birthday, gender]);
                   res.render('pages/thankyou');
                 }
               })
@@ -156,7 +156,8 @@ app.post('/signedup',async(req,res)=>{
     try{
       // await pool.query(`DELETE FROM usr WHERE username='${username}'`);
       // const banneduser = await pool.query(`INSERT INTO banned (username) VALUES ('${username}')`);
-      const banneduser = await pool.query(`UPDATE usr SET banned = '1' WHERE username = '${username}'`);
+      var setuserBanned = `UPDATE usr SET banned = '1' WHERE username = $1`;
+	  const banneduser = await pool.query(setuserBanned, [username]);
       res.redirect('/admin');
 
     }catch(err) {
@@ -169,7 +170,8 @@ app.post('/signedup',async(req,res)=>{
     try{
       // await pool.query(`DELETE FROM usr WHERE username='${username}'`);
       // const banneduser = await pool.query(`INSERT INTO banned (username) VALUES ('${username}')`);
-      const banneduser = await pool.query(`UPDATE usr SET banned = '0' WHERE username = '${username}'`);
+	  var setuserUnbanned = `UPDATE usr SET banned = '0' WHERE username = $1`;
+      const banneduser = await pool.query(setuserUnbanned, [username]);
       res.redirect('/admin');
 
     }catch(err) {
@@ -199,9 +201,11 @@ app.post('/loginn', async(req,res)=>{
 	let un = req.body.username;
 	let pw = req.body.password;
 
-	const result = await pool.query(`SELECT * FROM usr WHERE username = '${un}' AND password = '${pw}'`);
+	var chkUser = `SELECT * FROM usr WHERE username = $1 AND password = $2`;
+	const result = await pool.query(chkUser, [un, pw]);
 
-	const count = await pool.query(`SELECT COUNT(*) FROM usr WHERE username = '${un}' AND password = '${pw}'`);
+	var countUser = `SELECT COUNT(*) FROM usr WHERE username = $1 AND password = $2`;
+	const count = await pool.query(countUser, [un, pw]);
 	const results = { 'results': (result) ? result.rows : null};
 	const countResult ={'results': (count)?count.rows:null};
 
@@ -258,7 +262,8 @@ app.post('/logout', async(req,res) => {
           
           let datapassword=req.body.password;
           let id=val.results[0].uid;
-          const result= await pool.query(`SELECT Count(*) FROM usr WHERE uid='${id}' AND password = '${datapassword}'`);
+          var verifypassQuery = `SELECT Count(*) FROM usr WHERE uid=$1 AND password = $2`;
+		  const result= await pool.query(verifypassQuery, [id, datapassword]);
           const results = { 'results': (result) ? result.rows : null};
           if (results['results'][0].count==0){
             if(adminid==null){
@@ -288,7 +293,8 @@ app.post('/logout', async(req,res) => {
          
           let newPassword=req.body.password;
           let id=val.results[0].uid;
-          const update= await pool.query(`UPDATE usr SET password= '${newPassword}' WHERE uid = '${id}'`);
+		  var updatepassQuery = `UPDATE usr SET password= $1 WHERE uid = $2`;
+          const update= await pool.query(updatepassQuery, [newPassword, id]);
           req.session.destroy();
           res.redirect('/')
         }
@@ -326,7 +332,8 @@ app.post('/logout', async(req,res) => {
         let adminid=val.results[0].adminid; 
         let datapassword=req.body.password;
         let id=val.results[0].uid;
-        const result= await pool.query(`SELECT Count(*) FROM usr WHERE uid='${id}' AND password = '${datapassword}'`);
+        var verifyunameQuery = `SELECT Count(*) FROM usr WHERE uid=$1 AND password = $2`;
+		const result= await pool.query(verifyunameQuery, [id, datapassword]);
         const results = { 'results': (result) ? result.rows : null};
         if (results['results'][0].count==0){
           if(adminid==null){
@@ -355,7 +362,8 @@ app.post('/logout', async(req,res) => {
       try{
         let newUsername=req.body.username;
         let id=val.results[0].uid;
-        const update= await pool.query(`UPDATE usr SET username= '${newUsername}' WHERE uid = '${id}'`);
+		var updateunameQuery = `UPDATE usr SET username= $1 WHERE uid = $2`;
+        const update= await pool.query(updateunameQuery, [newUsername, id]);
         req.session.destroy();
         res.redirect('/', {data: {user:val}})
       }
@@ -583,11 +591,24 @@ app.post('/submitrating', async(req,res) => {
       res.send("Error" + err);
     }
   })
+ app.post('/submitrating_tv', async(req,res) => {
+    try{
+		// needs to verify inputs
+		let tvshow_id = req.body.tvshow_id; let user_id = req.session.user['results'][0].uid; 
+		let rating = req.body.rating; let review_text = req.body.review_text;
+		var storeReviewQuery = "INSERT INTO reviews_tv (tvshow_id, user_id, rating, review_text) VALUES ($1, $2, $3, $4)";
+		await pool.query(storeReviewQuery, [tvshow_id, user_id, rating, review_text])
+		res.redirect('back');
+    }
+    catch(err){
+      res.send("Error" + err);
+    }
+  })
 
 // ----------- API -----------
 	app.get('/api/movie/:id',async(req,res)=>{
 		const movie_id = req.params.id;// needs sanitization
-		var getReviewsQuery = "SELECT review_id, user_id, rating, review_text, firstname, lastname, username FROM reviews INNER JOIN usr ON reviews.user_id=usr.uid WHERE reviews.movie_id=$1";
+		var getReviewsQuery = "SELECT review_id, user_id, rating, review_text, firstname, lastname, username FROM reviews INNER JOIN usr ON reviews.user_id=usr.uid WHERE reviews.movie_id=$1 ORDER BY review_id DESC";
 		pool.query(getReviewsQuery, [movie_id], (error,result) => {
 			if (error)
 				res.end(error);
@@ -610,9 +631,9 @@ app.post('/submitrating', async(req,res) => {
 		})
 	})
   app.get('/api/tvshow/:id',async(req,res)=>{
-		const movie_id = req.params.id;// needs sanitization
-		var getReviewsQuery = "SELECT review_id, user_id, rating, review_text, firstname, lastname, username FROM reviews INNER JOIN usr ON reviews.user_id=usr.uid WHERE reviews.tvshow_id=$1";
-		pool.query(getReviewsQuery, [movie_id], (error,result) => {
+		const tvshow_id = req.params.id;// needs sanitization
+		var getReviewsQuery = "SELECT review_id, user_id, rating, review_text, firstname, lastname, username FROM reviews_tv INNER JOIN usr ON reviews_tv.user_id=usr.uid WHERE reviews_tv.tvshow_id=$1 ORDER BY review_id DESC";
+		pool.query(getReviewsQuery, [tvshow_id], (error,result) => {
 			if (error)
 				res.end(error);
 			res.setHeader('Content-Type', 'application/json');
