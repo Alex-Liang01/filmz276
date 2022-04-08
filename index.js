@@ -360,12 +360,13 @@ app.post('/logout', async(req,res) => {
   app.post('/updatedUsername',async(req,res)=>{
     if(req.session.user){
       try{
+       
         let newUsername=req.body.username;
         let id=val.results[0].uid;
-		var updateunameQuery = `UPDATE usr SET username= $1 WHERE uid = $2`;
-        const update= await pool.query(updateunameQuery, [newUsername, id]);
+    var updateUserQuery = `UPDATE usr SET username= $1 WHERE uid = $2`;
+        const update= await pool.query(updateUserQuery, [newUsername, id]);
         req.session.destroy();
-        res.redirect('/', {data: {user:val}})
+        res.redirect('/')
       }
       catch(err){
         res.send(err);
